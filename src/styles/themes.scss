@@ -1,18 +1,5 @@
 @import "./_colours.scss";
-
-
-@mixin lightenOrDarken($key, $colour, $percentage) {
-  @if lightness($colour) < 50% {
-    #{$key}: lighten($colour, $percentage);
-  } @else {
-    #{$key}: darken($colour, $percentage);
-  }
-}
-
-@mixin shiftColourLightness($colour, $percentage) {
-  @include lightenOrDarken("background-color", $colour, $percentage);
-}
-
+@import "./_mixins.scss";
 
 @each $name, $values in $theme-maps {
   $base-background: map-get($values, base-background);
@@ -34,7 +21,7 @@
     }
 
     #request-indicator-loader {
-      @include shiftColourLightness($colour, $darken-amount * 3);
+      @include shiftBackgroundColourLightness($colour, $darken-amount * 3);
     }
 
   }

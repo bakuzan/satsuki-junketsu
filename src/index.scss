@@ -6,3 +6,9 @@ body {
 body, .button {
   font: 16px "Roboto mono", monospace;
 }
+
+.center-contents {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

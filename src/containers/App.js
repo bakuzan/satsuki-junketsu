@@ -1,10 +1,10 @@
 import React from 'react';
 
-import AppSettings from './AppSettings';
+import Header from 'components/header/Header';
 
 const App = ({ children }) => (
   <div className="satsuki">
-    <AppSettings />
+    <Header />
     <main>{children}</main>
   </div>
 );

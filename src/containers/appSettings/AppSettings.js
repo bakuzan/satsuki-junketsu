@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { setApplicationTheme } from 'actions/theme';
 
 import Constants from 'constants/index';
+import './appSettings.css';
 
 const applyThemeToBody = theme => (document.body.className = theme);
 

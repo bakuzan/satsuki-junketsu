@@ -7,6 +7,11 @@ import configureStore from './store/configureStore';
 import Routes from './Routes';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
+import './styles/list.css';
+import './styles/float-label.css';
+import './styles/ripple.css';
+import './styles/button.css';
+import './styles/themes.css';
 
 const history = createHistory();
 const store = configureStore(history);
