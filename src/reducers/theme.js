@@ -5,8 +5,7 @@ import { createReducer } from './utils';
 
 const getUserTheme = () => {
   const settings = getUserSettings();
-  if (!settings || !settings.theme)
-    return { ...Constants.themes[0], isTimed: false };
+  if (!settings || !settings.theme) return { ...Constants.themes[0] };
   return settings.theme;
 };
 
@@ -17,16 +16,8 @@ const persistUserThemeChoice = (state, action) => {
   return updatedSettings.theme;
 };
 
-const persistUserTimedSetting = (state, action) => {
-  const updatedSettings = persistUserSettings({
-    theme: { ...state, isTimed: !state.isTimed }
-  });
-  return updatedSettings.theme;
-};
-
 const theme = createReducer(getUserTheme(), {
-  [SET_THEME_CLASS]: persistUserThemeChoice,
-  [TOGGLE_TIMED_THEME]: persistUserTimedSetting
+  [SET_THEME_CLASS]: persistUserThemeChoice
 });
 
 export default theme;

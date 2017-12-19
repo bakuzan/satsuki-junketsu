@@ -1,2 +1,1 @@
 export const SET_THEME_CLASS = 'SET_THEME_CLASS';
-export const TOGGLE_TIMED_THEME = 'TOGGLE_TIMED_THEME';
