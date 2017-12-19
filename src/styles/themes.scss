@@ -1,0 +1,34 @@
+@import "./_colours.scss"
+
+
+@mixin shiftColourLightness($colour, $percentage) {
+  @include lightenOrDarken("background-color", $colour, $percentage);
+}
+
+
+@each $name, $values in $theme-maps {
+  $base-background: map-get($values, base-background);
+  $base-colour: map-get($values, base-colour);
+  $colour: map-get($values, colour);
+  $contrast: map-get($values, contrast);
+  $anchor-colour: map-get($values, anchor-colour);
+  $anchor-colour-hover: map-get($values, anchor-colour-hover);
+
+  .#{$name} {
+    background: $base-background;
+    color: $base-colour;
+
+    a {
+      color: $anchor-colour;
+      &:hover {
+        color: $anchor-colour-hover;
+      }
+    }
+
+    #request-indicator-loader {
+      @include shiftColourLightness($colour, $darken-amount * 3);
+    }
+
+  }
+
+}

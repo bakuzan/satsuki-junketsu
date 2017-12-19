@@ -1,0 +1,23 @@
+// Colour helpers
+$darken-amount: 5%;
+
+$white: #fff;
+$black: #000;
+
+$satsuki-blue: #0117ff;
+$satsuki-white: #fefefe;
+$junketsu-eye-red: #CA273C;
+$satsuki-hair-black: #1A1323;
+
+
+// Super theme maps!
+$theme-maps: (
+  theme-one: (
+    base-background: $white,
+    base-colour: $black,
+    colour: $satsuki-blue,
+    contrast: $satsuki-white,
+    anchor-colour: $junketsu-eye-red,
+    anchor-colour-hover: $satsuki-hair-black
+  )
+);
