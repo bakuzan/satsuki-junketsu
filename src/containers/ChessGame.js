@@ -1,5 +1,11 @@
 import React from 'react';
 
-const ChessGame = () => <div>CHESS GAME PLACEHOLDER</div>;
+import Board from './Board';
+
+const ChessGame = () => (
+  <div id="chess-game" className="row">
+    <Board />
+  </div>
+);
 
 export default ChessGame;
