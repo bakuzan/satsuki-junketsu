@@ -2,6 +2,7 @@
   "name": "satsuki-junketsu",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://bakuzan.github.io/satsuki-junketsu/",
   "dependencies": {
     "classnames": "^2.2.5",
     "history": "^4.7.2",
@@ -34,5 +35,8 @@
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "redux-logger": "^3.0.6"
   }
 }

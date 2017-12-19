@@ -1,5 +1,13 @@
-@import "./_colours.scss"
+@import "./_colours.scss";
 
+
+@mixin lightenOrDarken($key, $colour, $percentage) {
+  @if lightness($colour) < 50% {
+    #{$key}: lighten($colour, $percentage);
+  } @else {
+    #{$key}: darken($colour, $percentage);
+  }
+}
 
 @mixin shiftColourLightness($colour, $percentage) {
   @include lightenOrDarken("background-color", $colour, $percentage);

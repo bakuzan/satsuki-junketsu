@@ -1,10 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+
+import AppSettings from './AppSettings';
 
 const App = ({ children }) => (
   <div className="satsuki">
+    <AppSettings />
     <main>{children}</main>
   </div>
 );
 
-export default connect(mapStateToProps)(App);
+export default App;

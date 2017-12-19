@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { setApplicationTheme } from 'actions/theme';
 
-import Constants from 'constants';
+import Constants from 'constants/index';
 
 const applyThemeToBody = theme => (document.body.className = theme);
 

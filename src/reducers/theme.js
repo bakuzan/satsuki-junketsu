@@ -1,5 +1,5 @@
-import { SET_THEME_CLASS, TOGGLE_TIMED_THEME } from 'actions/theme';
-import Constants from 'constants';
+import { SET_THEME_CLASS } from 'actions/theme';
+import Constants from 'constants/index';
 import { getUserSettings, persistUserSettings } from 'utils/common';
 import { createReducer } from './utils';
 
