@@ -3,15 +3,27 @@ import classNames from 'classnames';
 
 import Piece from 'components/piece/Piece';
 
-const Square = ({ rank, file, selected, inCheck, contains }) => {
+const Square = ({
+  id,
+  rank,
+  file,
+  isSelected,
+  isInCheck,
+  contains,
+  onClick
+}) => {
   const classes = classNames('square', {
-    selected: selected,
-    'in-check': inCheck,
+    selected: isSelected,
+    'in-check': isInCheck,
     [`rank-${rank}`]: true,
     [`file-${file}`]: true
   });
 
-  return <div className={classes}>{!!contains && <Piece {...contains} />}</div>;
+  return (
+    <div className={classes} onClick={() => onClick(id)}>
+      {!!contains && <Piece {...contains} />}
+    </div>
+  );
 };
 
 export default Square;

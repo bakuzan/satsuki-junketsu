@@ -40,3 +40,6 @@ export const buildStartingBoard = () => {
       };
     });
 };
+
+export const isSameSquare = (s1, s2) =>
+  s1.rank === s2.rank && s1.file === s2.file;

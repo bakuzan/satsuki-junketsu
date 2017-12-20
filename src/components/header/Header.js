@@ -13,7 +13,7 @@ class Header extends Component {
         <NavLink className="ripple" id="satsuki-svg" to={Paths.base}>
           <SvgLogo text="Satsuki Junketsu" />
         </NavLink>
-        <h1>SATSUKI</h1>
+        <h1>SATSUKI JUNKETSU</h1>
         <div id="navigation-links">
           <div className="flex-right center-vertically">
             <AppSettings />
