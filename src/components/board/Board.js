@@ -32,7 +32,14 @@ class Board extends React.Component {
     if (selectedSquare && isSameSquare) return actions.selectBoardSquare(null);
     if (selectedSquare && square.contains.colour === currentPlayerColour)
       return actions.selectBoardSquare(squareId);
-    console.log('%c square selection case not handled!', 'color: red');
+    if (selectedSquare && square.contains.colour !== currentPlayerColour)
+      return actions.takePiece(squareId);
+
+    console.log(
+      '%c square selection case not handled!',
+      'color: red',
+      `Selected square: ${selectedSquareId}, Target square: ${squareId}`
+    );
   }
 
   render() {

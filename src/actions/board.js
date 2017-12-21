@@ -9,3 +9,9 @@ export const moveSelectedPiece = targetSquareId => ({
   type: BOARD_MOVE_PIECE,
   targetSquareId
 });
+
+export const BOARD_TAKE_PIECE = 'BOARD_TAKE_PIECE';
+export const takePiece = targetSquareId => ({
+  type: BOARD_TAKE_PIECE,
+  targetSquareId
+});

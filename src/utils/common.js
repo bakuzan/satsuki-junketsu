@@ -8,3 +8,9 @@ export const persistUserSettings = settingUpdate => {
   localStorage.setItem(Strings.localUserSettings, JSON.stringify(updated));
   return updated;
 };
+
+export const updateArrayPreservingOrder = (arr, i, o) => [
+  ...arr.slice(0, i),
+  { ...arr[i], ...o },
+  ...arr.slice(i + 1)
+];

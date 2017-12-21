@@ -1,0 +1,24 @@
+@import "../../styles/_variables";
+
+.graveyard {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 20vw;
+  height: 90%;
+  border: {
+    width: $border-width;
+    style: dashed;
+    color: map-get($chess-board, border-colour);
+  }
+
+  .piece {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    width: #{map-get($square, size)}px;
+    height: #{map-get($square, size)}px;
+  }
+}
