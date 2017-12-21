@@ -43,3 +43,18 @@ export const buildStartingBoard = () => {
 
 export const isSameSquare = (s1, s2) =>
   s1.rank === s2.rank && s1.file === s2.file;
+
+export const isBetween = (num1, num2, middleNumber) => {
+  if (num1 < middleNumber && middleNumber < num2) return true;
+  if (num1 > middleNumber && middleNumber > num2) return true;
+  return false;
+};
+
+export const isOnDiagonal = (fileIndex, from, to, square) => {
+  const fileDiff = Math.abs(fileIndex - from.fileIndex);
+  const rankDiff = Math.abs(square.rank - from.rank);
+  if (!(fileDiff === rankDiff)) return false;
+  if (!this.isBetween(from.rank, to.rank, square.rank)) return false;
+  if (!this.isBetween(from.fileIndex, to.fileIndex, fileIndex)) return false;
+  return true;
+};

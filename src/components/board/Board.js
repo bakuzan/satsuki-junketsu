@@ -5,7 +5,7 @@ import Scales from 'components/scales/Scales';
 import Square from 'components/Square';
 
 import Constants from 'constants/index';
-import { getCurrentPlayerColour } from 'utils/game';
+import { getCurrentPlayerColour, isValidMove, isValidTake } from 'utils/game';
 import './board.css';
 
 class Board extends React.Component {
@@ -24,7 +24,14 @@ class Board extends React.Component {
 
     if (!selectedSquare && !square.contains) return;
     if (selectedSquare && !square.contains)
-      return actions.moveSelectedPiece(squareId);
+      return isValidMove(selectedSquare, square, squares)
+        ? actions.moveSelectedPiece(squareId)
+        : console.log(
+            '%c invalid move',
+            'color: red; font-size: 22px;',
+            selectedSquare,
+            square
+          );
     if (!selectedSquare && square.contains.colour !== currentPlayerColour)
       return;
     if (!selectedSquare && square.contains.colour === currentPlayerColour)
@@ -33,7 +40,14 @@ class Board extends React.Component {
     if (selectedSquare && square.contains.colour === currentPlayerColour)
       return actions.selectBoardSquare(squareId);
     if (selectedSquare && square.contains.colour !== currentPlayerColour)
-      return actions.takePiece(squareId);
+      return isValidTake(selectedSquare, square, squares)
+        ? actions.takePiece(squareId)
+        : console.log(
+            '%c invalid take',
+            'color: red; font-size: 22px;',
+            selectedSquare,
+            square
+          );
 
     console.log(
       '%c square selection case not handled!',
