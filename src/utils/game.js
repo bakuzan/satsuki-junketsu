@@ -88,12 +88,10 @@ export const isValidTake = (from, to, squares) => {
     case Constants.Strings.pieces.pawn:
       const fromIndex = Constants.files.findIndex(x => x === from.file);
       const toIndex = Constants.files.findIndex(x => x === to.file);
-      if (
+      return (
         Math.abs(toIndex - fromIndex) === 1 &&
         Math.abs(to.rank - from.rank) === 1
-      )
-        return true;
-      return false;
+      );
     case Constants.Strings.pieces.rook:
     case Constants.Strings.pieces.knight:
     case Constants.Strings.pieces.bishop:
