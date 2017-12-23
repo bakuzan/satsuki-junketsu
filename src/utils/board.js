@@ -51,10 +51,13 @@ export const isBetween = (num1, num2, middleNumber) => {
 };
 
 export const isOnDiagonal = (fileIndex, from, to, square) => {
-  const fileDiff = Math.abs(fileIndex - from.fileIndex);
+  const fromFileIndex = Constants.files.findIndex(x => x === from.file);
+  const fileDiff = Math.abs(fileIndex - fromFileIndex);
   const rankDiff = Math.abs(square.rank - from.rank);
   if (!(fileDiff === rankDiff)) return false;
-  if (!this.isBetween(from.rank, to.rank, square.rank)) return false;
-  if (!this.isBetween(from.fileIndex, to.fileIndex, fileIndex)) return false;
+  if (!isBetween(from.rank, to.rank, square.rank)) return false;
+
+  const toFileIndex = Constants.files.findIndex(x => x === to.file);
+  if (!isBetween(fromFileIndex, toFileIndex, fileIndex)) return false;
   return true;
 };

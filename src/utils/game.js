@@ -90,7 +90,11 @@ export const isValidTake = (from, to, squares) => {
       const toIndex = Constants.files.findIndex(x => x === to.file);
       return (
         Math.abs(toIndex - fromIndex) === 1 &&
-        Math.abs(to.rank - from.rank) === 1
+        Math.abs(to.rank - from.rank) === 1 &&
+        ((from.rank < to.rank &&
+          attacker.colour === Constants.Strings.colours.white) ||
+          (from.rank > to.rank &&
+            attacker.colour === Constants.Strings.colours.black))
       );
     case Constants.Strings.pieces.rook:
     case Constants.Strings.pieces.knight:

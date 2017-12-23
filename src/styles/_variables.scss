@@ -1,6 +1,6 @@
 @import "./_colours.scss";
 
-$border-width: 1px;
+$border-width: 3px;
 $scale-size: 20;
 $fixed-header-height: 50px;
 
@@ -27,7 +27,7 @@ $square: (
   in-check: $square-background-in-check,
 );
 $chess-board: (
-  size: map-get($square, size) * 8 + 2,
+  size: map-get($square, size) * 8,
   border-colour: $board-border-colour
 );
 
