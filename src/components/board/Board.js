@@ -5,6 +5,7 @@ import Scales from 'components/scales/Scales';
 import Square from 'components/Square';
 
 import Constants from 'constants/index';
+import { reverseArray } from 'utils/common';
 import { getCurrentPlayerColour, isValidMove, isValidTake } from 'utils/game';
 import './board.css';
 
@@ -57,11 +58,20 @@ class Board extends React.Component {
   }
 
   render() {
-    const { squares, selectedSquareId, readOnly } = this.props;
+    const { squares, selectedSquareId, readOnly, isReversed } = this.props;
+
+    const boardSquares = isReversed ? reverseArray(squares) : squares;
+    const boardFiles = isReversed
+      ? reverseArray(Constants.files)
+      : Constants.files;
+    const boardRanks = isReversed
+      ? reverseArray(Constants.ranks)
+      : Constants.ranks;
+
     return (
       <div className={classNames('chess-board', { 'read-only': readOnly })}>
-        <Scales files={Constants.files} ranks={Constants.ranks} />
-        {squares.map(o => (
+        <Scales files={boardFiles} ranks={boardRanks} />
+        {boardSquares.map(o => (
           <Square
             key={o.id}
             {...o}

@@ -4,9 +4,11 @@ import { bindActionCreators } from 'redux';
 import Board from 'components/board/Board';
 
 import * as actions from 'actions/board';
+import { isWhitesTurn } from 'utils/common';
 
 const mapStateToProps = state => ({
-  ...state.board
+  ...state.board,
+  isReversed: !isWhitesTurn(state.board.moves.length)
 });
 
 const mapDispatchToProps = dispatch => ({

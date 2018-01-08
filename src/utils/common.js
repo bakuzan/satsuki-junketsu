@@ -14,3 +14,5 @@ export const updateArrayPreservingOrder = (arr, i, o) => [
   { ...arr[i], ...o },
   ...arr.slice(i + 1)
 ];
+
+export const reverseArray = arr => arr.slice(0).reverse();
