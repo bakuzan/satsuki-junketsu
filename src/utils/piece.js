@@ -61,3 +61,14 @@ export const discoverSquaresUnderThreat = squares =>
 
     return [...p, ...attacks];
   }, []);
+
+export const getAttacksOnKingSquare = (kingSquare, squares) =>
+  squares
+    .filter(x => x.contains && x.contains.colour !== kingSquare.contains.colour)
+    .reduce((p, square) => {
+      if (!isValidTake(square, kingSquare, squares)) return p;
+      return {
+        square,
+        kingSquare
+      };
+    }, []);
