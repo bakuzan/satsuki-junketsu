@@ -58,7 +58,13 @@ class Board extends React.Component {
   }
 
   render() {
-    const { squares, selectedSquareId, readOnly, isReversed } = this.props;
+    const {
+      squares,
+      selectedSquareId,
+      potentialMoves,
+      readOnly,
+      isReversed
+    } = this.props;
 
     const boardSquares = isReversed ? reverseArray(squares) : squares;
     const boardFiles = isReversed
@@ -68,6 +74,12 @@ class Board extends React.Component {
       ? reverseArray(Constants.ranks)
       : Constants.ranks;
 
+    console.groupCollapsed('BOARD RENDER');
+    console.log('selectedSquareId', selectedSquareId);
+    console.log('boardSquares', boardSquares);
+    console.log('props', this.props);
+    console.groupEnd();
+
     return (
       <div className={classNames('chess-board', { 'read-only': readOnly })}>
         <Scales files={boardFiles} ranks={boardRanks} />
@@ -75,6 +87,7 @@ class Board extends React.Component {
           <Square
             key={o.id}
             {...o}
+            isPotentialMove={potentialMoves.some(x => x === o.id)}
             isSelected={o.id === selectedSquareId}
             onClick={this.handleSquareSelection}
           />

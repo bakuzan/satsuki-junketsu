@@ -35,5 +35,11 @@
     &.selected {
       background-color: map-get($square, selected);
     }
+    &.potential-move {
+      background-color: map-get($square, potential-move)
+    }
+    &.potential-take {
+      background-color: map-get($square, potential-take)
+    }
   }
 }

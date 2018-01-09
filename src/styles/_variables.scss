@@ -25,6 +25,8 @@ $square: (
   dark-background: $square-background-dark,
   selected: $square-background-selected,
   in-check: $square-background-in-check,
+  potential-move: $square-background-potential-move,
+  potential-take: $square-background-potential-take,
 );
 $chess-board: (
   size: map-get($square, size) * 8,

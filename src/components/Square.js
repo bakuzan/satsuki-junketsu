@@ -8,12 +8,15 @@ const Square = ({
   rank,
   file,
   isSelected,
+  isPotentialMove,
   isInCheck,
   contains,
   onClick
 }) => {
   const classes = classNames('square', {
     selected: isSelected,
+    'potential-move': isPotentialMove && !contains,
+    'potential-take': isPotentialMove && contains,
     'in-check': isInCheck,
     [`rank-${rank}`]: true,
     [`file-${file}`]: true

@@ -4,13 +4,16 @@ $darken-amount: 5%;
 $white: #fff;
 $grey95: #f2f2f2;
 $grey94: #efefef;
+$grey: #eee;
 $grey80: #ccc;
 $grey40: #666;
+$light-black: #444;
 $onyx: #0f0f0f;
 $black: #000;
-$grey: #eee;
+
 $gold: #ffd700;
-$light-black: #444;
+$forest-green: #228b22;
+$maroon: #800000;
 
 $satsuki-blue: #0117ff;
 $satsuki-white: #fefefe;
@@ -32,6 +35,8 @@ $square-background-light: $grey;
 $square-background-dark: $light-black;
 $square-background-selected: $gold;
 $square-background-in-check: $secondary-background;
+$square-background-potential-move: $forest-green;
+$square-background-potential-take: $maroon;
 
 $anchor-colour: $junketsu-eye-red;
 $anchor-colour-hover: $satsuki-hair-black;
