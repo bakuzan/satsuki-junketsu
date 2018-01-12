@@ -62,7 +62,7 @@ class Board extends React.Component {
       squares,
       selectedSquareId,
       potentialMoves,
-      readOnly,
+      isReadOnly,
       isReversed
     } = this.props;
 
@@ -81,7 +81,7 @@ class Board extends React.Component {
     console.groupEnd();
 
     return (
-      <div className={classNames('chess-board', { 'read-only': readOnly })}>
+      <div className={classNames('chess-board', { 'read-only': isReadOnly })}>
         <Scales files={boardFiles} ranks={boardRanks} />
         {boardSquares.map(o => (
           <Square

@@ -3,6 +3,8 @@ import classNames from 'classnames';
 
 import Piece from 'components/piece/Piece';
 
+import './square.css';
+
 const Square = ({
   id,
   rank,
