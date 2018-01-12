@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import Scales from 'components/scales/Scales';
-import Square from 'components/Square';
+import Square from 'components/square/Square';
 
 import Constants from 'constants/index';
 import { reverseArray } from 'utils/common';
