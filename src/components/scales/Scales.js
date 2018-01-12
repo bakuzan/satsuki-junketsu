@@ -3,9 +3,7 @@ import './scales.css';
 
 class Scales extends Component {
   renderScale(array) {
-    return array.map((item, index) => {
-      return <div key={item}>{item}</div>;
-    });
+    return array.map(item => <div key={item}>{item}</div>);
   }
 
   render() {
