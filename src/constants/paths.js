@@ -1,3 +1,3 @@
 export const Paths = {
-  base: '/satsuki'
+  base: '/satsuki-junketsu'
 };
