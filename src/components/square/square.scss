@@ -7,6 +7,8 @@
   width: #{map-get($square, size)}px;
   height: #{map-get($square, size)}px;
   background-color: map-get($square, dark-background);
+  border: 1px solid map-get($square, dark-background);
+  box-sizing: border-box;
   &:nth-of-type(16n+16),
   &:nth-of-type(16n+14),
   &:nth-of-type(16n+12),
@@ -16,6 +18,7 @@
   &:nth-of-type(16n+3),
   &:nth-of-type(16n+1) {
     background-color: map-get($square, light-background);
+    border-color: map-get($square, light-background);
   }
   &.in-check {
     background-color: map-get($square, in-check);
