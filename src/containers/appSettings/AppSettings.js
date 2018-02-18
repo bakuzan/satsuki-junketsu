@@ -2,56 +2,121 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setApplicationTheme } from 'actions/theme';
+import Portal from 'components/Portal';
+import SelectBox from 'components/selectBox/SelectBox';
 
+import { setApplicationTheme, setBoardTheme } from 'actions/theme';
 import Constants from 'constants/index';
 import './appSettings.css';
 
+const themeMapper = theme => ({
+  text: theme.name,
+  value: theme.class
+});
+const appThemes = Constants.themes.map(themeMapper);
+const boardThemes = Constants.boardThemes.map(themeMapper);
+
 const applyThemeToBody = theme => (document.body.className = theme);
 
-const AppSettings = ({ theme, setApplicationTheme }) => {
-  const themes = Constants.themes.slice(0);
-  applyThemeToBody(theme);
+class AppSettings extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDropdownOpen: false
+    };
 
-  return (
-    <div id="app-settings">
-      <button
-        type="button"
-        title="App settings"
-        className="button-icon ripple"
-        icon="&#x2699;"
-      />
-      <ul className="dropdown-menu" role="menu">
-        <li className="dropdown-arrow" />
-        <li className="button-group">
-          {themes.map(item => (
-            <button
-              key={item.class}
-              type="button"
-              role="menuitem"
-              className="button"
-              onClick={() => setApplicationTheme(item.class)}
-            >
-              {item.name}
-            </button>
-          ))}
-        </li>
-      </ul>
-    </div>
-  );
-};
+    this.handleDropdownChange = this.handleDropdownChange.bind(this);
+    this.handleCloseAppSettings = this.handleCloseAppSettings.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+  }
+
+  handleDropdownChange(onChange) {
+    return e => {
+      onChange(e.target.value);
+      this.handleCloseAppSettings();
+    };
+  }
+
+  handleCloseAppSettings() {
+    this.setState({ isDropdownOpen: false });
+  }
+
+  toggleDropdown() {
+    this.setState(prev => ({ isDropdownOpen: !prev.isDropdownOpen }));
+  }
+
+  render() {
+    const {
+      appTheme,
+      boardTheme,
+      setApplicationTheme,
+      setBoardTheme
+    } = this.props;
+    applyThemeToBody(appTheme);
+
+    return (
+      <div id="app-settings">
+        <input
+          type="checkbox"
+          value={this.state.isDropdownOpen}
+          id="app-settings-toggler"
+          onChange={this.toggleDropdown}
+        />
+        <label
+          icon="&#x2699;"
+          htmlFor="app-settings-toggler"
+          title="App settings"
+        />
+        {this.state.isDropdownOpen && (
+          <Portal targetTagName="main">
+            <div
+              id="app-settings-backdrop"
+              role="button"
+              onClick={this.handleCloseAppSettings}
+            />
+            <ul id="app-settings-menu" className="dropdown-menu" role="menu">
+              <li className="dropdown-arrow" />
+              <li>
+                <SelectBox
+                  name="appTheme"
+                  text="App Theme"
+                  value={appTheme}
+                  options={appThemes}
+                  onSelect={this.handleDropdownChange(setApplicationTheme)}
+                />
+              </li>
+              <li>
+                <SelectBox
+                  name="boardTheme"
+                  text="Board Theme"
+                  value={boardTheme}
+                  options={boardThemes}
+                  onSelect={this.handleDropdownChange(setBoardTheme)}
+                />
+              </li>
+            </ul>
+          </Portal>
+        )}
+      </div>
+    );
+  }
+}
 
 AppSettings.propTypes = {
-  theme: PropTypes.string.isRequired,
-  setApplicationTheme: PropTypes.func.isRequired
+  appTheme: PropTypes.string.isRequired,
+  boardTheme: PropTypes.string.isRequired,
+  setApplicationTheme: PropTypes.func.isRequired,
+  setBoardTheme: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  theme: state.theme.class
+  appTheme: state.theme.app,
+  boardTheme: state.theme.board
 });
 
 const mapDispatchToProps = {
-  setApplicationTheme
+  setApplicationTheme,
+  setBoardTheme
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppSettings);

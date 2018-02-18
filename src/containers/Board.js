@@ -8,6 +8,7 @@ import { isWhitesTurn } from 'utils/game';
 import { possibleMovesForSelectedPiece, getCheckMoves } from 'utils/piece';
 
 const mapStateToProps = state => ({
+  themeClass: state.theme.board,
   ...state.board,
   potentialMoves: possibleMovesForSelectedPiece(state.board),
   checkMoves: getCheckMoves(state.board.squares),

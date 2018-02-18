@@ -1,5 +1,5 @@
-@import "./_colours.scss";
-@import "./_mixins.scss";
+@import './_colours.scss';
+@import './_mixins.scss';
 
 @each $name, $values in $theme-maps {
   $base-background: map-get($values, base-background);
@@ -24,8 +24,10 @@
       @include shiftBackgroundColourLightness($colour, $darken-amount * 3);
     }
 
+    .graveyard {
+      border-color: $base-colour;
+    }
   }
-
 }
 
 @each $name, $values in $board-themes {
@@ -38,18 +40,17 @@
     .square {
       background-color: $dark-square;
       border-color: $dark-square;
-      &:nth-of-type(16n+16),
-      &:nth-of-type(16n+14),
-      &:nth-of-type(16n+12),
-      &:nth-of-type(16n+10),
-      &:nth-of-type(16n+7),
-      &:nth-of-type(16n+5),
-      &:nth-of-type(16n+3),
-      &:nth-of-type(16n+1) {
+      &:nth-of-type(16n + 16),
+      &:nth-of-type(16n + 14),
+      &:nth-of-type(16n + 12),
+      &:nth-of-type(16n + 10),
+      &:nth-of-type(16n + 7),
+      &:nth-of-type(16n + 5),
+      &:nth-of-type(16n + 3),
+      &:nth-of-type(16n + 1) {
         background-color: $light-square;
         border-color: $light-square;
       }
     }
-
   }
 }

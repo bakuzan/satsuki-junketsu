@@ -59,6 +59,7 @@ class Board extends React.Component {
 
   render() {
     const {
+      themeClass,
       squares,
       selectedSquareId,
       potentialMoves,
@@ -82,7 +83,7 @@ class Board extends React.Component {
 
     return (
       <div
-        className={classNames('chess-board board-one', {
+        className={classNames('chess-board', themeClass, {
           'read-only': isReadOnly
         })}
       >

@@ -17,14 +17,13 @@ $maroon: #800000;
 $tanned: #d2b48c;
 $burleywood: #deb887;
 $khaki: #f0e68c;
-$aquamarine: #7fffd4;
 $emerald: #50c878;
 $dark-green: #515e54;
 
 $satsuki-blue: #0117ff;
 $satsuki-white: #fefefe;
-$junketsu-eye-red: #CA273C;
-$satsuki-hair-black: #1A1323;
+$junketsu-eye-red: #ca273c;
+$satsuki-hair-black: #1a1323;
 
 // USAGES
 $primary-background: $satsuki-blue;
@@ -47,41 +46,44 @@ $square-background-potential-take: $maroon;
 $anchor-colour: $junketsu-eye-red;
 $anchor-colour-hover: $satsuki-hair-black;
 
-
 // Super theme maps!
 $theme-maps: (
-  theme-one: (
-    base-background: $white,
-    base-colour: $black,
-    colour: $satsuki-blue,
-    contrast: $satsuki-white,
-    anchor-colour: $anchor-colour,
-    anchor-colour-hover: $anchor-colour-hover
-  ),
-  theme-two: (
-    base-background: $black,
-    base-colour: $white,
-    colour: $junketsu-eye-red,
-    contrast: $satsuki-hair-black,
-    anchor-colour: $anchor-colour-hover,
-    anchor-colour-hover: $anchor-colour
-  )
+  theme-one:
+    (
+      base-background: $white,
+      base-colour: $black,
+      colour: $satsuki-blue,
+      contrast: $satsuki-white,
+      anchor-colour: $anchor-colour,
+      anchor-colour-hover: $anchor-colour-hover
+    ),
+  theme-two:
+    (
+      base-background: $black,
+      base-colour: $white,
+      colour: $junketsu-eye-red,
+      contrast: $satsuki-hair-black,
+      anchor-colour: $anchor-colour-hover,
+      anchor-colour-hover: $anchor-colour
+    )
 );
-
 $board-themes: (
-  board-one: (
-    board-border: $onyx,
-    dark-square: $light-black,
-    light-square: $grey
-  ),
-  board-two: (
-    board-border: $burleywood,
-    dark-square: $tanned,
-    light-square: $khaki
-  ),
-  board-three: (
-    board-border: $dark-green,
-    dark-square: $forest-green,
-    light-square: $emerald
-  )
-)
+  board-one:
+    (
+      board-border: $onyx,
+      dark-square: $light-black,
+      light-square: $grey
+    ),
+  board-two:
+    (
+      board-border: $burleywood,
+      dark-square: $tanned,
+      light-square: $khaki
+    ),
+  board-three:
+    (
+      board-border: $dark-green,
+      dark-square: $forest-green,
+      light-square: $emerald
+    )
+);
