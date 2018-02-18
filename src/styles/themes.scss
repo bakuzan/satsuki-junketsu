@@ -27,3 +27,29 @@
   }
 
 }
+
+@each $name, $values in $board-themes {
+  $board-border: map-get($values, board-border);
+  $dark-square: map-get($values, dark-square);
+  $light-square: map-get($values, light-square);
+
+  .#{$name} {
+    border-color: $board-border;
+    .square {
+      background-color: $dark-square;
+      border-color: $dark-square;
+      &:nth-of-type(16n+16),
+      &:nth-of-type(16n+14),
+      &:nth-of-type(16n+12),
+      &:nth-of-type(16n+10),
+      &:nth-of-type(16n+7),
+      &:nth-of-type(16n+5),
+      &:nth-of-type(16n+3),
+      &:nth-of-type(16n+1) {
+        background-color: $light-square;
+        border-color: $light-square;
+      }
+    }
+
+  }
+}

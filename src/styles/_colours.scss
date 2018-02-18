@@ -14,6 +14,12 @@ $black: #000;
 $gold: #ffd700;
 $forest-green: #228b22;
 $maroon: #800000;
+$tanned: #d2b48c;
+$burleywood: #deb887;
+$khaki: #f0e68c;
+$aquamarine: #7fffd4;
+$emerald: #50c878;
+$dark-green: #515e54;
 
 $satsuki-blue: #0117ff;
 $satsuki-white: #fefefe;
@@ -61,3 +67,21 @@ $theme-maps: (
     anchor-colour-hover: $anchor-colour
   )
 );
+
+$board-themes: (
+  board-one: (
+    board-border: $onyx,
+    dark-square: $light-black,
+    light-square: $grey
+  ),
+  board-two: (
+    board-border: $burleywood,
+    dark-square: $tanned,
+    light-square: $khaki
+  ),
+  board-three: (
+    board-border: $dark-green,
+    dark-square: $forest-green,
+    light-square: $emerald
+  )
+)

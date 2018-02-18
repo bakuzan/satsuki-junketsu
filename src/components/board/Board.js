@@ -81,7 +81,11 @@ class Board extends React.Component {
     console.groupEnd();
 
     return (
-      <div className={classNames('chess-board', { 'read-only': isReadOnly })}>
+      <div
+        className={classNames('chess-board board-one', {
+          'read-only': isReadOnly
+        })}
+      >
         <Scales files={boardFiles} ranks={boardRanks} />
         {boardSquares.map(o => (
           <Square
