@@ -12,8 +12,11 @@ $onyx: #0f0f0f;
 $black: #000;
 
 $gold: #ffd700;
+$thistle: #d8d320;
 $forest-green: #228b22;
+$lime-green: #bfff00;
 $maroon: #800000;
+$terracotta: #e2725b;
 $tanned: #d2b48c;
 $burleywood: #deb887;
 $khaki: #f0e68c;
@@ -39,9 +42,13 @@ $board-border-colour: $onyx;
 $square-background-light: $grey;
 $square-background-dark: $light-black;
 $square-background-selected: $gold;
+$square-border-selected: $thistle;
 $square-background-in-check: $secondary-background;
+$square-border-in-check: $terracotta;
 $square-background-potential-move: $forest-green;
+$square-border-potential-move: $lime-green;
 $square-background-potential-take: $maroon;
+$square-border-potential-take: $terracotta;
 
 $anchor-colour: $junketsu-eye-red;
 $anchor-colour-hover: $satsuki-hair-black;

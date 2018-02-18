@@ -1,4 +1,4 @@
-@import "./_colours.scss";
+@import './_colours.scss';
 
 $border-width: 3px;
 $scale-size: 20;
@@ -24,16 +24,19 @@ $square: (
   light-background: $square-background-light,
   dark-background: $square-background-dark,
   selected: $square-background-selected,
+  selected-border: $square-border-selected,
   in-check: $square-background-in-check,
+  in-check-border: $square-border-in-check,
   potential-move: $square-background-potential-move,
+  potential-move-border: $square-border-potential-move,
   potential-take: $square-background-potential-take,
+  potential-take-border: $square-border-potential-take
 );
 $chess-board: (
   size: map-get($square, size) * 8,
   border-colour: $board-border-colour
 );
-
-//z-index
+// z-index
 $z-index: (
   wafer: 1,
   above-siblings: 10,

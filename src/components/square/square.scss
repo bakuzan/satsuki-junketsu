@@ -1,4 +1,4 @@
-@import "../../styles/_variables";
+@import '../../styles/_variables';
 
 .square {
   position: relative;
@@ -6,18 +6,23 @@
   flex-shrink: 0;
   width: #{map-get($square, size)}px;
   height: #{map-get($square, size)}px;
+  border: 1px solid;
   box-sizing: border-box;
 
   &.in-check {
-    background-color: map-get($square, in-check);
+    background-color: map-get($square, in-check) !important;
+    border-color: map-get($square, in-check-border) !important;
   }
   &.selected {
-    background-color: map-get($square, selected);
+    background-color: map-get($square, selected) !important;
+    border-color: map-get($square, selected-border) !important;
   }
   &.potential-move {
-    background-color: map-get($square, potential-move)
+    background-color: map-get($square, potential-move) !important;
+    border-color: map-get($square, potential-move-border) !important;
   }
   &.potential-take {
-    background-color: map-get($square, potential-take)
+    background-color: map-get($square, potential-take) !important;
+    border-color: map-get($square, potential-take-border) !important;
   }
 }
