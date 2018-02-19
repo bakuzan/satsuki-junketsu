@@ -63,6 +63,7 @@ class Board extends React.Component {
       squares,
       selectedSquareId,
       potentialMoves,
+      checkMoves,
       isReadOnly,
       isReversed
     } = this.props;
@@ -74,6 +75,9 @@ class Board extends React.Component {
     const boardRanks = isReversed
       ? reverseArray(Constants.ranks)
       : Constants.ranks;
+
+    const checkedKingSquareId =
+      !!checkMoves.attackers.length && checkMoves.kingSquare.id;
 
     console.groupCollapsed('BOARD RENDER');
     console.log('selectedSquareId', selectedSquareId);
@@ -93,6 +97,7 @@ class Board extends React.Component {
             key={o.id}
             {...o}
             isPotentialMove={potentialMoves.some(x => x === o.id)}
+            isInCheck={o.id === checkedKingSquareId}
             isSelected={o.id === selectedSquareId}
             onClick={this.handleSquareSelection}
           />

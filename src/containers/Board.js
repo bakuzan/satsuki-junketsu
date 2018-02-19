@@ -4,14 +4,20 @@ import { bindActionCreators } from 'redux';
 import Board from 'components/board/Board';
 
 import * as actions from 'actions/board';
-import { isWhitesTurn } from 'utils/game';
-import { possibleMovesForSelectedPiece, getCheckMoves } from 'utils/piece';
+import { isWhitesTurn, getCurrentPlayerColour } from 'utils/game';
+import {
+  possibleMovesForSelectedPiece,
+  getCheckMovesForColour
+} from 'utils/piece';
 
 const mapStateToProps = state => ({
   themeClass: state.theme.board,
   ...state.board,
   potentialMoves: possibleMovesForSelectedPiece(state.board),
-  checkMoves: getCheckMoves(state.board.squares),
+  checkMoves: getCheckMovesForColour(
+    getCurrentPlayerColour(state.board.moves),
+    state.board.squares
+  ),
   isReversed: !isWhitesTurn(state.board.moves.length)
 });
 
