@@ -7,15 +7,17 @@ class Portal extends React.Component {
     super(props);
 
     this.el = document.createElement(props.parentTag);
-    this.targetNode = document.querySelector(props.targetSelector);
+    this.getTargetNode = () => document.querySelector(props.targetSelector);
   }
 
   componentDidMount() {
-    this.targetNode.appendChild(this.el);
+    const targetNode = this.getTargetNode();
+    targetNode.appendChild(this.el);
   }
 
   componentWillUnmount() {
-    this.targetNode.removeChild(this.el);
+    const targetNode = this.getTargetNode();
+    if (targetNode) targetNode.removeChild(this.el);
   }
 
   render() {

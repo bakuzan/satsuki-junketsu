@@ -1,11 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import Portal from 'components/Portal';
 import Scales from 'components/scales/Scales';
 import Square from 'components/square/Square';
 
 import Constants from 'constants/index';
-import { reverseArray } from 'utils/common';
+import { reverseArray, capitalise } from 'utils/common';
 import { getWinningPlayerColour, isValidMove, isValidTake } from 'utils/game';
 import './board.css';
 
@@ -17,7 +18,7 @@ class Board extends React.Component {
   }
 
   handleSquareSelection(squareId) {
-    const { squares, moves, selectedSquareId, actions } = this.props;
+    const { squares, selectedSquareId, actions } = this.props;
     const selectedSquare = squares.find(x => x.id === selectedSquareId);
     const square = squares.find(x => x.id === squareId);
     const isSameSquare = selectedSquareId === squareId;
@@ -89,7 +90,7 @@ class Board extends React.Component {
     console.groupEnd();
 
     return (
-      <>
+      <React.Fragment>
         <div
           className={classNames('chess-board', themeClass, {
             'read-only': isReadOnly
@@ -108,11 +109,12 @@ class Board extends React.Component {
           ))}
         </div>
         <Portal targetSelector="#chess-game-status">
-          {!checkStatus.isCheckmate && `Current player: ${currentPlayerColour}`}
+          {!checkStatus.isCheckmate &&
+            `Current player: ${capitalise(currentPlayerColour)}`}
           {checkStatus.isCheckmate &&
             `Winner: ${getWinningPlayerColour(checkStatus.kingSquare)}`}
         </Portal>
-      </>
+      </React.Fragment>
     );
   }
 }

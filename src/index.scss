@@ -1,19 +1,20 @@
-@import "./styles/_variables.scss";
+@import './styles/_variables.scss';
 
 body {
   padding: 0;
   margin: 0;
 }
 
-body, .button {
-  font: 16px "Roboto mono", monospace;
+body,
+.button {
+  font: 16px 'Roboto mono', monospace;
 }
 
 main {
   height: calc(100vh - #{$fixed-header-height});
   padding: 5px {
     top: $fixed-header-height;
-  };
+  }
 }
 
 .center-contents {
@@ -27,4 +28,10 @@ main {
   justify-content: space-around;
   height: 100%;
   width: 100%;
+}
+
+#chess-game-status {
+  display: flex;
+  justify-content: center;
+  margin: #{$scale-size + 15}px 0;
 }

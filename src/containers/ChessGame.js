@@ -5,8 +5,10 @@ import Graveyard from './Graveyard';
 
 const ChessGame = () => (
   <div id="chess-game" className="row">
-    <div id="chess-game-status" />
-    <Board />
+    <div>
+      <div id="chess-game-status" />
+      <Board />
+    </div>
     <Graveyard />
   </div>
 );

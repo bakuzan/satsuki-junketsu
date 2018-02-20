@@ -17,3 +17,7 @@ export const updateArrayPreservingOrder = (arr, i, o) => [
 ];
 
 export const reverseArray = arr => arr.slice(0).reverse();
+
+export const capitalise = ([first, ...rest], lowerRest = false) =>
+  first.toUpperCase() +
+  (lowerRest ? rest.join('').toLowerCase() : rest.join(''));
