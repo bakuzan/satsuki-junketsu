@@ -68,7 +68,7 @@ class AppSettings extends React.Component {
           title="App settings"
         />
         {this.state.isDropdownOpen && (
-          <Portal targetTagName="main">
+          <Portal targetSelector="main">
             <div
               id="app-settings-backdrop"
               role="button"

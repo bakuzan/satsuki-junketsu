@@ -6,7 +6,7 @@ import Square from 'components/square/Square';
 
 import Constants from 'constants/index';
 import { reverseArray } from 'utils/common';
-import { getCurrentPlayerColour, isValidMove, isValidTake } from 'utils/game';
+import { getWinningPlayerColour, isValidMove, isValidTake } from 'utils/game';
 import './board.css';
 
 class Board extends React.Component {
@@ -21,7 +21,7 @@ class Board extends React.Component {
     const selectedSquare = squares.find(x => x.id === selectedSquareId);
     const square = squares.find(x => x.id === squareId);
     const isSameSquare = selectedSquareId === squareId;
-    const currentPlayerColour = getCurrentPlayerColour(moves);
+    const currentPlayerColour = this.props.currentPlayerColour;
 
     if (!selectedSquare && !square.contains) return;
     if (selectedSquare && !square.contains)
@@ -62,9 +62,9 @@ class Board extends React.Component {
       themeClass,
       squares,
       selectedSquareId,
+      currentPlayerColour,
       potentialMoves,
-      checkMoves,
-      isReadOnly,
+      checkStatus,
       isReversed
     } = this.props;
 
@@ -77,32 +77,42 @@ class Board extends React.Component {
       : Constants.ranks;
 
     const checkedKingSquareId =
-      !!checkMoves.attackers.length && checkMoves.kingSquare.id;
+      !!checkStatus.attackers.length && checkStatus.kingSquare.id;
+    const isReadOnly = checkStatus.isCheckmate;
+    const onSquareClick = isReadOnly ? null : this.handleSquareSelection;
 
     console.groupCollapsed('BOARD RENDER');
     console.log('selectedSquareId', selectedSquareId);
     console.log('boardSquares', boardSquares);
     console.log('props', this.props);
+    console.log('isReadOnly', isReadOnly);
     console.groupEnd();
 
     return (
-      <div
-        className={classNames('chess-board', themeClass, {
-          'read-only': isReadOnly
-        })}
-      >
-        <Scales files={boardFiles} ranks={boardRanks} />
-        {boardSquares.map(o => (
-          <Square
-            key={o.id}
-            {...o}
-            isPotentialMove={potentialMoves.some(x => x === o.id)}
-            isInCheck={o.id === checkedKingSquareId}
-            isSelected={o.id === selectedSquareId}
-            onClick={this.handleSquareSelection}
-          />
-        ))}
-      </div>
+      <>
+        <div
+          className={classNames('chess-board', themeClass, {
+            'read-only': isReadOnly
+          })}
+        >
+          <Scales files={boardFiles} ranks={boardRanks} />
+          {boardSquares.map(o => (
+            <Square
+              key={o.id}
+              {...o}
+              isPotentialMove={potentialMoves.some(x => x === o.id)}
+              isInCheck={o.id === checkedKingSquareId}
+              isSelected={o.id === selectedSquareId}
+              onClick={onSquareClick}
+            />
+          ))}
+        </div>
+        <Portal targetSelector="#chess-game-status">
+          {!checkStatus.isCheckmate && `Current player: ${currentPlayerColour}`}
+          {checkStatus.isCheckmate &&
+            `Winner: ${getWinningPlayerColour(checkStatus.kingSquare)}`}
+        </Portal>
+      </>
     );
   }
 }

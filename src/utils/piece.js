@@ -2,11 +2,6 @@ import Constants from 'constants/index';
 
 import { isValidMove, isValidTake } from './game';
 
-const matchKingForGivenColour = colour => x =>
-  x.contains &&
-  x.contains.name === Constants.Strings.pieces.king &&
-  x.contains.colour === colour;
-
 export const possibleMovesForSelectedPiece = ({
   selectedSquareId,
   squares
@@ -19,6 +14,11 @@ export const possibleMovesForSelectedPiece = ({
   }, []);
 };
 
+const matchKingForGivenColour = colour => x =>
+  x.contains &&
+  x.contains.name === Constants.Strings.pieces.king &&
+  x.contains.colour === colour;
+
 const getAttacksOnKingSquare = (kingSquare, squares) =>
   squares
     .filter(x => x.contains && x.contains.colour !== kingSquare.contains.colour)
@@ -27,10 +27,23 @@ const getAttacksOnKingSquare = (kingSquare, squares) =>
       return [...p, square];
     }, []);
 
-export const getCheckMovesForColour = (colour, squares) => {
+const colourHasPossibleMoves = (colour, squares) => {
+  const piecesForColour = squares.filter(
+    x => x.contains && x.contains.colour === colour
+  );
+  return piecesForColour.some(
+    x => !!possibleMovesForSelectedPiece(x.id, squares).length
+  );
+};
+
+export const getcheckStatusForColour = (colour, squares) => {
   const kingSquare = squares.find(matchKingForGivenColour(colour));
+  const attackers = getAttacksOnKingSquare(kingSquare, squares);
+  const isCheckmate =
+    !!attackers.length && !colourHasPossibleMoves(colour, squares);
   return {
     kingSquare,
-    attackers: getAttacksOnKingSquare(kingSquare, squares)
+    attackers,
+    isCheckmate
   };
 };

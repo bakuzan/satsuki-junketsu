@@ -9,6 +9,11 @@ export const getCurrentPlayerColour = moves =>
     ? Constants.Strings.colours.white
     : Constants.Strings.colours.black;
 
+export const getWinningPlayerColour = kingSquare =>
+  kingSquare.contains.colour === Constants.Strings.colours.white
+    ? Constants.Strings.colours.black
+    : Constants.Strings.colours.white;
+
 const hasFreePath = (from, to, match, squares) => {
   const hasDiagonalMovement = !(match.files || match.ranks);
   for (let i = 0, length = squares.length; i < length; i++) {

@@ -7,7 +7,7 @@ class Portal extends React.Component {
     super(props);
 
     this.el = document.createElement(props.parentTag);
-    this.targetNode = document.querySelector(props.targetTagName);
+    this.targetNode = document.querySelector(props.targetSelector);
   }
 
   componentDidMount() {
@@ -29,7 +29,7 @@ Portal.defaultProps = {
 
 Portal.propTypes = {
   parentTag: PropTypes.string,
-  targetTagName: PropTypes.string.isRequired
+  targetSelector: PropTypes.string.isRequired
 };
 
 export default Portal;
