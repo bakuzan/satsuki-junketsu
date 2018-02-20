@@ -1,6 +1,13 @@
 import Constants from 'constants/index';
 
+import { mapPieceToNewSquare } from './mappers';
 import { isValidMove, isValidTake } from './game';
+
+const willResultInCheck = (pieceSquare, squares) => {
+  const colour = pieceSquare.contains.colour;
+  const kingSquare = squares.find(matchKingForGivenColour(colour));
+  return !!getAttacksOnKingSquare(kingSquare, squares).length;
+};
 
 export const possibleMovesForSelectedPiece = ({
   selectedSquareId,
@@ -10,7 +17,10 @@ export const possibleMovesForSelectedPiece = ({
   const pieceSquare = squares.find(x => x.id === selectedSquareId);
   return squares.reduce((p, square) => {
     const func = square.contains ? isValidTake : isValidMove;
-    return func(pieceSquare, square, squares) ? [...p, square.id] : p;
+    return func(pieceSquare, square, squares) &&
+      !willResultInCheck(mapPieceToNewSquare(pieceSquare, square), squares)
+      ? [...p, square.id]
+      : p;
   }, []);
 };
 

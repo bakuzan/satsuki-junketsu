@@ -80,7 +80,7 @@ class Board extends React.Component {
     const checkedKingSquareId =
       !!checkStatus.attackers.length && checkStatus.kingSquare.id;
     const isReadOnly = checkStatus.isCheckmate;
-    const onSquareClick = isReadOnly ? null : this.handleSquareSelection;
+    const onSquareClick = isReadOnly ? () => null : this.handleSquareSelection;
 
     console.groupCollapsed('BOARD RENDER');
     console.log('selectedSquareId', selectedSquareId);

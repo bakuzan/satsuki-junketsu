@@ -6,7 +6,7 @@ import Graveyard from 'components/graveyard/Graveyard';
 import Constants from 'constants/index';
 
 const DualGraveyards = ({ whitePieces, blackPieces }) => (
-  <div>
+  <div id="paired-graveyards">
     <Graveyard pieces={whitePieces} />
     <Graveyard pieces={blackPieces} />
   </div>

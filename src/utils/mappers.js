@@ -6,3 +6,10 @@ export const mapSquaresToMove = (oldSquare, newSquare) => ({
   to: squarePosition(newSquare),
   piece: mapPieceToMovedPiece(newSquare.contains)
 });
+
+export const mapPieceToNewSquare = (currentSquare, targetSquare) => ({
+  ...targetSquare,
+  contains: {
+    ...currentSquare.contains
+  }
+});
