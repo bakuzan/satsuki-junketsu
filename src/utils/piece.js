@@ -32,7 +32,9 @@ const colourHasPossibleMoves = (colour, squares) => {
     x => x.contains && x.contains.colour === colour
   );
   return piecesForColour.some(
-    x => !!possibleMovesForSelectedPiece(x.id, squares).length
+    x =>
+      !!possibleMovesForSelectedPiece({ selectedSquareId: x.id, squares })
+        .length
   );
 };
 
