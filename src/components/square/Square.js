@@ -25,7 +25,7 @@ const Square = ({
   });
 
   return (
-    <div className={classes} onClick={() => onClick(id)}>
+    <div id={id} className={classes} onClick={() => onClick(id)}>
       {!!contains && <Piece {...contains} />}
     </div>
   );

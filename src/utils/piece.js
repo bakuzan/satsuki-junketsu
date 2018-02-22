@@ -15,10 +15,13 @@ export const possibleMovesForSelectedPiece = ({
 }) => {
   if (!selectedSquareId) return [];
   const pieceSquare = squares.find(x => x.id === selectedSquareId);
-  return squares.reduce((p, square) => {
+  return squares.reduce((p, square, index) => {
     const func = square.contains ? isValidTake : isValidMove;
     return func(pieceSquare, square, squares) &&
-      !willResultInCheck(mapPieceToNewSquare(pieceSquare, square), squares)
+      !willResultInCheck(
+        pieceSquare,
+        mapPieceToNewSquare(squares, index, pieceSquare)
+      )
       ? [...p, square.id]
       : p;
   }, []);
