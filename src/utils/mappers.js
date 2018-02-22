@@ -9,16 +9,6 @@ export const mapSquaresToMove = (oldSquare, newSquare) => ({
   piece: mapPieceToMovedPiece(newSquare.contains)
 });
 
-export const moveSquareContainsToTargetSquare = (
-  currentSquare,
-  targetSquare
-) => ({
-  ...targetSquare,
-  contains: {
-    ...currentSquare.contains
-  }
-});
-
 export const mapPieceToNewSquare = (squares, index, currentSquare) => {
   const oldIndex = squares.findIndex(x => x.id === currentSquare.id);
   return updateArrayPreservingOrder(

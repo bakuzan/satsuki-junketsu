@@ -26,10 +26,11 @@ const makeMoves = arr => {
 	}, 200);
 }
 
-// check
+// check at index 3
 let moves = [
 	[53,45],
 	[12,28],
 	[45,37],
-	[3,39]
+	[3,39],
+  [54,46]
 ].reverse();

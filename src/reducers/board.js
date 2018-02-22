@@ -1,7 +1,10 @@
 import { createReducer } from './utils';
 import { buildStartingBoard } from 'utils/board';
-import { updateArrayPreservingOrder } from 'utils/common';
-import { mapSquaresToMove, mapPieceToMovedPiece } from 'utils/mappers';
+import {
+  mapSquaresToMove,
+  mapPieceToMovedPiece,
+  mapPieceToNewSquare
+} from 'utils/mappers';
 
 import {
   BOARD_SELECT_SQUARE,
@@ -22,20 +25,15 @@ const board = createReducer(initialState, {
     selectedSquareId: action.squareId
   }),
   [BOARD_MOVE_PIECE]: (state, action) => {
-    const currentIndex = state.squares.findIndex(
+    const currentSquare = state.squares.find(
       x => x.id === state.selectedSquareId
     );
-    const contains = mapPieceToMovedPiece(state.squares[currentIndex].contains);
-    const tempSquares = updateArrayPreservingOrder(
-      state.squares,
-      currentIndex,
-      { contains: null }
-    );
-
     const targetIndex = state.squares.findIndex(
       x => x.id === action.targetSquareId
     );
-    const squares = updateArrayPreservingOrder(tempSquares, targetIndex, {
+    const contains = mapPieceToMovedPiece(currentSquare.contains);
+    const squares = mapPieceToNewSquare(state.squares, targetIndex, {
+      ...currentSquare,
       contains
     });
 
@@ -45,28 +43,21 @@ const board = createReducer(initialState, {
       selectedSquareId: null,
       moves: [
         ...state.moves,
-        mapSquaresToMove(squares[currentIndex], squares[targetIndex])
+        mapSquaresToMove(currentSquare, squares[targetIndex])
       ]
     };
   },
   [BOARD_TAKE_PIECE]: (state, action) => {
-    const currentIndex = state.squares.findIndex(
+    const currentSquare = state.squares.find(
       x => x.id === state.selectedSquareId
     );
-    const attackingPiece = mapPieceToMovedPiece(
-      state.squares[currentIndex].contains
-    );
-    const tempSquares = updateArrayPreservingOrder(
-      state.squares,
-      currentIndex,
-      { contains: null }
-    );
-
     const targetIndex = state.squares.findIndex(
       x => x.id === action.targetSquareId
     );
+    const attackingPiece = mapPieceToMovedPiece(currentSquare.contains);
     const defendingPiece = { ...state.squares[targetIndex].contains };
-    const squares = updateArrayPreservingOrder(tempSquares, targetIndex, {
+    const squares = mapPieceToNewSquare(state.squares, targetIndex, {
+      ...currentSquare,
       contains: attackingPiece
     });
 
@@ -76,7 +67,7 @@ const board = createReducer(initialState, {
       selectedSquareId: null,
       moves: [
         ...state.moves,
-        mapSquaresToMove(squares[currentIndex], squares[targetIndex])
+        mapSquaresToMove(currentSquare, squares[targetIndex])
       ],
       graveyard: [...state.graveyard, defendingPiece]
     };
