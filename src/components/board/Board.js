@@ -7,7 +7,7 @@ import Square from 'components/square/Square';
 
 import Constants from 'constants/index';
 import { reverseArray, capitalise } from 'utils/common';
-import { getWinningPlayerColour, isValidMove, isValidTake } from 'utils/game';
+import { getWinningPlayerColour } from 'utils/game';
 import './board.css';
 
 class Board extends React.Component {
@@ -18,15 +18,16 @@ class Board extends React.Component {
   }
 
   handleSquareSelection(squareId) {
-    const { squares, selectedSquareId, actions } = this.props;
+    const { squares, potentialMoves, selectedSquareId, actions } = this.props;
     const selectedSquare = squares.find(x => x.id === selectedSquareId);
     const square = squares.find(x => x.id === squareId);
     const isSameSquare = selectedSquareId === squareId;
     const currentPlayerColour = this.props.currentPlayerColour;
+    const isPotentialMove = potentialMoves.some(x => x === squareId);
 
     if (!selectedSquare && !square.contains) return;
     if (selectedSquare && !square.contains)
-      return isValidMove(selectedSquare, square, squares)
+      return isPotentialMove
         ? actions.moveSelectedPiece(squareId)
         : console.log(
             '%c invalid move',
@@ -42,7 +43,7 @@ class Board extends React.Component {
     if (selectedSquare && square.contains.colour === currentPlayerColour)
       return actions.selectBoardSquare(squareId);
     if (selectedSquare && square.contains.colour !== currentPlayerColour)
-      return isValidTake(selectedSquare, square, squares)
+      return isPotentialMove
         ? actions.takePiece(squareId)
         : console.log(
             '%c invalid take',
