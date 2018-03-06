@@ -1,3 +1,4 @@
+import Strings from 'constants/strings';
 import { updateArrayPreservingOrder } from './common';
 
 export const mapPieceToMovedPiece = p => ({ ...p, hasMoved: true });
@@ -19,3 +20,8 @@ export const mapPieceToNewSquare = (squares, index, currentSquare) => {
     { contains: null }
   );
 };
+
+export const mapSquareIdToPromotion = squareId => ({
+  type: Strings.specialMoves.promotion,
+  squareId
+});

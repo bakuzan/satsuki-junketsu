@@ -9,12 +9,14 @@ import {
   possibleMovesForSelectedPiece,
   getcheckStatusForColour
 } from 'utils/piece';
+import availableSpecialMovesForSelectedPiece from 'utils/special-moves';
 
 const mapStateToProps = state => ({
   themeClass: state.theme.board,
   ...state.board,
   currentPlayerColour: getCurrentPlayerColour(state.board.moves),
   potentialMoves: possibleMovesForSelectedPiece(state.board),
+  specialMoves: availableSpecialMovesForSelectedPiece(state.board),
   checkStatus: getcheckStatusForColour(
     getCurrentPlayerColour(state.board.moves),
     state.board.squares

@@ -11,10 +11,17 @@ const pieces = {
   king: 'king'
 };
 
+const specialMoves = {
+  promotion: 'PROMOTION',
+  enPassant: 'EN_PASSANT',
+  castling: 'CASTLING'
+};
+
 const Strings = {
   localUserSettings: 'satsukiUserSettings',
   colours,
-  pieces
+  pieces,
+  specialMoves
 };
 
 export default Strings;

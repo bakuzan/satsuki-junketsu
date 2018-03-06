@@ -21,3 +21,16 @@ export const reverseArray = arr => arr.slice(0).reverse();
 export const capitalise = ([first, ...rest], lowerRest = false) =>
   first.toUpperCase() +
   (lowerRest ? rest.join('').toLowerCase() : rest.join(''));
+
+export const compose = (...fns) =>
+  fns.reduce((f, g) => (...args) => f(g(...args)));
+
+export function curry(uncurried) {
+  const parameters = Array.prototype.slice.call(arguments, 1);
+  return function() {
+    return uncurried.apply(
+      this,
+      parameters.concat(Array.prototype.slice.call(arguments, 0))
+    );
+  };
+}
