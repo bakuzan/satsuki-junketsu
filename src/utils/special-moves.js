@@ -1,9 +1,13 @@
-import Strings from 'constants/strings';
+import Constants from 'constants/index';
 
-import { mapSquareIdToPromotion } from './mappers';
+import { mapSquareIdToPromotion, mapSquareIdToEnPassant } from './mappers';
 import { possibleMovesForSelectedPiece } from './piece';
 
+const { Strings } = Constants;
+
 const BLACK_BACK_ROW = 8;
+const BLACK_PAWN_ROW = 7;
+const WHITE_PAWN_ROW = 2;
 const WHITE_BACK_ROW = 1;
 
 function checkPawnPromotion(pawnSquare, squares) {
@@ -17,12 +21,36 @@ function checkPawnPromotion(pawnSquare, squares) {
   }).map(mapSquareIdToPromotion);
 }
 
-function checkPawnEnPassant() {
-  return [];
+function checkPawnEnPassant(pawnSquare, boardState) {
+  const { squares, moves } = boardState;
+  const [lastMove] = moves.slice(-1);
+  if (!lastMove) return [];
+  if (lastMove.piece.name !== Strings.pieces.pawn) return [];
+
+  const fromRank =
+    lastMove.piece.colour === Strings.colours.white
+      ? WHITE_PAWN_ROW
+      : BLACK_PAWN_ROW;
+  if (lastMove.from.rank !== fromRank || lastMove.to.rank !== pawnSquare.rank)
+    return [];
+
+  const toIndex = Constants.files.findIndex(x => x === lastMove.to.file);
+  const pawnIndex = Constants.files.findIndex(x => x === pawnSquare.file);
+  if (Math.abs(toIndex - pawnIndex) !== 1) return [];
+
+  const direction =
+    pawnSquare.contains.colour === Strings.colours.white ? 1 : -1;
+  const targetSquare = squares.find(
+    x => x.file === lastMove.to.file && x.rank === lastMove.to.rank - direction
+  );
+  return [mapSquareIdToEnPassant(targetSquare.id)];
 }
 
-function pawnSpecialMoves(pawnSquare, squares) {
-  return [...checkPawnPromotion(pawnSquare, squares), ...checkPawnEnPassant()];
+function pawnSpecialMoves(pawnSquare, boardState) {
+  return [
+    ...checkPawnPromotion(pawnSquare, boardState.squares),
+    ...checkPawnEnPassant(pawnSquare, boardState)
+  ];
 }
 
 function kingSpecialMoves(kingSquare, squares) {
@@ -46,7 +74,7 @@ function availableSpecialMovesForSelectedPiece(boardState) {
 
   switch (square.contains.name) {
     case Strings.pieces.pawn:
-      return pawnSpecialMoves(square, squares);
+      return pawnSpecialMoves(square, boardState);
     case Strings.pieces.king:
       return kingSpecialMoves(square, squares);
     default:

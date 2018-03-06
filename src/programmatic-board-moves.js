@@ -29,7 +29,7 @@ let check = [[53, 45], [12, 28], [45, 37], [3, 39], [54, 46]].reverse();
 let castling = [].reverse();
 
 // en passant test
-let enPassant = [].reverse();
+let enPassant = [[51, 35], [8, 16], [35, 27], [12, 28], [27]].reverse();
 
 // promotion tests
 let promotion = [
@@ -56,6 +56,7 @@ export default {
     promotion
   },
   examples: {
-    promotion: () => makeMoves(promotion)
+    promotion: () => makeMoves(promotion),
+    enPassant: () => makeMoves(enPassant)
   }
 };

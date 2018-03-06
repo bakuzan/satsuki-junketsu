@@ -25,3 +25,8 @@ export const mapSquareIdToPromotion = squareId => ({
   type: Strings.specialMoves.promotion,
   squareId
 });
+
+export const mapSquareIdToEnPassant = squareId => ({
+  type: Strings.specialMoves.enPassant,
+  squareId
+});
