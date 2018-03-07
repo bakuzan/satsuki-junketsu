@@ -34,13 +34,13 @@ class Board extends React.Component {
 
     if (!selectedSquare && !square.contains) return;
     if (selectedSquare && !square.contains)
-      return isPotentialMove
-        ? actions.moveSelectedPiece(squareId)
-        : isSpecialMove
-          ? console.log(
-              '%c special move action not implemented yet!',
-              'color: #b784a7'
-            )
+      return isSpecialMove
+        ? console.log(
+            '%c special move action not implemented yet!',
+            'color: #b784a7'
+          )
+        : isPotentialMove
+          ? actions.moveSelectedPiece(squareId)
           : console.log(
               '%c invalid move',
               'color: red; font-size: 22px;',
@@ -55,13 +55,13 @@ class Board extends React.Component {
     if (selectedSquare && square.contains.colour === currentPlayerColour)
       return actions.selectBoardSquare(squareId);
     if (selectedSquare && square.contains.colour !== currentPlayerColour)
-      return isPotentialMove
-        ? actions.takePiece(squareId)
-        : isSpecialMove
-          ? console.log(
-              '%c special move action not implemented yet!',
-              'color: #b784a7'
-            )
+      return isSpecialMove
+        ? console.log(
+            '%c special move action not implemented yet!',
+            'color: #b784a7'
+          )
+        : isPotentialMove
+          ? actions.takePiece(squareId)
           : console.log(
               '%c invalid take',
               'color: red; font-size: 22px;',

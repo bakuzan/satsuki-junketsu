@@ -44,7 +44,7 @@ function checkPawnEnPassant(pawnSquare, boardState) {
   if (Math.abs(toIndex - pawnIndex) !== 1) return [];
 
   const direction =
-    pawnSquare.contains.colour === Strings.colours.white ? 1 : -1;
+    pawnSquare.contains.colour === Strings.colours.white ? -1 : 1;
   const targetSquare = squares.find(
     x => x.file === lastMove.to.file && x.rank === lastMove.to.rank - direction
   );
