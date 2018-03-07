@@ -7,7 +7,7 @@ import * as actions from 'actions/board';
 import { isWhitesTurn, getCurrentPlayerColour } from 'utils/game';
 import {
   possibleMovesForSelectedPiece,
-  getcheckStatusForColour
+  getCheckStatusForColour
 } from 'utils/piece';
 import availableSpecialMovesForSelectedPiece from 'utils/special-moves';
 
@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
   currentPlayerColour: getCurrentPlayerColour(state.board.moves),
   potentialMoves: possibleMovesForSelectedPiece(state.board),
   specialMoves: availableSpecialMovesForSelectedPiece(state.board),
-  checkStatus: getcheckStatusForColour(
+  checkStatus: getCheckStatusForColour(
     getCurrentPlayerColour(state.board.moves),
     state.board.squares
   ),

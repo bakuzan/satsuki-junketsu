@@ -30,3 +30,8 @@ export const mapSquareIdToEnPassant = squareId => ({
   type: Strings.specialMoves.enPassant,
   squareId
 });
+
+export const mapSquareIdToCastling = squareId => ({
+  type: Strings.specialMoves.castling,
+  squareId
+});

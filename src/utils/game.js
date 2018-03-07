@@ -14,7 +14,7 @@ export const getWinningPlayerColour = kingSquare =>
     ? Constants.Strings.colours.black
     : Constants.Strings.colours.white;
 
-const hasFreePath = (from, to, match, squares) => {
+export const hasFreePath = (from, to, match, squares) => {
   const hasDiagonalMovement = !(match.files || match.ranks);
   for (let i = 0, length = squares.length; i < length; i++) {
     const square = squares[i];

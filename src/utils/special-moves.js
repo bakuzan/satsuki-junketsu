@@ -1,7 +1,12 @@
 import Constants from 'constants/index';
 
-import { mapSquareIdToPromotion, mapSquareIdToEnPassant } from './mappers';
-import { possibleMovesForSelectedPiece } from './piece';
+import {
+  mapSquareIdToPromotion,
+  mapSquareIdToEnPassant,
+  mapSquareIdToCastling,
+  mapPieceToNewSquare
+} from './mappers';
+import { possibleMovesForSelectedPiece, willResultInCheck } from './piece';
 
 const { Strings } = Constants;
 
@@ -55,6 +60,7 @@ function pawnSpecialMoves(pawnSquare, boardState) {
 
 function kingSpecialMoves(kingSquare, squares) {
   if (kingSquare.contains.hasMoved) return [];
+  if (willResultInCheck(kingSquare, squares)) return [];
   const rookSquares = squares.filter(
     x =>
       x.contains &&
@@ -63,8 +69,31 @@ function kingSpecialMoves(kingSquare, squares) {
       !x.contains.hasMoved
   );
   if (!rookSquares.length) return [];
-  // no pieces between king and rook
-  // king cannot move through or into check
+  const kingId = kingSquare.id;
+  const targetSquares = rookSquares.reduce((p, sq) => {
+    const rookId = sq.id;
+    const [startId, endId] =
+      rookId < kingId ? [rookId, kingId] : [kingId, rookId];
+    const squareIds = Array.from(
+      new Array(endId - startId - 1),
+      (x, i) => 1 + i + startId
+    );
+    if (!squares.filter(x => squareIds.includes(x.id)).every(x => !x.contains))
+      return p;
+
+    return squareIds.slice(0, 2).every(sqId => {
+      const squareIndex = squares.findIndex(x => x.id === sqId);
+      return !willResultInCheck(
+        kingSquare,
+        mapPieceToNewSquare(squares, squareIndex, kingSquare)
+      );
+    })
+      ? [...p, squareIds[1]]
+      : p;
+  }, []);
+
+  if (!targetSquares.length) return [];
+  return targetSquares.map(mapSquareIdToCastling);
 }
 
 function availableSpecialMovesForSelectedPiece(boardState) {

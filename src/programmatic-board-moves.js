@@ -26,7 +26,17 @@ let fastestGame = [[53, 37], [12, 28], [54, 38], [3, 39]].reverse();
 let check = [[53, 45], [12, 28], [45, 37], [3, 39], [54, 46]].reverse();
 
 // castling tests
-let castling = [].reverse();
+let castling = [
+  [53, 37],
+  [8, 16],
+  [54, 38],
+  [9, 17],
+  [61, 47],
+  [10, 18],
+  [62, 45],
+  [11, 19],
+  [60]
+].reverse();
 
 // en passant test
 let enPassant = [[51, 35], [8, 16], [35, 27], [12, 28], [27]].reverse();
@@ -57,6 +67,7 @@ export default {
   },
   examples: {
     promotion: () => makeMoves(promotion),
-    enPassant: () => makeMoves(enPassant)
+    enPassant: () => makeMoves(enPassant),
+    castling: () => makeMoves(castling)
   }
 };

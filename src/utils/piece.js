@@ -3,7 +3,7 @@ import Constants from 'constants/index';
 import { mapPieceToNewSquare } from './mappers';
 import { isValidMove, isValidTake } from './game';
 
-const willResultInCheck = (pieceSquare, squares) => {
+export const willResultInCheck = (pieceSquare, squares) => {
   const colour = pieceSquare.contains.colour;
   const kingSquare = squares.find(matchKingForGivenColour(colour));
   return !!getAttacksOnKingSquare(kingSquare, squares).length;
@@ -51,7 +51,7 @@ const colourHasPossibleMoves = (colour, squares) => {
   );
 };
 
-export const getcheckStatusForColour = (colour, squares) => {
+export const getCheckStatusForColour = (colour, squares) => {
   const kingSquare = squares.find(matchKingForGivenColour(colour));
   const attackers = getAttacksOnKingSquare(kingSquare, squares);
   const isCheckmate =
