@@ -30,7 +30,9 @@ $square: (
   potential-move: $square-background-potential-move,
   potential-move-border: $square-border-potential-move,
   potential-take: $square-background-potential-take,
-  potential-take-border: $square-border-potential-take
+  potential-take-border: $square-border-potential-take,
+  special-move: $square-background-special-move,
+  special-move-border: $square-border-special-move
 );
 $chess-board: (
   size: map-get($square, size) * 8,

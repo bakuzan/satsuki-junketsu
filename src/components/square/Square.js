@@ -11,6 +11,7 @@ const Square = ({
   file,
   isSelected,
   isPotentialMove,
+  isSpecialMove,
   isInCheck,
   contains,
   onClick
@@ -19,6 +20,7 @@ const Square = ({
     selected: isSelected,
     'potential-move': isPotentialMove && !contains,
     'potential-take': isPotentialMove && contains,
+    'special-move': isSpecialMove,
     'in-check': isInCheck,
     [`rank-${rank}`]: true,
     [`file-${file}`]: true

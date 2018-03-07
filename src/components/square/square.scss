@@ -25,8 +25,13 @@
     background-color: map-get($square, potential-take) !important;
     border-color: map-get($square, potential-take-border) !important;
   }
+  &.special-move {
+    background-color: map-get($square, special-move) !important;
+    border-color: map-get($square, special-move-border) !important;
+  }
   &.potential-move,
-  &.potential-take {
+  &.potential-take,
+  &.special-move {
     cursor: pointer;
   }
 }

@@ -18,23 +18,35 @@ class Board extends React.Component {
   }
 
   handleSquareSelection(squareId) {
-    const { squares, potentialMoves, selectedSquareId, actions } = this.props;
+    const {
+      squares,
+      potentialMoves,
+      specialMoves,
+      selectedSquareId,
+      actions
+    } = this.props;
     const selectedSquare = squares.find(x => x.id === selectedSquareId);
     const square = squares.find(x => x.id === squareId);
     const isSameSquare = selectedSquareId === squareId;
     const currentPlayerColour = this.props.currentPlayerColour;
     const isPotentialMove = potentialMoves.some(x => x === squareId);
+    const isSpecialMove = specialMoves.some(x => x.squareId === squareId);
 
     if (!selectedSquare && !square.contains) return;
     if (selectedSquare && !square.contains)
       return isPotentialMove
         ? actions.moveSelectedPiece(squareId)
-        : console.log(
-            '%c invalid move',
-            'color: red; font-size: 22px;',
-            selectedSquare,
-            square
-          );
+        : isSpecialMove
+          ? console.log(
+              '%c special move action not implemented yet!',
+              'color: #b784a7'
+            )
+          : console.log(
+              '%c invalid move',
+              'color: red; font-size: 22px;',
+              selectedSquare,
+              square
+            );
     if (!selectedSquare && square.contains.colour !== currentPlayerColour)
       return;
     if (!selectedSquare && square.contains.colour === currentPlayerColour)
@@ -45,12 +57,17 @@ class Board extends React.Component {
     if (selectedSquare && square.contains.colour !== currentPlayerColour)
       return isPotentialMove
         ? actions.takePiece(squareId)
-        : console.log(
-            '%c invalid take',
-            'color: red; font-size: 22px;',
-            selectedSquare,
-            square
-          );
+        : isSpecialMove
+          ? console.log(
+              '%c special move action not implemented yet!',
+              'color: #b784a7'
+            )
+          : console.log(
+              '%c invalid take',
+              'color: red; font-size: 22px;',
+              selectedSquare,
+              square
+            );
 
     console.log(
       '%c square selection case not handled!',
@@ -66,6 +83,7 @@ class Board extends React.Component {
       selectedSquareId,
       currentPlayerColour,
       potentialMoves,
+      specialMoves,
       checkStatus,
       isReversed
     } = this.props;
@@ -103,6 +121,7 @@ class Board extends React.Component {
               key={o.id}
               {...o}
               isPotentialMove={potentialMoves.some(x => x === o.id)}
+              isSpecialMove={specialMoves.some(x => x.squareId === o.id)}
               isInCheck={o.id === checkedKingSquareId}
               isSelected={o.id === selectedSquareId}
               onClick={onSquareClick}
