@@ -9,8 +9,10 @@ import {
 import {
   BOARD_SELECT_SQUARE,
   BOARD_MOVE_PIECE,
-  BOARD_TAKE_PIECE
+  BOARD_TAKE_PIECE,
+  BOARD_SPECIAL_MOVE
 } from 'actions/board';
+import specialMoveSubReducer from './board-special-move';
 
 const initialState = {
   graveyard: [],
@@ -71,7 +73,8 @@ const board = createReducer(initialState, {
       ],
       graveyard: [...state.graveyard, defendingPiece]
     };
-  }
+  },
+  [BOARD_SPECIAL_MOVE]: specialMoveSubReducer
 });
 
 export default board;

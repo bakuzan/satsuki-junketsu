@@ -15,3 +15,9 @@ export const takePiece = targetSquareId => ({
   type: BOARD_TAKE_PIECE,
   targetSquareId
 });
+
+export const BOARD_SPECIAL_MOVE = 'BOARD_SPECIAL_MOVE';
+export const performSpecialMove = specialMove => ({
+  type: BOARD_SPECIAL_MOVE,
+  specialMove
+});

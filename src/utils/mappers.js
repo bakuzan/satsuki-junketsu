@@ -21,17 +21,16 @@ export const mapPieceToNewSquare = (squares, index, currentSquare) => {
   );
 };
 
-export const mapSquareIdToPromotion = squareId => ({
-  type: Strings.specialMoves.promotion,
+const mapToSpecialMove = type => squareId => ({
+  type,
   squareId
 });
-
-export const mapSquareIdToEnPassant = squareId => ({
-  type: Strings.specialMoves.enPassant,
-  squareId
-});
-
-export const mapSquareIdToCastling = squareId => ({
-  type: Strings.specialMoves.castling,
-  squareId
-});
+export const mapSquareIdToPromotion = mapToSpecialMove(
+  Strings.specialMoves.promotion
+);
+export const mapSquareIdToEnPassant = mapToSpecialMove(
+  Strings.specialMoves.enPassant
+);
+export const mapSquareIdToCastling = mapToSpecialMove(
+  Strings.specialMoves.castling
+);

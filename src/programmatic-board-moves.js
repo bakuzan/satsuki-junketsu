@@ -35,11 +35,11 @@ let castling = [
   [10, 18],
   [62, 45],
   [11, 19],
-  [60]
+  [60] // 62
 ].reverse();
 
 // en passant test
-let enPassant = [[51, 35], [8, 16], [35, 27], [12, 28], [27]].reverse();
+let enPassant = [[51, 35], [8, 16], [35, 27], [12, 28], [27]].reverse(); // 20
 
 // promotion tests
 let promotion = [
@@ -53,10 +53,11 @@ let promotion = [
   [22, 21],
   [23, 15],
   [21, 20],
-  [15]
+  [15] // 7
 ].reverse();
 
 export default {
+  selectSquare,
   makeMoves,
   movesFor: {
     fastestGame,

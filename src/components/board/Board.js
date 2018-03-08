@@ -30,15 +30,13 @@ class Board extends React.Component {
     const isSameSquare = selectedSquareId === squareId;
     const currentPlayerColour = this.props.currentPlayerColour;
     const isPotentialMove = potentialMoves.some(x => x === squareId);
-    const isSpecialMove = specialMoves.some(x => x.squareId === squareId);
+    const specialMove = specialMoves.find(x => x.squareId === squareId);
+    const isSpecialMove = !!specialMove;
 
     if (!selectedSquare && !square.contains) return;
     if (selectedSquare && !square.contains)
       return isSpecialMove
-        ? console.log(
-            '%c special move action not implemented yet!',
-            'color: #b784a7'
-          )
+        ? actions.performSpecialMove(specialMove)
         : isPotentialMove
           ? actions.moveSelectedPiece(squareId)
           : console.log(
@@ -56,10 +54,7 @@ class Board extends React.Component {
       return actions.selectBoardSquare(squareId);
     if (selectedSquare && square.contains.colour !== currentPlayerColour)
       return isSpecialMove
-        ? console.log(
-            '%c special move action not implemented yet!',
-            'color: #b784a7'
-          )
+        ? actions.performSpecialMove(specialMove)
         : isPotentialMove
           ? actions.takePiece(squareId)
           : console.log(
