@@ -4,10 +4,11 @@ import { updateArrayPreservingOrder } from './common';
 export const mapPieceToMovedPiece = p => ({ ...p, hasMoved: true });
 
 const squarePosition = ({ rank, file }) => ({ rank, file });
-export const mapSquaresToMove = (oldSquare, newSquare) => ({
+export const mapSquaresToMove = (oldSquare, newSquare, specialMove) => ({
   from: squarePosition(oldSquare),
   to: squarePosition(newSquare),
-  piece: mapPieceToMovedPiece(newSquare.contains)
+  piece: mapPieceToMovedPiece(newSquare.contains),
+  specialMove
 });
 
 export const mapPieceToNewSquare = (squares, index, currentSquare) => {
@@ -21,12 +22,20 @@ export const mapPieceToNewSquare = (squares, index, currentSquare) => {
   );
 };
 
+export const mapPieceToNewPiece = (squares, index, updatedPiece) =>
+  updateArrayPreservingOrder(squares, index, {
+    contains: {
+      ...(squares[index].contains || {}),
+      ...updatedPiece
+    }
+  });
+
 const mapToSpecialMove = type => squareId => ({
   type,
   squareId
 });
 export const mapSquareIdToPromotion = mapToSpecialMove(
-  Strings.specialMoves.promotion
+  Strings.specialMoves.promotionSelection
 );
 export const mapSquareIdToEnPassant = mapToSpecialMove(
   Strings.specialMoves.enPassant

@@ -18,7 +18,8 @@ const initialState = {
   graveyard: [],
   moves: [],
   squares: buildStartingBoard(),
-  selectedSquareId: null
+  selectedSquareId: null,
+  promotionAt: null
 };
 
 const board = createReducer(initialState, {
@@ -57,7 +58,7 @@ const board = createReducer(initialState, {
       x => x.id === action.targetSquareId
     );
     const attackingPiece = mapPieceToMovedPiece(currentSquare.contains);
-    const defendingPiece = { ...state.squares[targetIndex].contains };
+    const defendingPiece = { ...(state.squares[targetIndex].contains || {}) };
     const squares = mapPieceToNewSquare(state.squares, targetIndex, {
       ...currentSquare,
       contains: attackingPiece

@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Portal from 'components/Portal';
 import Scales from 'components/scales/Scales';
 import Square from 'components/square/Square';
+import PromotionOptions from 'components/promotionOptions/PromotionOptions';
 
 import Constants from 'constants/index';
 import { reverseArray, capitalise } from 'utils/common';
@@ -124,8 +125,12 @@ class Board extends React.Component {
           ))}
         </div>
         <Portal targetSelector="#chess-game-status">
-          {!checkStatus.isCheckmate &&
-            `Current player: ${capitalise(currentPlayerColour)}`}
+          {!checkStatus.isCheckmate && (
+            <React.Fragment>
+              <PromotionOptions />
+              {`Current player: ${capitalise(currentPlayerColour)}`}
+            </React.Fragment>
+          )}
           {checkStatus.isCheckmate &&
             `Winner: ${getWinningPlayerColour(checkStatus.kingSquare)}`}
         </Portal>
