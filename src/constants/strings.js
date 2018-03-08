@@ -12,7 +12,8 @@ const pieces = {
 };
 
 const specialMoves = {
-  promotion: 'PROMOTION',
+  promotionSelection: 'PROMOTION_SELECT',
+  promotion: 'PROMOTION_COMPLETE',
   enPassant: 'EN_PASSANT',
   castling: 'CASTLING'
 };
