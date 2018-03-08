@@ -74,7 +74,6 @@ function specialMoveSubReducer(state, action) {
       const direction =
         movedToSquare.contains.colour === Strings.colours.white ? 1 : -1;
       const offsetRank = movedToSquare.rank - direction;
-      console.log(movedToSquare, offsetRank);
       const passedSquareIndex = postPieceMovementToTargetState.squares.findIndex(
         x => x.file === movedToSquare.file && x.rank === offsetRank
       );
