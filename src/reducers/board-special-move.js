@@ -15,7 +15,9 @@ function performMovementFromCurrentToTarget(state, specialMove) {
     x => x.id === specialMove.squareId
   );
   const movingPiece = mapPieceToMovedPiece(currentSquare.contains);
-  const defendingPiece = { ...(state.squares[targetIndex].contains || {}) };
+  const defendingPiece = !!state.squares[targetIndex].contains
+    ? { ...state.squares[targetIndex].contains }
+    : null;
 
   const squares = mapPieceToNewSquare(state.squares, targetIndex, {
     ...currentSquare,
@@ -66,11 +68,30 @@ function specialMoveSubReducer(state, action) {
       };
     }
     case Strings.specialMoves.enPassant: {
-      console.log(
-        '%c special move: en passant - not implemented',
-        'color: red'
+      const movedToSquare = postPieceMovementToTargetState.squares.find(
+        x => x.id === targetSquareId
       );
-      return state;
+      const direction =
+        movedToSquare.contains.colour === Strings.colours.white ? 1 : -1;
+      const offsetRank = movedToSquare.rank - direction;
+      console.log(movedToSquare, offsetRank);
+      const passedSquareIndex = postPieceMovementToTargetState.squares.findIndex(
+        x => x.file === movedToSquare.file && x.rank === offsetRank
+      );
+      const passedPiece = {
+        ...postPieceMovementToTargetState.squares[passedSquareIndex].contains
+      };
+      const squares = mapPieceToNewPiece(
+        postPieceMovementToTargetState.squares,
+        passedSquareIndex,
+        null
+      );
+
+      return {
+        ...postPieceMovementToTargetState,
+        squares,
+        graveyard: [...postPieceMovementToTargetState.graveyard, passedPiece]
+      };
     }
     case Strings.specialMoves.castling: {
       console.log('%c special move: castling - not implemented', 'color: red');

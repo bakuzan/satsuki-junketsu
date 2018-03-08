@@ -12,8 +12,12 @@ const promotionChoices = [
   Strings.pieces.queen
 ];
 
-const PromotionOptions = ({ promotion, actions }) => {
-  if (!promotion) return null;
+const PromotionOptions = ({ promotionAt, actions }) => {
+  if (!promotionAt) return null;
+  const promotion = {
+    ...promotionAt,
+    type: Strings.specialMoves.promotion
+  };
   return (
     <div id="promotion-options-container">
       <div>Please select a piece to promote to: </div>
@@ -35,10 +39,7 @@ const PromotionOptions = ({ promotion, actions }) => {
 };
 
 const mapStateToProps = state => ({
-  promotion: {
-    ...state.board.promotionAt,
-    type: Strings.specialMoves.promotion
-  }
+  promotionAt: state.board.promotionAt
 });
 
 const mapDispatchToProps = dispatch => ({

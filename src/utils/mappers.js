@@ -24,10 +24,9 @@ export const mapPieceToNewSquare = (squares, index, currentSquare) => {
 
 export const mapPieceToNewPiece = (squares, index, updatedPiece) =>
   updateArrayPreservingOrder(squares, index, {
-    contains: {
-      ...(squares[index].contains || {}),
-      ...updatedPiece
-    }
+    contains: updatedPiece
+      ? { ...(squares[index].contains || {}), ...updatedPiece }
+      : null
   });
 
 const mapToSpecialMove = type => squareId => ({
