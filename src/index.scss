@@ -26,8 +26,12 @@ main {
 #chess-game {
   @extend .center-contents;
   justify-content: space-around;
-  height: 100%;
+  height: calc(100% - #{$chess-game-actions-height});
   width: 100%;
+}
+
+#chess-game-actions {
+  margin: 0;
 }
 
 #chess-game-status {
@@ -37,6 +41,8 @@ main {
 }
 
 #paired-graveyards {
-  height: calc(100vh - #{$fixed-header-height * 2});
+  height: calc(
+    100vh - #{$fixed-header-height * 2} - #{$chess-game-actions-height}
+  );
   min-width: 200px;
 }

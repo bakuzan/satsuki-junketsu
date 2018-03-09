@@ -21,3 +21,8 @@ export const performSpecialMove = specialMove => ({
   type: BOARD_SPECIAL_MOVE,
   specialMove
 });
+
+export const BOARD_RESET = 'BOARD_RESET';
+export const resetBoard = () => ({
+  type: BOARD_RESET
+});

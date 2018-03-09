@@ -1,7 +1,9 @@
-@import "./_colours";
-@import "./_mixins";
+@import './_colours';
+@import './_mixins';
 
-.button, .button-link, .button-icon {
+.button,
+.button-link,
+.button-icon {
   appearance: none;
   display: flex;
   justify-content: center;
@@ -41,11 +43,12 @@
 .button-link {
   color: $anchor-colour;
   text-decoration: underline;
-  &:focus, &:active {
+  &:focus,
+  &:active {
     color: $anchor-colour;
   }
   &:hover {
-   color: $anchor-colour-hover;
+    color: $anchor-colour-hover;
   }
 }
 
@@ -58,7 +61,7 @@
   &:before {
     content: attr(icon);
     font-size: 1.5rem;
-    &:not(:disabled){
+    &:not(:disabled) {
       cursor: pointer;
     }
   }
@@ -67,21 +70,24 @@
   }
 }
 
-.button.primary, .button-icon.primary {
+.button.primary,
+.button-icon.primary {
   background-color: $primary-background;
   color: $primary-colour-contrast;
-  &:hover, &.active {
-    @include lightenOrDarken("background-color", $primary-background, $darken-amount * 3);
+  &:hover,
+  &.active {
+    @include lightenOrDarken('background-color', $primary-background, $darken-amount * 3);
   }
 }
 
 .button-link.primary {
   color: $primary-colour;
-  &:focus, &:active {
+  &:focus,
+  &:active {
     color: $primary-colour;
   }
   &:hover {
-   color: darken($primary-colour, $darken-amount);
+    color: darken($primary-colour, $darken-amount);
   }
 }
 
@@ -94,7 +100,7 @@ a.button-link.active {
   background-color: $secondary-background;
   color: $secondary-colour-contrast;
   &:hover {
-    @include lightenOrDarken("background-color", $secondary-background, $darken-amount * 3);
+    @include lightenOrDarken('background-color', $secondary-background, $darken-amount * 3);
   }
 }
 
@@ -107,7 +113,9 @@ a.button-link.active {
   &.centered {
     justify-content: center;
   }
-
+  &.right {
+    justify-content: flex-end;
+  }
 }
 
 form .button-group {
