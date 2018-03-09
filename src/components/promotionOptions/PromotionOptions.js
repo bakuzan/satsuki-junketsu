@@ -21,7 +21,7 @@ const PromotionOptions = ({ promotionAt, actions }) => {
   return (
     <div id="promotion-options-container">
       <div>Please select a piece to promote to: </div>
-      <ul>
+      <ul className="list column one">
         {promotionChoices.map(option => {
           const promoteTo = () =>
             actions.performSpecialMove({ ...promotion, promoteTo: option });
