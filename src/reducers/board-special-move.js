@@ -7,6 +7,12 @@ import {
   mapPieceToNewPiece
 } from 'utils/mappers';
 
+const Castling = {
+  kingTargets: ['c', 'g'],
+  rookStarts: ['a', 'h'],
+  rookEnds: ['d', 'f']
+};
+
 function performMovementFromCurrentToTarget(state, specialMove) {
   const currentSquare = state.squares.find(
     x => x.id === state.selectedSquareId
@@ -93,8 +99,36 @@ function specialMoveSubReducer(state, action) {
       };
     }
     case Strings.specialMoves.castling: {
-      console.log('%c special move: castling - not implemented', 'color: red');
-      return state;
+      const newKingSquare = postPieceMovementToTargetState.squares.find(
+        x => x.id === targetSquareId
+      );
+      const rookFileIndex = Castling.kingTargets.findIndex(
+        x => x === newKingSquare.file
+      );
+      const rookSquare = postPieceMovementToTargetState.squares.find(
+        x =>
+          x.rank === newKingSquare.rank &&
+          x.file === Castling.rookStarts[rookFileIndex]
+      );
+      const rookTargetIndex = postPieceMovementToTargetState.squares.findIndex(
+        x =>
+          x.rank === newKingSquare.rank &&
+          x.file === Castling.rookEnds[rookFileIndex]
+      );
+      const movingRook = mapPieceToMovedPiece(rookSquare.contains);
+      const squares = mapPieceToNewSquare(
+        postPieceMovementToTargetState.squares,
+        rookTargetIndex,
+        {
+          ...rookSquare,
+          contains: movingRook
+        }
+      );
+
+      return {
+        ...postPieceMovementToTargetState,
+        squares
+      };
     }
     default:
       return state;
