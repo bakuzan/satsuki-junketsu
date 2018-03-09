@@ -18,11 +18,28 @@ const specialMoves = {
   castling: 'CASTLING'
 };
 
+const pgn = {
+  piece: {
+    king: 'K',
+    queen: 'Q',
+    bishop: 'B',
+    knight: 'N',
+    rook: 'R',
+    pawn: ''
+  },
+  capture: 'x',
+  promotion: '=',
+  castle: { king: 'O-O', queen: 'O-O-O' },
+  check: '+',
+  checkmate: '#'
+};
+
 const Strings = {
   localUserSettings: 'satsukiUserSettings',
   colours,
   pieces,
-  specialMoves
+  specialMoves,
+  pgn
 };
 
 export default Strings;

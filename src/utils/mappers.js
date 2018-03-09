@@ -4,10 +4,16 @@ import { updateArrayPreservingOrder } from './common';
 export const mapPieceToMovedPiece = p => ({ ...p, hasMoved: true });
 
 const squarePosition = ({ rank, file }) => ({ rank, file });
-export const mapSquaresToMove = (oldSquare, newSquare, specialMove) => ({
+export const mapSquaresToMove = (
+  oldSquare,
+  newSquare,
+  captured,
+  specialMove
+) => ({
   from: squarePosition(oldSquare),
   to: squarePosition(newSquare),
   piece: mapPieceToMovedPiece(newSquare.contains),
+  captured,
   specialMove
 });
 

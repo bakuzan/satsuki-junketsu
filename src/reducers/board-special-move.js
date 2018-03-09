@@ -31,7 +31,12 @@ function performMovementFromCurrentToTarget(state, specialMove) {
   });
   const moves = [
     ...state.moves,
-    mapSquaresToMove(currentSquare, squares[targetIndex], specialMove)
+    mapSquaresToMove(
+      currentSquare,
+      squares[targetIndex],
+      defendingPiece,
+      specialMove
+    )
   ];
   const graveyard = !!defendingPiece
     ? [...state.graveyard, defendingPiece]
