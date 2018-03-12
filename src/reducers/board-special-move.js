@@ -34,6 +34,7 @@ function performMovementFromCurrentToTarget(state, specialMove) {
     mapSquaresToMove(
       currentSquare,
       squares[targetIndex],
+      squares,
       defendingPiece,
       specialMove
     )

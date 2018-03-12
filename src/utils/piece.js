@@ -62,3 +62,15 @@ export const getCheckStatusForColour = (colour, squares) => {
     isCheckmate
   };
 };
+
+export const getCurrentCheckStatusAfterMove = (piece, squares) => {
+  const colour =
+    piece.colour === Constants.Strings.colours.white
+      ? Constants.Strings.colours.black
+      : Constants.Strings.colours.white;
+  const { attackers, isCheckmate } = getCheckStatusForColour(colour, squares);
+  return {
+    isCheck: !!attackers.length,
+    isCheckmate
+  };
+};

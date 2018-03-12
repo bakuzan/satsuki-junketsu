@@ -47,7 +47,7 @@ const board = createReducer(initialState, {
       selectedSquareId: null,
       moves: [
         ...state.moves,
-        mapSquaresToMove(currentSquare, squares[targetIndex])
+        mapSquaresToMove(currentSquare, squares[targetIndex], squares)
       ]
     };
   },
@@ -71,7 +71,12 @@ const board = createReducer(initialState, {
       selectedSquareId: null,
       moves: [
         ...state.moves,
-        mapSquaresToMove(currentSquare, squares[targetIndex], defendingPiece)
+        mapSquaresToMove(
+          currentSquare,
+          squares[targetIndex],
+          squares,
+          defendingPiece
+        )
       ],
       graveyard: [...state.graveyard, defendingPiece]
     };

@@ -28,8 +28,9 @@ function generatePortableGameNotationForMove(item) {
       item.specialMove.promoteTo
     ] || ''}`;
   }
-  // if (item.check.inCheck && !item.check.winner) pgn += Strings.pgn.check;
-  // if (item.check.inCheck && item.check.winner) pgn += Strings.pgn.checkmate;
+  const { isCheck, isCheckmate } = item.checkStatus;
+  if (!isCheckmate && isCheck) pgn += Strings.pgn.check;
+  if (isCheckmate) pgn += Strings.pgn.checkmate;
   return {
     id,
     pgn

@@ -22,8 +22,8 @@ const makeMoves = arr => {
 // fastest checkmate
 let fastestGame = [[53, 37], [12, 28], [54, 38], [3, 39]].reverse();
 
-// check at index 3
-let check = [[53, 45], [12, 28], [45, 37], [3, 39], [54, 46]].reverse();
+// check - evade with [54, 46]
+let check = [[53, 45], [12, 28], [45, 37], [3, 39]].reverse();
 
 // castling tests
 let castling = [
@@ -58,6 +58,7 @@ let promotion = [
 
 export default {
   selectSquare,
+  moveFromSquareToSquare,
   makeMoves,
   movesFor: {
     fastestGame,
@@ -67,6 +68,8 @@ export default {
     promotion
   },
   examples: {
+    fastestGame: () => makeMoves(fastestGame),
+    check: () => makeMoves(check),
     promotion: () => makeMoves(promotion),
     enPassant: () => makeMoves(enPassant),
     castling: () => makeMoves(castling)

@@ -1,4 +1,5 @@
 import Strings from 'constants/strings';
+import { getCurrentCheckStatusAfterMove } from './piece';
 import { updateArrayPreservingOrder } from './common';
 
 export const mapPieceToMovedPiece = p => ({ ...p, hasMoved: true });
@@ -7,12 +8,17 @@ const squarePosition = ({ rank, file }) => ({ rank, file });
 export const mapSquaresToMove = (
   oldSquare,
   newSquare,
+  squaresAfterMove,
   captured,
   specialMove
 ) => ({
   from: squarePosition(oldSquare),
   to: squarePosition(newSquare),
   piece: mapPieceToMovedPiece(newSquare.contains),
+  checkStatus: getCurrentCheckStatusAfterMove(
+    newSquare.contains,
+    squaresAfterMove
+  ),
   captured,
   specialMove
 });

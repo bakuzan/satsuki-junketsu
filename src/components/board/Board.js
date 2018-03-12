@@ -94,6 +94,7 @@ class Board extends React.Component {
 
     const checkedKingSquareId =
       !!checkStatus.attackers.length && checkStatus.kingSquare.id;
+    const isCheck = !!checkedKingSquareId;
     const isReadOnly = checkStatus.isCheckmate;
     const onSquareClick = isReadOnly ? () => null : this.handleSquareSelection;
 
@@ -129,6 +130,7 @@ class Board extends React.Component {
             <React.Fragment>
               <PromotionOptions />
               {`Current player: ${capitalise(currentPlayerColour)}`}
+              {isCheck && `\n${capitalise(currentPlayerColour)} is in Check!`}
             </React.Fragment>
           )}
           {checkStatus.isCheckmate &&
