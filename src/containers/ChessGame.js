@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Board from './Board';
 import Graveyard from './Graveyard';
 import MoveList from './MoveList';
+import Playback from './Playback';
 
 import { resetBoard } from 'actions/board';
 
@@ -27,6 +28,7 @@ const ChessGame = ({ actions }) => (
       </div>
       <Graveyard />
     </div>
+    <Playback />
   </React.Fragment>
 );
 
