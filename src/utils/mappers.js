@@ -4,7 +4,7 @@ import { updateArrayPreservingOrder } from './common';
 
 export const mapPieceToMovedPiece = p => ({ ...p, hasMoved: true });
 
-const squarePosition = ({ rank, file }) => ({ rank, file });
+const squarePosition = ({ id, rank, file }) => ({ id, rank, file });
 export const mapSquaresToMove = (
   oldSquare,
   newSquare,

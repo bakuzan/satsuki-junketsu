@@ -1,5 +1,9 @@
+const SLIDER_END = 100;
+
 export const getMoveIndexForPlayback = (moves, playback) => {
-  const percentage = playback / 100;
+  if (playback.sliderPosition === SLIDER_END) return moves.length;
+
+  const percentage = playback.sliderPosition / SLIDER_END;
   const moveNumber = Math.round(moves.length * percentage);
   return moveNumber - 1;
 };

@@ -11,33 +11,43 @@ import {
   getCheckStatusForColour
 } from 'utils/piece';
 import availableSpecialMovesForSelectedPiece from 'utils/special-moves';
+import { getMoveIndexForPlayback } from 'utils/playback';
 
-class BoardContainer extends React.Component {
-  render() {
-    const { board } = this.props;
-    const currentPlayerColour = getCurrentPlayerColour(board.moves);
-    const potentialMoves = possibleMovesForSelectedPiece(board);
-    const specialMoves = availableSpecialMovesForSelectedPiece(board);
-    const checkStatus = getCheckStatusForColour(
-      getCurrentPlayerColour(board.moves),
-      board.squares
-    );
-    const isReversed = !isWhitesTurn(board.moves.length);
+const BoardContainer = ({ board, ...props }) => {
+  /*  For Playback
+   *  Here we need to calculate the moves, squares, and set the selectedSquareId
+   *  for the currently active move according to the playback.sliderPosition
+  */
+  const activeMoveIndex = getMoveIndexForPlayback(board.moves, board.playback);
+  const moves = board.moves.slice(0, activeMoveIndex);
+  const squares = board.squares.slice(0); // TODO calculate squares
+  const currentBoardForDisplay = {
+    ...board,
+    moves,
+    squares
+  };
 
-    return (
-      <Board
-        {...this.props}
-        {...board}
-        currentPlayerColour={currentPlayerColour}
-        potentialMoves={potentialMoves}
-        specialMoves={specialMoves}
-        checkStatus={checkStatus}
-        isReversed={isReversed}
-        isReadOnly={false}
-      />
-    );
-  }
-}
+  const currentPlayerColour = getCurrentPlayerColour(moves);
+  const potentialMoves = possibleMovesForSelectedPiece(currentBoardForDisplay);
+  const specialMoves = availableSpecialMovesForSelectedPiece(
+    currentBoardForDisplay
+  );
+  const checkStatus = getCheckStatusForColour(currentPlayerColour, squares);
+  const isReversed = !isWhitesTurn(moves.length);
+
+  return (
+    <Board
+      {...props}
+      {...currentBoardForDisplay}
+      currentPlayerColour={currentPlayerColour}
+      potentialMoves={potentialMoves}
+      specialMoves={specialMoves}
+      checkStatus={checkStatus}
+      isReversed={isReversed}
+      isReadOnly={false}
+    />
+  );
+};
 
 const mapStateToProps = state => ({
   themeClass: state.theme.board,

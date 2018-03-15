@@ -40,7 +40,7 @@ function performMovementFromCurrentToTarget(state, specialMove) {
     )
   ];
   const graveyard = !!defendingPiece
-    ? [...state.graveyard, defendingPiece]
+    ? [...state.graveyard, defendingPiece].filter(x => !!x)
     : state.graveyard;
   return {
     ...state,
@@ -99,7 +99,7 @@ function specialMoveSubReducer(state, action) {
       );
       const moveIndex = postPieceMovementToTargetState.moves.length - 1;
       const moves = [
-        ...postPieceMovementToTargetState.moves.slice(-1),
+        ...postPieceMovementToTargetState.moves.slice(0, moveIndex),
         {
           ...postPieceMovementToTargetState.moves[moveIndex],
           captured: { ...passedPiece }
