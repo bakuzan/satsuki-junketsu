@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Icons from 'constants/icons';
+import { SLIDER_START, SLIDER_END } from 'constants/slider';
 import './playback.css';
 
 const PlaybackButton = props => (
@@ -14,8 +15,6 @@ const PlaybackButton = props => (
   />
 );
 
-const SLIDER_START = 0;
-const SLIDER_END = 100;
 const STEP_FORWARD = 1;
 const STEP_BACK = -1;
 

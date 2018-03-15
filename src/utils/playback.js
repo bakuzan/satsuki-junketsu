@@ -1,4 +1,4 @@
-const SLIDER_END = 100;
+import { SLIDER_END } from 'constants/slider';
 
 export const getMoveIndexForPlayback = (moves, playback) => {
   if (playback.sliderPosition === SLIDER_END) return moves.length;

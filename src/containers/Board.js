@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import Board from 'components/board/Board';
 
+import { SLIDER_END } from 'constants/slider';
 import * as actions from 'actions/board';
 import { isWhitesTurn, getCurrentPlayerColour } from 'utils/game';
 import {
@@ -34,6 +35,7 @@ const BoardContainer = ({ board, ...props }) => {
   );
   const checkStatus = getCheckStatusForColour(currentPlayerColour, squares);
   const isReversed = !isWhitesTurn(moves.length);
+  const isReadOnly = board.playback.sliderPosition !== SLIDER_END;
 
   return (
     <Board
@@ -44,7 +46,7 @@ const BoardContainer = ({ board, ...props }) => {
       specialMoves={specialMoves}
       checkStatus={checkStatus}
       isReversed={isReversed}
-      isReadOnly={false}
+      isReadOnly={isReadOnly}
     />
   );
 };
