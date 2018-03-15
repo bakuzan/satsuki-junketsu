@@ -13,14 +13,21 @@ import {
   BOARD_SPECIAL_MOVE,
   BOARD_RESET
 } from 'actions/board';
+import {
+  PLAYBACK_UPDATE_SLIDE_POSITION,
+  PLAYBACK_STEP_FORWARD,
+  PLAYBACK_STEP_BACK
+} from 'actions/playback';
 import specialMoveSubReducer from './board-special-move';
+import playbackSubReducer, { playbackInitialState } from './board-playback';
 
 const initialState = {
   graveyard: [],
   moves: [],
   squares: buildStartingBoard(),
   selectedSquareId: null,
-  promotionAt: null
+  promotionAt: null,
+  playback: playbackInitialState
 };
 
 const board = createReducer(initialState, {
@@ -82,6 +89,9 @@ const board = createReducer(initialState, {
     };
   },
   [BOARD_SPECIAL_MOVE]: specialMoveSubReducer,
+  [PLAYBACK_UPDATE_SLIDE_POSITION]: playbackSubReducer,
+  [PLAYBACK_STEP_FORWARD]: playbackSubReducer,
+  [PLAYBACK_STEP_BACK]: playbackSubReducer,
   [BOARD_RESET]: () => initialState
 });
 

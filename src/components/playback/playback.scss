@@ -1,0 +1,46 @@
+#playback-control {
+  display: flex;
+  flex: 1;
+  align-items: center;
+
+  .button-group {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+#playback-progress-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.range-slider > input {
+  display: block;
+  width: 100%;
+  color: rgb(120, 144, 156);
+  background-color: rgb(238, 238, 238);
+  background-clip: content-box;
+  height: 8px;
+  margin: 13px 0px;
+  border-radius: 999px;
+  box-sizing: border-box;
+  appearance: none;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+    background-color: currentcolor;
+    border: 0;
+    border-radius: 999px;
+    appearance: none;
+  }
+  &::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background-color: currentcolor;
+    border: 0;
+    border-radius: 999px;
+  }
+}
