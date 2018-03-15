@@ -25,10 +25,10 @@ const ChessGame = ({ actions }) => (
       <div>
         <div id="chess-game-status" />
         <Board />
+        <Playback />
       </div>
       <Graveyard />
     </div>
-    <Playback />
   </React.Fragment>
 );
 

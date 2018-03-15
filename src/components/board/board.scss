@@ -1,4 +1,4 @@
-@import "../../styles/_variables";
+@import '../../styles/_variables';
 
 .chess-board {
   position: relative;
@@ -12,4 +12,5 @@
     style: solid;
     color: map-get($chess-board, border-colour);
   }
+  margin: 25px;
 }

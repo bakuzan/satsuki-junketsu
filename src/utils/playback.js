@@ -7,3 +7,8 @@ export const getMoveIndexForPlayback = (moves, playback) => {
   const moveNumber = Math.round(moves.length * percentage);
   return moveNumber - 1;
 };
+
+export const selectNextMoveSquareId = (moves, moveIndex) => {
+  const nextMove = { ...moves[moveIndex] };
+  return nextMove.from.id;
+};

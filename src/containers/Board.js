@@ -12,18 +12,26 @@ import {
   getCheckStatusForColour
 } from 'utils/piece';
 import availableSpecialMovesForSelectedPiece from 'utils/special-moves';
-import { getMoveIndexForPlayback } from 'utils/playback';
+import {
+  getMoveIndexForPlayback,
+  selectNextMoveSquareId
+} from 'utils/playback';
 
 const BoardContainer = ({ board, ...props }) => {
+  const isReadOnly = board.playback.sliderPosition !== SLIDER_END;
   /*  For Playback
    *  Here we need to calculate the moves, squares, and set the selectedSquareId
    *  for the currently active move according to the playback.sliderPosition
   */
   const activeMoveIndex = getMoveIndexForPlayback(board.moves, board.playback);
   const moves = board.moves.slice(0, activeMoveIndex);
+  const selectedSquareId = !isReadOnly
+    ? board.selectedSquareId
+    : selectNextMoveSquareId(board.moves, activeMoveIndex);
   const squares = board.squares.slice(0); // TODO calculate squares
   const currentBoardForDisplay = {
     ...board,
+    selectedSquareId,
     moves,
     squares
   };
@@ -35,7 +43,6 @@ const BoardContainer = ({ board, ...props }) => {
   );
   const checkStatus = getCheckStatusForColour(currentPlayerColour, squares);
   const isReversed = !isWhitesTurn(moves.length);
-  const isReadOnly = board.playback.sliderPosition !== SLIDER_END;
 
   return (
     <Board

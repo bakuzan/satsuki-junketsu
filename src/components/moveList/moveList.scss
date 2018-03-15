@@ -1,6 +1,14 @@
 #move-list {
   position: fixed;
   left: 0;
-  width: 100px;
+  width: 150px;
   height: 100%;
+
+  li {
+    text-align: center;
+
+    &.title {
+      font-weight: bold;
+    }
+  }
 }

@@ -25,13 +25,9 @@ main {
 
 #chess-game {
   @extend .center-contents;
-  justify-content: space-around;
+  justify-content: space-evenly;
   height: calc(100% - #{$chess-game-actions-height});
   width: 100%;
-}
-
-#chess-game-actions {
-  margin: 0;
 }
 
 #chess-game-status {
