@@ -1,4 +1,5 @@
 import Constants from 'constants/index';
+import { generateUniqueId } from './common';
 
 const { pieces, colours } = Constants.Strings;
 
@@ -6,6 +7,7 @@ const getStartingPiece = (rank, file) => {
   if ([1, 2, 7, 8].indexOf(rank) === -1) return null;
 
   const piece = {
+    id: generateUniqueId(),
     colour: rank < 5 ? colours.white : colours.black,
     hasMoved: false
   };

@@ -109,7 +109,7 @@ Playback.propTypes = {
   name: PropTypes.string,
   playbackInterval: PropTypes.number,
   sliderPosition: PropTypes.number.isRequired,
-  actions: PropTypes.shapeOf({
+  actions: PropTypes.shape({
     onSlide: PropTypes.func.isRequired,
     onStepForward: PropTypes.func.isRequired,
     onStepBack: PropTypes.func.isRequired

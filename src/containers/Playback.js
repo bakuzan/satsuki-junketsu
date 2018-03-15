@@ -5,7 +5,7 @@ import Playback from 'components/playback/Playback';
 import * as actions from 'actions/playback';
 
 const mapStateToProps = state => ({
-  sliderPosition: 0
+  ...state.board.playback
 });
 
 const mapDispatchToProps = dispatch => ({

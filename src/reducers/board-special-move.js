@@ -97,10 +97,19 @@ function specialMoveSubReducer(state, action) {
         passedSquareIndex,
         null
       );
+      const moveIndex = postPieceMovementToTargetState.moves.length - 1;
+      const moves = [
+        ...postPieceMovementToTargetState.moves.slice(-1),
+        {
+          ...postPieceMovementToTargetState.moves[moveIndex],
+          captured: { ...passedPiece }
+        }
+      ];
 
       return {
         ...postPieceMovementToTargetState,
         squares,
+        moves,
         graveyard: [...postPieceMovementToTargetState.graveyard, passedPiece]
       };
     }

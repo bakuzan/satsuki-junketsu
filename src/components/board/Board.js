@@ -81,7 +81,8 @@ class Board extends React.Component {
       potentialMoves,
       specialMoves,
       checkStatus,
-      isReversed
+      isReversed,
+      isReadOnly
     } = this.props;
 
     const boardSquares = isReversed ? reverseArray(squares) : squares;
@@ -95,21 +96,21 @@ class Board extends React.Component {
     const checkedKingSquareId =
       !!checkStatus.attackers.length && checkStatus.kingSquare.id;
     const isCheck = !!checkedKingSquareId;
-    const isReadOnly = checkStatus.isCheckmate;
-    const onSquareClick = isReadOnly ? () => null : this.handleSquareSelection;
+    const isLocked = isReadOnly || checkStatus.isCheckmate;
+    const onSquareClick = isLocked ? () => null : this.handleSquareSelection;
 
     console.groupCollapsed('BOARD RENDER');
     console.log('selectedSquareId', selectedSquareId);
     console.log('boardSquares', boardSquares);
     console.log('props', this.props);
-    console.log('isReadOnly', isReadOnly);
+    console.log('isLocked', isLocked);
     console.groupEnd();
 
     return (
       <React.Fragment>
         <div
           className={classNames('chess-board', themeClass, {
-            'read-only': isReadOnly
+            'read-only': isLocked
           })}
         >
           <Scales files={boardFiles} ranks={boardRanks} />

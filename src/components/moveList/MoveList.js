@@ -1,11 +1,14 @@
+import classNames from 'classnames';
 import React from 'react';
 
 import Strings from 'constants/strings';
 import './moveList.css';
 
-const MoveItem = ({ pgn }) => <li>{pgn}</li>;
+const MoveItem = ({ pgn, isActive }) => (
+  <li className={classNames({ active: isActive })}>{pgn}</li>
+);
 
-const MoveList = ({ moves }) => {
+const MoveList = ({ moves, activeMoveIndex }) => {
   console.log('moves', moves);
   return (
     <div id="move-list">
@@ -16,7 +19,9 @@ const MoveList = ({ moves }) => {
         <li key="BLACK" className="title">
           {Strings.colours.black}
         </li>
-        {moves.map(move => <MoveItem key={move.id} {...move} />)}
+        {moves.map((move, i) => (
+          <MoveItem key={move.id} isActive={i === activeMoveIndex} {...move} />
+        ))}
       </ul>
     </div>
   );
