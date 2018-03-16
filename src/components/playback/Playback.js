@@ -72,7 +72,12 @@ class Playback extends React.Component {
 
   render() {
     const { isPlaying } = this.state;
-    const { name, sliderPosition } = this.props;
+    const { name, isDisabled, isHidden, sliderPosition } = this.props;
+
+    if (isHidden) return null;
+
+    const AT_THE_START = sliderPosition === SLIDER_START;
+    const AT_THE_END = sliderPosition === SLIDER_END;
     const toggleIcon = isPlaying ? Icons.pause : Icons.play;
     const width = sliderPosition;
     const sliderStyle = {
@@ -82,7 +87,11 @@ class Playback extends React.Component {
     return (
       <div id="playback-control">
         <div className="button-group">
-          <PlaybackButton icon={toggleIcon} onClick={this.handleTogglePlay} />
+          <PlaybackButton
+            icon={toggleIcon}
+            onClick={this.handleTogglePlay}
+            disabled={isDisabled}
+          />
         </div>
         <div id="playback-progress-container" className="range-slider">
           <input
@@ -90,6 +99,7 @@ class Playback extends React.Component {
             name={name}
             style={sliderStyle}
             value={sliderPosition}
+            disabled={isDisabled}
             onChange={this.handleSliderChange}
           />
         </div>
@@ -98,13 +108,13 @@ class Playback extends React.Component {
             className="playback-back"
             icon={Icons.back}
             onClick={this.createSliderStepHandler(STEP_BACK)}
-            disabled={sliderPosition === SLIDER_START}
+            disabled={AT_THE_START || isDisabled}
           />
           <PlaybackButton
             className="playback-forward"
             icon={Icons.forward}
             onClick={this.createSliderStepHandler(STEP_FORWARD)}
-            disabled={sliderPosition === SLIDER_END}
+            disabled={AT_THE_END || isDisabled}
           />
         </div>
       </div>
@@ -114,12 +124,16 @@ class Playback extends React.Component {
 
 Playback.defaultProps = {
   name: 'slider',
-  playbackInterval: 1000
+  playbackInterval: 1000,
+  isDisabled: false,
+  isHidden: false
 };
 
 Playback.propTypes = {
   name: PropTypes.string,
   playbackInterval: PropTypes.number,
+  isDisabled: PropTypes.bool,
+  isHidden: PropTypes.bool,
   sliderPosition: PropTypes.number.isRequired,
   actions: PropTypes.shape({
     onSlide: PropTypes.func.isRequired,
