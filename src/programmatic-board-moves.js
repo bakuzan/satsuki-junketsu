@@ -73,5 +73,10 @@ export default {
     promotion: () => makeMoves(promotion),
     enPassant: () => makeMoves(enPassant),
     castling: () => makeMoves(castling)
+  },
+  playback: {
+    forward: () =>
+      document.querySelector('.playback-button.playback-forward').click(),
+    back: () => document.querySelector('.playback-button.playback-back').click()
   }
 };

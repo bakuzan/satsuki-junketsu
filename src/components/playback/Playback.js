@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import React from 'react';
 
 import Icons from 'constants/icons';
@@ -8,7 +9,10 @@ import './playback.css';
 const PlaybackButton = props => (
   <button
     type="button"
-    className="button-icon ripple playback-button"
+    className={classNames(
+      'button-icon ripple playback-button',
+      props.className
+    )}
     icon={props.icon}
     disabled={props.disabled}
     onClick={props.onClick}
@@ -36,14 +40,21 @@ class Playback extends React.Component {
       () => {
         clearInterval(this.timer);
         if (!this.state.isPlaying) return;
+        const isAtEnd = this.props.sliderPosition === SLIDER_END;
+        if (isAtEnd) this.props.actions.onSlide(this.props.name, SLIDER_START);
 
         this.timer = setInterval(() => {
-          if (this.props.sliderPosition === SLIDER_END)
-            clearInterval(this.timer);
+          if (!isAtEnd && this.props.sliderPosition === SLIDER_END)
+            this.stopPlaying();
           else this.props.actions.onStepForward(this.props.name, STEP_FORWARD);
         }, this.props.playbackInterval);
       }
     );
+  }
+
+  stopPlaying() {
+    clearInterval(this.timer);
+    this.setState({ isPlaying: false });
   }
 
   createSliderStepHandler(stepDirection) {
@@ -56,7 +67,7 @@ class Playback extends React.Component {
 
   handleSliderChange(event) {
     const { name, value } = event.target;
-    this.props.actions.onSlide(name, value);
+    this.props.actions.onSlide(name, Number(value));
   }
 
   render() {
@@ -84,11 +95,13 @@ class Playback extends React.Component {
         </div>
         <div className="button-group">
           <PlaybackButton
+            className="playback-back"
             icon={Icons.back}
             onClick={this.createSliderStepHandler(STEP_BACK)}
             disabled={sliderPosition === SLIDER_START}
           />
           <PlaybackButton
+            className="playback-forward"
             icon={Icons.forward}
             onClick={this.createSliderStepHandler(STEP_FORWARD)}
             disabled={sliderPosition === SLIDER_END}
