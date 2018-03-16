@@ -14,7 +14,8 @@ import {
 import availableSpecialMovesForSelectedPiece from 'utils/special-moves';
 import {
   getMoveIndexForPlayback,
-  selectNextMoveSquareId
+  selectNextMoveSquareId,
+  createBoardLayoutForMoveList
 } from 'utils/playback';
 
 const BoardContainer = ({ board, ...props }) => {
@@ -28,7 +29,9 @@ const BoardContainer = ({ board, ...props }) => {
   const selectedSquareId = !isReadOnly
     ? board.selectedSquareId
     : selectNextMoveSquareId(board.moves, activeMoveIndex);
-  const squares = board.squares.slice(0); // TODO calculate squares
+  const squares = !isReadOnly
+    ? board.squares
+    : createBoardLayoutForMoveList(moves);
   const currentBoardForDisplay = {
     ...board,
     selectedSquareId,
