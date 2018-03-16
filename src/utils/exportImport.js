@@ -12,12 +12,30 @@ export const exportPGNForMoves = moves => {
   }, '');
 
   const date = formatDate(new Date());
-  console.log(
-    'export PGN > ',
-    `[Site "https://bakuzan.github.io/satsuki-junketsu/"]
-     [Date "${date}"]
+  const dataForFile = `
+  [Site "https://bakuzan.github.io/satsuki-junketsu/"]
+  [Date "${date}"]
 
-     ${pgn}
-    `
+  ${pgn}
+  `;
+
+  download(
+    processDataIntoDownloadUrl(dataForFile),
+    `chess-game-${new Date().toLocaleString()}.pgn`
   );
+  console.log('export PGN > ', dataForFile);
 };
+
+const processDataIntoDownloadUrl = dataStr =>
+  URL.createObjectURL(new Blob([dataStr]));
+
+export function download(downloadUrl, fileName) {
+  const link = document.createElement('a');
+  link.setAttribute('href', downloadUrl);
+  link.setAttribute('download', fileName);
+  document.body.appendChild(link); // Required for FF
+  link.click();
+  document.body.removeChild(link);
+}
+
+export const importMovesFromPGN = () => {};
