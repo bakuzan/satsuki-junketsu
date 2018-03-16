@@ -75,6 +75,8 @@ export default {
     castling: () => makeMoves(castling)
   },
   playback: {
+    togglePlay: () =>
+      document.querySelector('.playback-button.playback-toggle-play').click(),
     forward: () =>
       document.querySelector('.playback-button.playback-forward').click(),
     back: () => document.querySelector('.playback-button.playback-back').click()

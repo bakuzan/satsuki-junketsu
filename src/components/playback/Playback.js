@@ -28,6 +28,8 @@ class Playback extends React.Component {
     this.state = {
       isPlaying: false
     };
+    this.timer = null;
+    this.previousPosition = null;
 
     this.handleTogglePlay = this.handleTogglePlay.bind(this);
     this.createSliderStepHandler = this.createSliderStepHandler.bind(this);
@@ -40,13 +42,13 @@ class Playback extends React.Component {
       () => {
         clearInterval(this.timer);
         if (!this.state.isPlaying) return;
-        const isAtEnd = this.props.sliderPosition === SLIDER_END;
-        if (isAtEnd) this.props.actions.onSlide(this.props.name, SLIDER_START);
+        if (this.props.sliderPosition === SLIDER_END)
+          this.props.actions.onSlide(this.props.name, SLIDER_START);
 
         this.timer = setInterval(() => {
-          if (!isAtEnd && this.props.sliderPosition === SLIDER_END)
-            this.stopPlaying();
-          else this.props.actions.onStepForward(this.props.name, STEP_FORWARD);
+          if (this.previousPosition === SLIDER_END) return this.stopPlaying();
+          this.previousPosition = this.props.sliderPosition;
+          this.props.actions.onStepForward(this.props.name, STEP_FORWARD);
         }, this.props.playbackInterval);
       }
     );
@@ -88,6 +90,7 @@ class Playback extends React.Component {
       <div id="playback-control">
         <div className="button-group">
           <PlaybackButton
+            className="playback-toggle-play"
             icon={toggleIcon}
             onClick={this.handleTogglePlay}
             disabled={isDisabled}
