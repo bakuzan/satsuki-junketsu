@@ -66,7 +66,9 @@ $theme-maps: (
       colour: $satsuki-blue,
       contrast: $satsuki-white,
       anchor-colour: $anchor-colour,
-      anchor-colour-hover: $anchor-colour-hover
+      anchor-colour-hover: $anchor-colour-hover,
+      disabled-colour: $grey40,
+      disabled-background: $grey80
     ),
   theme-two:
     (
@@ -75,7 +77,9 @@ $theme-maps: (
       colour: $junketsu-eye-red,
       contrast: $satsuki-hair-black,
       anchor-colour: $anchor-colour-hover,
-      anchor-colour-hover: $anchor-colour
+      anchor-colour-hover: $anchor-colour,
+      disabled-colour: $grey40,
+      disabled-background: $grey80
     )
 );
 $board-themes: (

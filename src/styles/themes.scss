@@ -8,6 +8,8 @@
   $contrast: map-get($values, contrast);
   $anchor-colour: map-get($values, anchor-colour);
   $anchor-colour-hover: map-get($values, anchor-colour-hover);
+  $disabled-colour: map-get($values, disabled-colour);
+  $disabled-background: map-get($values, disabled-background);
 
   .#{$name} {
     background: $base-background;
@@ -22,6 +24,15 @@
 
     #request-indicator-loader {
       @include shiftBackgroundColourLightness($colour, $darken-amount * 3);
+    }
+
+    #playback-control input {
+      color: $colour;
+      background: $contrast;
+      &:disabled {
+        color: $disabled-colour;
+        background: $disabled-background;
+      }
     }
 
     #move-list li.active {

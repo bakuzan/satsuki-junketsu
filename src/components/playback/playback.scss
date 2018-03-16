@@ -6,6 +6,11 @@
   .button-group {
     padding: 0;
     margin: 0;
+
+    > button {
+      display: flex;
+      flex: 1;
+    }
   }
 }
 
@@ -42,5 +47,8 @@
     background-color: currentcolor;
     border: 0;
     border-radius: 999px;
+  }
+  &:disabled {
+    cursor: default;
   }
 }
