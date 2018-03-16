@@ -42,3 +42,17 @@ export const generateUniqueId = () =>
       (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
     ).toString(16)
   );
+
+export const padNumber = (n, width, z = 0) => {
+  n += '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+};
+
+export const formatDate = d => {
+  if (!d) return '';
+  const date = new Date(d);
+  return `${date.getFullYear()}-${padNumber(
+    date.getMonth() + 1,
+    2
+  )}-${padNumber(date.getDate(), 2)}`;
+};

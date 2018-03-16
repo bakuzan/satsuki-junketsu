@@ -8,18 +8,24 @@ import MoveList from './MoveList';
 import Playback from './Playback';
 
 import { resetBoard } from 'actions/board';
+import { exportPGNForMoves } from 'utils/exportImport';
 
-const ChessGame = ({ actions }) => (
+const GameAction = ({ children, ...props }) => (
+  <button type="button" className="button ripple primary" {...props}>
+    {children}
+  </button>
+);
+
+const ChessGame = ({ moves, actions }) => (
   <React.Fragment>
     <MoveList />
     <div id="chess-game-actions" className="button-group right">
-      <button
-        type="button"
-        className="button ripple primary"
-        onClick={actions.resetBoard}
-      >
+      <GameAction id="new-game" onClick={actions.resetBoard}>
         New Game
-      </button>
+      </GameAction>
+      <GameAction id="export-game" onClick={() => exportPGNForMoves(moves)}>
+        Export
+      </GameAction>
     </div>
     <div id="chess-game" className="row">
       <div>
@@ -32,8 +38,12 @@ const ChessGame = ({ actions }) => (
   </React.Fragment>
 );
 
+const mapStateToProps = state => ({
+  moves: state.board.moves
+});
+
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ resetBoard }, dispatch)
 });
 
-export default connect(null, mapDispatchToProps)(ChessGame);
+export default connect(mapStateToProps, mapDispatchToProps)(ChessGame);

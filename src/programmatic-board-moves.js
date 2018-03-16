@@ -74,6 +74,10 @@ export default {
     enPassant: () => makeMoves(enPassant),
     castling: () => makeMoves(castling)
   },
+  actions: {
+    newGame: () => document.getElementById('new-game').click(),
+    export: () => document.getElementById('export-game').click()
+  },
   playback: {
     togglePlay: () =>
       document.querySelector('.playback-button.playback-toggle-play').click(),
