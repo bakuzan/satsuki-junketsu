@@ -10,5 +10,8 @@
     &.title {
       font-weight: bold;
     }
+    &.active {
+      text-decoration: underline;
+    }
   }
 }

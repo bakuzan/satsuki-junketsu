@@ -24,6 +24,10 @@
       @include shiftBackgroundColourLightness($colour, $darken-amount * 3);
     }
 
+    #move-list li.active {
+      color: $anchor-colour;
+    }
+
     .graveyard {
       border-color: $base-colour;
     }
