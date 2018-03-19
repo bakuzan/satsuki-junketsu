@@ -23,7 +23,6 @@ export const exportPGNForMoves = moves => {
     processDataIntoDownloadUrl(dataForFile),
     `chess-game-${new Date().toLocaleString()}.pgn`
   );
-  console.log('export PGN > ', dataForFile);
 };
 
 const processDataIntoDownloadUrl = dataStr =>
@@ -38,4 +37,6 @@ export function download(downloadUrl, fileName) {
   document.body.removeChild(link);
 }
 
-export const importMovesFromPGN = () => {};
+export const importMovesFromPGN = file => {
+  console.log(file);
+};

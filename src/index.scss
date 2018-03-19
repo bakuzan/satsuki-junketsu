@@ -42,3 +42,7 @@ main {
   );
   min-width: 200px;
 }
+// Hide file inputs in favour of nice button
+.button > input[type='file'] {
+  display: none;
+}
