@@ -11,7 +11,8 @@ import {
   BOARD_MOVE_PIECE,
   BOARD_TAKE_PIECE,
   BOARD_SPECIAL_MOVE,
-  BOARD_RESET
+  BOARD_RESET,
+  BOARD_IMPORT_GAME
 } from 'actions/board';
 import {
   PLAYBACK_UPDATE_SLIDE_POSITION,
@@ -20,6 +21,7 @@ import {
 } from 'actions/playback';
 import specialMoveSubReducer from './board-special-move';
 import playbackSubReducer, { playbackInitialState } from './board-playback';
+import importSubReducer from './board-import';
 
 const initialState = {
   graveyard: [],
@@ -92,6 +94,8 @@ const board = createReducer(initialState, {
   [PLAYBACK_UPDATE_SLIDE_POSITION]: playbackSubReducer,
   [PLAYBACK_STEP_FORWARD]: playbackSubReducer,
   [PLAYBACK_STEP_BACK]: playbackSubReducer,
+  [BOARD_IMPORT_GAME]: (state, action) =>
+    importSubReducer(initialState, action),
   [BOARD_RESET]: () => initialState
 });
 

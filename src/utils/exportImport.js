@@ -6,7 +6,7 @@ export const exportPGNForMoves = moves => {
   let moveNumber = 1;
   const pgn = pgnForMoves.reduce((p, c, i) => {
     const hasNumber = i === 0 || i % 2 === 0;
-    const nextStr = hasNumber ? ` ${moveNumber}. ${c.pgn}` : ` ${c.pgn}`;
+    const nextStr = hasNumber ? ` ${moveNumber}. ${c.pgn}` : `${c.pgn}`;
     if (!hasNumber) moveNumber++;
     return `${p} ${nextStr}${!hasNumber && moveNumber === 6 ? `\n` : ''}`;
   }, '');
@@ -37,6 +37,17 @@ export function download(downloadUrl, fileName) {
   document.body.removeChild(link);
 }
 
-export const importMovesFromPGN = file => {
-  console.log(file);
+export const importPGNFromFile = fileText => {
+  const [gameInformation, ...movePairs] = fileText.split(/\d\./g);
+  const pgnMoves = movePairs.reduce(
+    (p, movePair) => [
+      ...p,
+      ...movePair
+        .split(' ')
+        .filter(x => !!x)
+        .map(x => x.replace(/\n/g, ''))
+    ],
+    []
+  );
+  return { gameInformation, pgnMoves };
 };

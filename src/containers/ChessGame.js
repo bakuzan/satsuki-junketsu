@@ -7,8 +7,8 @@ import Graveyard from './Graveyard';
 import MoveList from './MoveList';
 import Playback from './Playback';
 
-import { resetBoard } from 'actions/board';
-import { exportPGNForMoves, importMovesFromPGN } from 'utils/exportImport';
+import { resetBoard, importGame } from 'actions/board';
+import { exportPGNForMoves } from 'utils/exportImport';
 
 const GameAction = ({ children, ...props }) => (
   <button type="button" className="button ripple primary" {...props}>
@@ -29,10 +29,11 @@ class ChessGame extends React.Component {
     this.fileSelector.click();
   }
 
-  handleImport(event) {
+  async handleImport(event) {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
-    importMovesFromPGN(file);
+    const fileText = await new Response(file).text();
+    this.props.actions.importGame(fileText);
   }
 
   render() {
@@ -75,7 +76,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ resetBoard }, dispatch)
+  actions: bindActionCreators({ resetBoard, importGame }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChessGame);

@@ -26,3 +26,9 @@ export const BOARD_RESET = 'BOARD_RESET';
 export const resetBoard = () => ({
   type: BOARD_RESET
 });
+
+export const BOARD_IMPORT_GAME = 'BOARD_IMPORT_GAME';
+export const importGame = fileText => ({
+  type: BOARD_IMPORT_GAME,
+  fileText
+});
