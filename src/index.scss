@@ -34,6 +34,13 @@ main {
   display: flex;
   justify-content: center;
   margin: #{$scale-size + 15}px 0;
+
+  > div {
+    display: flex;
+    flex: 1;
+    flex-flow: column;
+    justify-content: center;
+  }
 }
 
 #paired-graveyards {

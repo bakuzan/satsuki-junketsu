@@ -56,6 +56,9 @@ let promotion = [
   [15] // 7
 ].reverse();
 
+// ambiguous movement tests
+let ambiguous = [[50, 34], [11, 27], [52, 36], [8, 16], [34, 27]].reverse();
+
 export default {
   selectSquare,
   moveFromSquareToSquare,
@@ -72,7 +75,8 @@ export default {
     check: () => makeMoves(check),
     promotion: () => makeMoves(promotion),
     enPassant: () => makeMoves(enPassant),
-    castling: () => makeMoves(castling)
+    castling: () => makeMoves(castling),
+    ambiguous: () => makeMoves(ambiguous)
   },
   actions: {
     newGame: () => document.getElementById('new-game').click(),
