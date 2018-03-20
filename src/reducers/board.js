@@ -32,6 +32,9 @@ const initialState = {
   playback: playbackInitialState
 };
 
+// REFACTOR
+// Logic from MOVE and TAKE needs relocating/merging with the other usages of similar logic
+
 const board = createReducer(initialState, {
   [BOARD_SELECT_SQUARE]: (state, action) => ({
     ...state,

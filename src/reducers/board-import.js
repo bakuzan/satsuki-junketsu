@@ -70,7 +70,7 @@ function processPGNToMove(pgnStr, index) {
     ? resolveCastlingFromSquare(pgnStr, isWhiteMove)
     : resolveFromSquare(pgnStr);
   const captured = pgnStr.includes('x') ? { colour: capturedColour } : null;
-  console.log(pgnStr, from, piece, to);
+
   return {
     from,
     piece,
@@ -89,7 +89,8 @@ function importSubReducer(cleanState, action) {
   const { fileText } = action;
   const data = importPGNFromFile(fileText);
   const processedMoves = data.pgnMoves.map(processPGNToMove);
-  const processedState = processedMoves.reduce((p, move) => {
+
+  return processedMoves.reduce((p, move) => {
     const toIndex = p.squares.findIndex(
       x => x.file === move.to.file && x.rank === move.to.rank
     );
@@ -97,16 +98,6 @@ function importSubReducer(cleanState, action) {
     const toHasPiece = !!to && !!to.contains;
     const captured = toHasPiece ? { ...to.contains } : null;
     const func = toHasPiece ? isValidTake : isValidMove;
-    // TODO Need a distinguishing "from file/rank"
-    // added during pgn creation
-    console.groupCollapsed('process move > ');
-    console.log('latest', p);
-    console.log('move > ', move);
-    console.log('to > ', to);
-    console.log('toHasPiece > ', toHasPiece);
-    console.log('captured > ', captured);
-    console.log('moving piece > ', move.piece);
-    console.log('from ? > ', move.from);
 
     const fromPossibilities = p.squares.filter(
       x =>
@@ -119,9 +110,8 @@ function importSubReducer(cleanState, action) {
         x.contains.name === move.piece.name &&
         (func(x, to, p.squares) || !!move.specialMove)
     );
-    console.log('possibilities ?? > ', fromPossibilities);
     const from = fromPossibilities[0];
-    console.groupEnd();
+
     const movingPiece = mapPieceToMovedPiece(from.contains);
     let squares = mapPieceToNewSquare(p.squares, toIndex, {
       ...from,
@@ -146,12 +136,13 @@ function importSubReducer(cleanState, action) {
       ]
     };
   }, cleanState);
-  console.log('loaded state > ', processedState);
-  return processedState;
 }
 
 export default importSubReducer;
 
+// REFACTOR
+// Need to relocate the piece square-to-square translations
+// as the same functions are being copied all over.
 const Castling = {
   kingTargets: ['c', 'g'],
   rookStarts: ['a', 'h'],

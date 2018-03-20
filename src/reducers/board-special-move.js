@@ -13,6 +13,9 @@ const Castling = {
   rookEnds: ['d', 'f']
 };
 
+// REFACTOR
+// This is a good example of the function I will Need
+// Bad args though.
 function performMovementFromCurrentToTarget(state, specialMove) {
   const currentSquare = state.squares.find(
     x => x.id === state.selectedSquareId
