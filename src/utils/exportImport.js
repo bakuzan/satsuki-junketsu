@@ -1,6 +1,8 @@
 import { formatDate } from './common';
 import { mapMovesToPGN } from './pgn';
 
+import * as Regexes from 'constants/regex';
+
 export const exportPGNForMoves = moves => {
   const pgnForMoves = mapMovesToPGN(moves);
   let moveNumber = 1;
@@ -38,16 +40,19 @@ export function download(downloadUrl, fileName) {
 }
 
 export const importPGNFromFile = fileText => {
-  const [gameInformation, ...movePairs] = fileText.split(/\d\./g);
+  const [gameInformation, ...movePairs] = fileText
+    .replace(Regexes.MATCH_PGN_COMMENTS_PGN_GAME_RESULT, '')
+    .split(Regexes.MATCH_DIGIT_DOT_SPACE);
   const pgnMoves = movePairs.reduce(
     (p, movePair) => [
       ...p,
       ...movePair
+        .replace(Regexes.MATCH_NEW_LINE, ' ')
         .split(' ')
-        .filter(x => !!x)
-        .map(x => x.replace(/\n/g, ''))
+        .filter(x => !!x && isNaN(x))
     ],
     []
   );
+  console.log('IMPORT > ', movePairs, pgnMoves);
   return { gameInformation, pgnMoves };
 };
