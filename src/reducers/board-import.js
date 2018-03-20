@@ -75,6 +75,7 @@ function processPGNToMove(pgnStr, index) {
     from,
     piece,
     to,
+    isAmbiguous: !isCastling && !!from,
     specialMove,
     captured,
     checkStatus: {
@@ -89,29 +90,39 @@ function importSubReducer(cleanState, action) {
   const data = importPGNFromFile(fileText);
   const processedMoves = data.pgnMoves.map(processPGNToMove);
   const processedState = processedMoves.reduce((p, move) => {
-    const to = p.squares.find(
+    const toIndex = p.squares.findIndex(
       x => x.file === move.to.file && x.rank === move.to.rank
     );
-    console.log('to > ', to, move);
+    const to = { ...p.squares[toIndex] };
     const toHasPiece = !!to && !!to.contains;
     const captured = toHasPiece ? { ...to.contains } : null;
     const func = toHasPiece ? isValidTake : isValidMove;
-    // TODO find a way to resolve potential clashes
-    // Need a distinguishing "from file/rank"
-    console.log('find from ', toHasPiece, to, move.piece, p.squares);
-    const from = p.squares.find(
+    // TODO Need a distinguishing "from file/rank"
+    // added during pgn creation
+    console.groupCollapsed('process move > ');
+    console.log('latest', p);
+    console.log('move > ', move);
+    console.log('to > ', to);
+    console.log('toHasPiece > ', toHasPiece);
+    console.log('captured > ', captured);
+    console.log('moving piece > ', move.piece);
+    console.log('from ? > ', move.from);
+
+    const fromPossibilities = p.squares.filter(
       x =>
-        (!move.from &&
-          x.contains &&
-          x.contains.colour === move.piece.colour &&
-          x.contains.name === move.piece.name &&
-          func(x, to, p.squares)) ||
-        (move.from &&
-          x.file === move.from.file &&
-          (!move.from.rank || x.rank === move.from.rank))
+        (!move.from ||
+          (move.from &&
+            x.file === move.from.file &&
+            (!move.from.rank || x.rank === move.from.rank))) &&
+        x.contains &&
+        x.contains.colour === move.piece.colour &&
+        x.contains.name === move.piece.name &&
+        (func(x, to, p.squares) || !!move.specialMove)
     );
+    console.log('possibilities ?? > ', fromPossibilities);
+    const from = fromPossibilities[0];
+    console.groupEnd();
     const movingPiece = mapPieceToMovedPiece(from.contains);
-    const toIndex = p.squares.findIndex(x => x.id === to.id);
     let squares = mapPieceToNewSquare(p.squares, toIndex, {
       ...from,
       contains: movingPiece

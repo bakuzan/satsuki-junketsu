@@ -1,6 +1,6 @@
 import Constants from 'constants/index';
 
-import { mapPieceToNewSquare } from './mappers';
+import { mapPieceToNewSquare, mapPieceToNewPiece } from './mappers';
 import { isValidMove, isValidTake } from './game';
 
 export const willResultInCheck = (pieceSquare, squares) => {
@@ -73,4 +73,41 @@ export const getCurrentCheckStatusAfterMove = (piece, squares) => {
     isCheck: !!attackers.length,
     isCheckmate
   };
+};
+
+const CannotBeAmbiguous = [
+  Constants.Strings.pieces.king,
+  Constants.Strings.pieces.queen,
+  Constants.Strings.pieces.bishop
+];
+
+export const checkForMoveAmbiguity = (
+  oldSquare,
+  targetSquare,
+  squaresAfterMove,
+  captured
+) => {
+  const movedPiece = targetSquare.contains;
+  if (CannotBeAmbiguous.includes(movedPiece.name)) return false;
+
+  const potentiallyAmbiguiousSquares = squaresAfterMove.filter(
+    x =>
+      x.id !== targetSquare.id &&
+      x.contains &&
+      x.contains.name === movedPiece.name &&
+      x.contains.colour === movedPiece.colour
+  );
+  if (potentiallyAmbiguiousSquares.length === 0) return false;
+
+  const fromIndex = squaresAfterMove.findIndex(x => x.id === oldSquare.id);
+  const toIndex = squaresAfterMove.findIndex(x => x.id === targetSquare.id);
+  let oldSquares = mapPieceToNewPiece(squaresAfterMove, fromIndex, {
+    ...targetSquare.contains
+  });
+  oldSquares = mapPieceToNewPiece(oldSquares, toIndex, captured);
+
+  const checkFunc = captured ? isValidTake : isValidMove;
+  return potentiallyAmbiguiousSquares.some(x =>
+    checkFunc(x, targetSquare, oldSquares)
+  );
 };

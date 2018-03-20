@@ -53,6 +53,5 @@ export const importPGNFromFile = fileText => {
     ],
     []
   );
-  console.log('IMPORT > ', movePairs, pgnMoves);
   return { gameInformation, pgnMoves };
 };

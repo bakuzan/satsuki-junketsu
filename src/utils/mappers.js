@@ -1,5 +1,5 @@
 import Strings from 'constants/strings';
-import { getCurrentCheckStatusAfterMove } from './piece';
+import { getCurrentCheckStatusAfterMove, checkForMoveAmbiguity } from './piece';
 import { updateArrayPreservingOrder } from './common';
 
 export const mapPieceToMovedPiece = p => ({ ...p, hasMoved: true });
@@ -15,6 +15,12 @@ export const mapSquaresToMove = (
   from: squarePosition(oldSquare),
   to: squarePosition(newSquare),
   piece: mapPieceToMovedPiece(newSquare.contains),
+  isAmbiguous: checkForMoveAmbiguity(
+    oldSquare,
+    newSquare,
+    squaresAfterMove,
+    captured
+  ),
   checkStatus: getCurrentCheckStatusAfterMove(
     newSquare.contains,
     squaresAfterMove

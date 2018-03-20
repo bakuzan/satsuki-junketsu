@@ -4,7 +4,7 @@ import { generateUniqueId } from 'utils/common';
 const KING_SIDE_CASTLE = 'g';
 
 function generatePortableGameNotationForMove(item) {
-  console.log(item);
+  console.log('make pgn for >> ', item);
   const id = generateUniqueId();
   let pgn = '';
   if (
@@ -18,6 +18,7 @@ function generatePortableGameNotationForMove(item) {
     };
   }
   pgn += Strings.pgn.piece[item.piece.name];
+  if (item.isAmbiguous) pgn += `${item.from.file}`;
   if (item.captured) pgn += `${Strings.pgn.capture}`;
   pgn += `${item.to.file}${item.to.rank}`;
   if (
