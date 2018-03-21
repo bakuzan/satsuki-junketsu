@@ -2,7 +2,8 @@ import Strings from 'constants/strings';
 
 import { mapPieceToNewPiece } from 'utils/mappers';
 import performMovementFromCurrentToTarget, {
-  performRookMovementForCastling
+  performRookMovementForCastling,
+  updateBoardToRemovePassedPawn
 } from 'utils/squaresUpdate';
 
 function specialMoveSubReducer(state, action) {
@@ -36,38 +37,10 @@ function specialMoveSubReducer(state, action) {
       };
     }
     case Strings.specialMoves.enPassant: {
-      const movedToSquare = postPieceMovementToTargetState.squares.find(
-        x => x.id === targetSquareId
+      return updateBoardToRemovePassedPawn(
+        postPieceMovementToTargetState,
+        targetSquareId
       );
-      const direction =
-        movedToSquare.contains.colour === Strings.colours.white ? 1 : -1;
-      const offsetRank = movedToSquare.rank - direction;
-      const passedSquareIndex = postPieceMovementToTargetState.squares.findIndex(
-        x => x.file === movedToSquare.file && x.rank === offsetRank
-      );
-      const passedPiece = {
-        ...postPieceMovementToTargetState.squares[passedSquareIndex].contains
-      };
-      const squares = mapPieceToNewPiece(
-        postPieceMovementToTargetState.squares,
-        passedSquareIndex,
-        null
-      );
-      const moveIndex = postPieceMovementToTargetState.moves.length - 1;
-      const moves = [
-        ...postPieceMovementToTargetState.moves.slice(0, moveIndex),
-        {
-          ...postPieceMovementToTargetState.moves[moveIndex],
-          captured: { ...passedPiece }
-        }
-      ];
-
-      return {
-        ...postPieceMovementToTargetState,
-        squares,
-        moves,
-        graveyard: [...postPieceMovementToTargetState.graveyard, passedPiece]
-      };
     }
     case Strings.specialMoves.castling: {
       const squares = performRookMovementForCastling(

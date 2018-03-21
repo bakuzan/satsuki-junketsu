@@ -2,7 +2,8 @@ import Strings from 'constants/strings';
 import {
   mapSquaresToMove,
   mapPieceToMovedPiece,
-  mapPieceToNewSquare
+  mapPieceToNewSquare,
+  mapPieceToNewPiece
 } from './mappers';
 
 export default function performMovementFromCurrentToTarget(
@@ -66,4 +67,33 @@ export function performRookMovementForCastling(currentSquares, kingSquareId) {
   });
 
   return squares;
+}
+
+export function updateBoardToRemovePassedPawn(oldState, movedPieceSquareId) {
+  const movedToSquare = oldState.squares.find(x => x.id === movedPieceSquareId);
+  const direction =
+    movedToSquare.contains.colour === Strings.colours.white ? 1 : -1;
+  const offsetRank = movedToSquare.rank - direction;
+  const passedSquareIndex = oldState.squares.findIndex(
+    x => x.file === movedToSquare.file && x.rank === offsetRank
+  );
+  const passedPiece = {
+    ...oldState.squares[passedSquareIndex].contains
+  };
+  const squares = mapPieceToNewPiece(oldState.squares, passedSquareIndex, null);
+  const moveIndex = oldState.moves.length - 1;
+  const moves = [
+    ...oldState.moves.slice(0, moveIndex),
+    {
+      ...oldState.moves[moveIndex],
+      captured: { ...passedPiece }
+    }
+  ];
+
+  return {
+    ...oldState,
+    squares,
+    moves,
+    graveyard: [...oldState.graveyard, passedPiece]
+  };
 }
