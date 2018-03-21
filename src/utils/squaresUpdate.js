@@ -1,10 +1,11 @@
+import Strings from 'constants/strings';
 import {
   mapSquaresToMove,
   mapPieceToMovedPiece,
   mapPieceToNewSquare
 } from './mappers';
 
-function performMovementFromCurrentToTarget(
+export default function performMovementFromCurrentToTarget(
   oldState,
   fromSquareId,
   toSquareId,
@@ -43,4 +44,26 @@ function performMovementFromCurrentToTarget(
   };
 }
 
-export default performMovementFromCurrentToTarget;
+export function performRookMovementForCastling(currentSquares, kingSquareId) {
+  const newKingSquare = currentSquares.find(x => x.id === kingSquareId);
+  const rookFileIndex = Strings.castling.kingTargets.findIndex(
+    x => x === newKingSquare.file
+  );
+  const rookSquare = currentSquares.find(
+    x =>
+      x.rank === newKingSquare.rank &&
+      x.file === Strings.castling.rookStarts[rookFileIndex]
+  );
+  const rookTargetIndex = currentSquares.findIndex(
+    x =>
+      x.rank === newKingSquare.rank &&
+      x.file === Strings.castling.rookEnds[rookFileIndex]
+  );
+  const movingRook = mapPieceToMovedPiece(rookSquare.contains);
+  const squares = mapPieceToNewSquare(currentSquares, rookTargetIndex, {
+    ...rookSquare,
+    contains: movingRook
+  });
+
+  return squares;
+}

@@ -8,6 +8,7 @@ import {
   mapPieceToNewSquare,
   mapSquaresToMove
 } from 'utils/mappers';
+import { performRookMovementForCastling } from 'utils/squaresUpdate';
 
 const getKeyForFirstLetter = l => {
   const keys = Object.keys(Strings.pgn.piece);
@@ -120,7 +121,9 @@ function importSubReducer(cleanState, action) {
     const isCastling =
       move.specialMove &&
       move.specialMove.type === Strings.specialMoves.castling;
-    squares = !isCastling ? squares : tempCastlingFunction(squares, to.id);
+    squares = !isCastling
+      ? squares
+      : performRookMovementForCastling(squares, to.id);
 
     const specialMove = move.specialMove
       ? { ...move.specialMove, squareId: to.id }
@@ -139,35 +142,3 @@ function importSubReducer(cleanState, action) {
 }
 
 export default importSubReducer;
-
-// REFACTOR
-// Need to relocate the piece square-to-square translations
-// as the same functions are being copied all over.
-const Castling = {
-  kingTargets: ['c', 'g'],
-  rookStarts: ['a', 'h'],
-  rookEnds: ['d', 'f']
-};
-function tempCastlingFunction(squares, kingSquareId) {
-  const newKingSquare = squares.find(x => x.id === kingSquareId);
-  const rookFileIndex = Castling.kingTargets.findIndex(
-    x => x === newKingSquare.file
-  );
-  const rookSquare = squares.find(
-    x =>
-      x.rank === newKingSquare.rank &&
-      x.file === Castling.rookStarts[rookFileIndex]
-  );
-  const rookTargetIndex = squares.findIndex(
-    x =>
-      x.rank === newKingSquare.rank &&
-      x.file === Castling.rookEnds[rookFileIndex]
-  );
-  const movingRook = mapPieceToMovedPiece(rookSquare.contains);
-  const postCastleSquares = mapPieceToNewSquare(squares, rookTargetIndex, {
-    ...rookSquare,
-    contains: movingRook
-  });
-
-  return postCastleSquares;
-}

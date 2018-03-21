@@ -11,7 +11,7 @@ import {
   possibleMovesForSelectedPiece,
   getCheckStatusForColour
 } from 'utils/piece';
-import availableSpecialMovesForSelectedPiece from 'utils/special-moves';
+import availableSpecialMovesForSelectedPiece from 'utils/specialMoves';
 import {
   getMoveIndexForPlayback,
   selectNextMoveSquareId,

@@ -1,58 +1,9 @@
 import Strings from 'constants/strings';
 
-import {
-  mapSquaresToMove,
-  mapPieceToMovedPiece,
-  mapPieceToNewSquare,
-  mapPieceToNewPiece
-} from 'utils/mappers';
-
-const Castling = {
-  kingTargets: ['c', 'g'],
-  rookStarts: ['a', 'h'],
-  rookEnds: ['d', 'f']
-};
-
-// REFACTOR
-// This is a good example of the function I will Need
-// Bad args though.
-function performMovementFromCurrentToTarget(state, specialMove) {
-  const currentSquare = state.squares.find(
-    x => x.id === state.selectedSquareId
-  );
-  const targetIndex = state.squares.findIndex(
-    x => x.id === specialMove.squareId
-  );
-  const movingPiece = mapPieceToMovedPiece(currentSquare.contains);
-  const defendingPiece = !!state.squares[targetIndex].contains
-    ? { ...state.squares[targetIndex].contains }
-    : null;
-
-  const squares = mapPieceToNewSquare(state.squares, targetIndex, {
-    ...currentSquare,
-    contains: movingPiece
-  });
-  const moves = [
-    ...state.moves,
-    mapSquaresToMove(
-      currentSquare,
-      squares[targetIndex],
-      squares,
-      defendingPiece,
-      specialMove
-    )
-  ];
-  const graveyard = !!defendingPiece
-    ? [...state.graveyard, defendingPiece].filter(x => !!x)
-    : state.graveyard;
-  return {
-    ...state,
-    squares,
-    selectedSquareId: null,
-    moves,
-    graveyard
-  };
-}
+import { mapPieceToNewPiece } from 'utils/mappers';
+import performMovementFromCurrentToTarget, {
+  performRookMovementForCastling
+} from 'utils/squaresUpdate';
 
 function specialMoveSubReducer(state, action) {
   const { type, squareId: targetSquareId } = action.specialMove;
@@ -61,6 +12,8 @@ function specialMoveSubReducer(state, action) {
 
   const postPieceMovementToTargetState = performMovementFromCurrentToTarget(
     state,
+    state.selectedSquareId,
+    action.specialMove.squareId,
     action.specialMove
   );
   switch (type) {
@@ -117,32 +70,10 @@ function specialMoveSubReducer(state, action) {
       };
     }
     case Strings.specialMoves.castling: {
-      const newKingSquare = postPieceMovementToTargetState.squares.find(
-        x => x.id === targetSquareId
-      );
-      const rookFileIndex = Castling.kingTargets.findIndex(
-        x => x === newKingSquare.file
-      );
-      const rookSquare = postPieceMovementToTargetState.squares.find(
-        x =>
-          x.rank === newKingSquare.rank &&
-          x.file === Castling.rookStarts[rookFileIndex]
-      );
-      const rookTargetIndex = postPieceMovementToTargetState.squares.findIndex(
-        x =>
-          x.rank === newKingSquare.rank &&
-          x.file === Castling.rookEnds[rookFileIndex]
-      );
-      const movingRook = mapPieceToMovedPiece(rookSquare.contains);
-      const squares = mapPieceToNewSquare(
+      const squares = performRookMovementForCastling(
         postPieceMovementToTargetState.squares,
-        rookTargetIndex,
-        {
-          ...rookSquare,
-          contains: movingRook
-        }
+        targetSquareId
       );
-
       return {
         ...postPieceMovementToTargetState,
         squares

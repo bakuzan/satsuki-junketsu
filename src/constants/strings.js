@@ -34,11 +34,18 @@ const pgn = {
   checkmate: '#'
 };
 
+const castling = {
+  kingTargets: ['c', 'g'],
+  rookStarts: ['a', 'h'],
+  rookEnds: ['d', 'f']
+};
+
 const Strings = {
   localUserSettings: 'satsukiUserSettings',
   colours,
   pieces,
   specialMoves,
+  castling,
   pgn
 };
 
