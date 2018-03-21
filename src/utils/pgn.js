@@ -29,6 +29,12 @@ function generatePortableGameNotationForMove(item) {
       item.specialMove.promoteTo
     ] || ''}`;
   }
+  if (
+    item.specialMove &&
+    item.specialMove.type === Strings.specialMoves.enPassant
+  ) {
+    pgn += `${Strings.pgn.enPassant}`;
+  }
   const { isCheck, isCheckmate } = item.checkStatus;
   if (!isCheckmate && isCheck) pgn += Strings.pgn.check;
   if (isCheckmate) pgn += Strings.pgn.checkmate;

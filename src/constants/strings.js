@@ -30,6 +30,7 @@ const pgn = {
   capture: 'x',
   promotion: '=',
   castle: { king: 'O-O', queen: 'O-O-O' },
+  enPassant: 'e.p.',
   check: '+',
   checkmate: '#'
 };

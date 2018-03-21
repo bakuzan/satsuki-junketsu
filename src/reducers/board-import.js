@@ -8,7 +8,10 @@ import {
   mapPieceToNewSquare,
   mapSquaresToMove
 } from 'utils/mappers';
-import { performRookMovementForCastling } from 'utils/squaresUpdate';
+import {
+  performRookMovementForCastling,
+  updateBoardToRemovePassedPawn
+} from 'utils/squaresUpdate';
 
 const getKeyForFirstLetter = l => {
   const keys = Object.keys(Strings.pgn.piece);
@@ -28,13 +31,18 @@ function resolveCastlingToSquare(pgnStr, isWhiteMove) {
 function resolveSpecialMove(pgnStr) {
   if (pgnStr === Strings.pgn.castle.king || pgnStr === Strings.pgn.castle.queen)
     return { type: Strings.specialMoves.castling };
-  if (pgnStr.includes('='))
+
+  if (pgnStr.includes(Strings.pgn.promotion))
     return {
       type: Strings.specialMoves.promotion,
       promoteTo: getKeyForFirstLetter(
         pgnStr.replace(Regexes.MATCH_EVERYTHING_UPTO_EQUALS, '')
       )
     };
+
+  if (pgnStr.includes(Strings.pgn.enPassant))
+    return { type: Strings.specialMoves.enPassant };
+
   return null;
 }
 
@@ -118,18 +126,22 @@ function importSubReducer(cleanState, action) {
       ...from,
       contains: movingPiece
     });
-    const isCastling =
-      move.specialMove &&
-      move.specialMove.type === Strings.specialMoves.castling;
-    squares = !isCastling
-      ? squares
-      : performRookMovementForCastling(squares, to.id);
 
     const specialMove = move.specialMove
       ? { ...move.specialMove, squareId: to.id }
       : null;
+    const isCastling =
+      move.specialMove &&
+      move.specialMove.type === Strings.specialMoves.castling;
+    const isEnPassant =
+      move.specialMove &&
+      move.specialMove.type === Strings.specialMoves.enPassant;
 
-    return {
+    squares = !isCastling
+      ? squares
+      : performRookMovementForCastling(squares, to.id);
+
+    const newState = {
       ...p,
       squares,
       graveyard: [...p.graveyard, captured].filter(x => !!x),
@@ -138,6 +150,10 @@ function importSubReducer(cleanState, action) {
         mapSquaresToMove(from, squares[toIndex], squares, captured, specialMove)
       ]
     };
+
+    return !isEnPassant
+      ? newState
+      : updateBoardToRemovePassedPawn(newState, to.id);
   }, cleanState);
 }
 
