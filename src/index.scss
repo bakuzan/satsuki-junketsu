@@ -30,6 +30,10 @@ main {
   width: 100%;
 }
 
+#chess-game-actions > .button:not(:last-child) {
+  margin-right: 5px;
+}
+
 #chess-game-status {
   display: flex;
   justify-content: center;
