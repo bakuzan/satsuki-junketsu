@@ -21,12 +21,7 @@ class ChessGame extends React.Component {
     super(props);
     this.fileSelector = null;
 
-    this.openFileSelector = this.openFileSelector.bind(this);
     this.handleImport = this.handleImport.bind(this);
-  }
-
-  openFileSelector() {
-    this.fileSelector.click();
   }
 
   async handleImport(event) {
@@ -48,7 +43,11 @@ class ChessGame extends React.Component {
           <GameAction id="export-game" onClick={() => exportPGNForMoves(moves)}>
             Export
           </GameAction>
-          <GameAction id="import-game" onClick={this.openFileSelector}>
+          <label
+            id="import-game"
+            role="button"
+            className="button ripple primary"
+          >
             Import
             <input
               ref={el => (this.fileSelector = el)}
@@ -56,7 +55,7 @@ class ChessGame extends React.Component {
               accept=".pgn"
               onChange={this.handleImport}
             />
-          </GameAction>
+          </label>
         </div>
         <div id="chess-game" className="row">
           <div>
