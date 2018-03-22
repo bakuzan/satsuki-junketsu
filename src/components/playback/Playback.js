@@ -56,6 +56,7 @@ class Playback extends React.Component {
 
   stopPlaying() {
     clearInterval(this.timer);
+    this.previousPosition = null;
     this.setState({ isPlaying: false });
   }
 
