@@ -1,3 +1,4 @@
+import Strings from 'constants/strings';
 import { SLIDER_START, SLIDER_END } from 'constants/slider';
 import { buildStartingBoard } from './board';
 import {
@@ -5,7 +6,7 @@ import {
   mapPieceToNewSquare,
   mapPieceToNewPiece
 } from './mappers';
-import performMovementFromCurrentToTarget, {
+import {
   performRookMovementForCastling,
   updateSquaresToRemovePassedPawn
 } from './squaresUpdate';
@@ -34,10 +35,7 @@ const updateBoardUsingSpecialMove = (specialMove, squares) => {
     case Strings.specialMoves.castling:
       return performRookMovementForCastling(squares, targetSquareId);
     case Strings.specialMoves.enPassant:
-      return updateSquaresToRemovePassedPawn(
-        postPieceMovementToTargetState,
-        targetSquareId
-      );
+      return updateSquaresToRemovePassedPawn(squares, targetSquareId);
     case Strings.specialMoves.promotion: {
       const promotionIndex = squares.findIndex(x => x.id === targetSquareId);
       return mapPieceToNewPiece(squares, promotionIndex, {
