@@ -1,16 +1,5 @@
-@import "../../styles/_variables";
-
 .piece {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-size: 100%;
   cursor: pointer;
-  @each $name, $value in $pieces {
-    &.#{$name} {
-      background-image: url('https://raw.githubusercontent.com/bakuzan/chess-images/master/' + $value + '.png');
-    }
-  }
 }
 
 .read-only {
