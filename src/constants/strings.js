@@ -1,6 +1,8 @@
 const colours = {
   white: 'white',
-  black: 'black'
+  black: 'black',
+  whiteHex: '#ffffff',
+  blackHex: '#000000'
 };
 const pieces = {
   pawn: 'pawn',

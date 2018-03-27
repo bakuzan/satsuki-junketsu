@@ -33,7 +33,7 @@ const rookStylePath3 = {
 };
 
 const Rook = ({ size, styleSettings }) => {
-  const mainBody = { ...rookStyleMainBody, ...styleSettings.mainBody };
+  const mainBody = { ...rookStyleMainBody, ...styleSettings };
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

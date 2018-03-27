@@ -3,13 +3,16 @@ import React from 'react';
 import Strings from 'constants/strings';
 
 const PIECE_SIZE = 45;
-const setColour = c => (c === Strings.colours.white ? '#ffffff' : '#000000');
+const setColour = c =>
+  c === Strings.colours.white
+    ? Strings.colours.whiteHex
+    : Strings.colours.blackHex;
 
 function colourSettingsForPieces(pieceName, colourString) {
-  const oppositeColourString =
-    colourString === Strings.colours.white
-      ? Strings.colours.black
-      : Strings.colours.white;
+  const isWhite = colourString === Strings.colours.white;
+  const oppositeColourString = isWhite
+    ? Strings.colours.black
+    : Strings.colours.white;
   const colour = setColour(colourString);
   const oppositeColour = setColour(oppositeColourString);
 
@@ -34,17 +37,9 @@ function colourSettingsForPieces(pieceName, colourString) {
     case Strings.pieces.pawn:
       return { fill: colour };
     case Strings.pieces.queen:
-      return {
-        mainBody: { fill: colour, stroke: oppositeColour },
-        circles: { fill: colour },
-        spikes: { stroke: oppositeColour },
-        crownLines: { fill: oppositeColour },
-        baseline: { stroke: oppositeColour }
-      };
+      return { isWhite, mainBody: { fill: colour } };
     case Strings.pieces.rook:
-      return {
-        mainBody: { fill: colour }
-      };
+      return { fill: colour };
     default:
       return {};
   }
