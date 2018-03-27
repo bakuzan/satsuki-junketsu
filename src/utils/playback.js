@@ -1,6 +1,14 @@
 import { SLIDER_START, SLIDER_END } from 'constants/slider';
 import { buildStartingBoard } from './board';
-import { mapPieceToMovedPiece, mapPieceToNewSquare } from './mappers';
+import {
+  mapPieceToMovedPiece,
+  mapPieceToNewSquare,
+  mapPieceToNewPiece
+} from './mappers';
+import performMovementFromCurrentToTarget, {
+  performRookMovementForCastling,
+  updateSquaresToRemovePassedPawn
+} from './squaresUpdate';
 
 export const resolveSliderValue = v =>
   v > SLIDER_END ? SLIDER_END : v < SLIDER_START ? SLIDER_START : v;
@@ -20,13 +28,40 @@ export const selectNextMoveSquareId = (moves, moveIndex) => {
   return nextMove.from.id;
 };
 
+const updateBoardUsingSpecialMove = (specialMove, squares) => {
+  const { type, squareId: targetSquareId } = specialMove;
+  switch (type) {
+    case Strings.specialMoves.castling:
+      return performRookMovementForCastling(squares, targetSquareId);
+    case Strings.specialMoves.enPassant:
+      return updateSquaresToRemovePassedPawn(
+        postPieceMovementToTargetState,
+        targetSquareId
+      );
+    case Strings.specialMoves.promotion: {
+      const promotionIndex = squares.findIndex(x => x.id === targetSquareId);
+      return mapPieceToNewPiece(squares, promotionIndex, {
+        name: specialMove.promoteTo
+      });
+    }
+    default:
+      return squares;
+  }
+};
+
 export const createBoardLayoutForMoveList = moves =>
   moves.reduce((squares, m) => {
     const from = squares.find(x => x.id === m.from.id);
     const toIndex = squares.findIndex(x => x.id === m.to.id);
     const contains = mapPieceToMovedPiece(from.contains);
-    return mapPieceToNewSquare(squares, toIndex, {
+    let newSquares = mapPieceToNewSquare(squares, toIndex, {
       ...from,
       contains
     });
+
+    if (m.specialMove) {
+      newSquares = updateBoardUsingSpecialMove(m.specialMove, newSquares);
+    }
+
+    return newSquares;
   }, buildStartingBoard());

@@ -97,3 +97,11 @@ export function updateBoardToRemovePassedPawn(oldState, movedPieceSquareId) {
     graveyard: [...oldState.graveyard, passedPiece]
   };
 }
+
+export function updateSquaresToRemovePassedPawn(squares, movedPieceSquareId) {
+  const fakeStateWithNewSquares = updateBoardToRemovePassedPawn(
+    { moves: [], graveyard: [], squares },
+    movedPieceSquareId
+  );
+  return fakeStateWithNewSquares.squares;
+}
