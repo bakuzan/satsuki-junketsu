@@ -12,6 +12,7 @@ import {
   performRookMovementForCastling,
   updateBoardToRemovePassedPawn
 } from 'utils/squaresUpdate';
+import availableSpecialMovesForSelectedPiece from '../utils/specialMoves';
 
 const getKeyForFirstLetter = l => {
   const keys = Object.keys(Strings.pgn.piece);
@@ -94,6 +95,19 @@ function processPGNToMove(pgnStr, index) {
   };
 }
 
+function canDoSpecialMove(state, move, square) {
+  if (!move.specialMove) return false;
+
+  const specialMovesPieceCanDo = availableSpecialMovesForSelectedPiece({
+    ...state,
+    selectedSquareId: square.id
+  });
+  const containsTheMatchingMove = specialMovesPieceCanDo.some(
+    x => x.type === move.specialMove.type
+  );
+  return containsTheMatchingMove;
+}
+
 function importSubReducer(cleanState, action) {
   const { fileText } = action;
   const data = importPGNFromFile(fileText);
@@ -108,7 +122,7 @@ function importSubReducer(cleanState, action) {
     const captured = toHasPiece ? { ...to.contains } : null;
     const func = toHasPiece ? isValidTake : isValidMove;
 
-    const fromPossibilities = p.squares.filter(
+    const from = p.squares.find(
       x =>
         (!move.from ||
           (move.from &&
@@ -117,9 +131,8 @@ function importSubReducer(cleanState, action) {
         x.contains &&
         x.contains.colour === move.piece.colour &&
         x.contains.name === move.piece.name &&
-        (func(x, to, p.squares) || !!move.specialMove)
+        (func(x, to, p.squares) || canDoSpecialMove(p, move, x))
     );
-    const from = fromPossibilities[0];
 
     const movingPiece = mapPieceToMovedPiece(from.contains);
     let squares = mapPieceToNewSquare(p.squares, toIndex, {

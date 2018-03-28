@@ -4,7 +4,6 @@ import { generateUniqueId } from 'utils/common';
 const KING_SIDE_CASTLE = 'g';
 
 function generatePortableGameNotationForMove(item) {
-  console.log('make pgn for >> ', item);
   const id = generateUniqueId();
   let pgn = '';
   if (

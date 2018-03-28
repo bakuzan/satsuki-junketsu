@@ -9,7 +9,6 @@ const MoveItem = ({ pgn, isActive }) => (
 );
 
 const MoveList = ({ moves, activeMoveIndex }) => {
-  console.log('moves', moves);
   return (
     <div id="move-list">
       <ul className="list column two">
