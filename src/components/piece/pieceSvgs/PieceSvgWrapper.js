@@ -16,7 +16,7 @@ function colourSettingsForPieces(pieceName, colourString) {
   const colour = setColour(colourString);
   const oppositeColour = setColour(oppositeColourString);
 
-  switch (pieceName.toLowerCase()) {
+  switch (pieceName) {
     case Strings.pieces.bishop:
       return {
         outline: { fill: colour },
@@ -49,7 +49,7 @@ export default function withColour(WrappedPiece) {
   class PieceSvgWrapper extends React.Component {
     render() {
       const colourSettings = colourSettingsForPieces(
-        WrappedPiece.name,
+        WrappedPiece.displayName,
         this.props.colour
       );
       return <WrappedPiece size={PIECE_SIZE} styleSettings={colourSettings} />;

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Strings from 'constants/strings';
 import withColour from './PieceSvgWrapper';
 
 const bishopStyleOuter = {
@@ -52,5 +53,7 @@ const Bishop = ({ size, styleSettings }) => {
     </svg>
   );
 };
+
+Bishop.displayName = Strings.pieces.bishop;
 
 export default withColour(Bishop);

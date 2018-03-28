@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Strings from 'constants/strings';
 import withColour from './PieceSvgWrapper';
 
 const rookStyleMainBody = {
@@ -75,5 +76,7 @@ const Rook = ({ size, styleSettings }) => {
     </svg>
   );
 };
+
+Rook.displayName = Strings.pieces.rook;
 
 export default withColour(Rook);

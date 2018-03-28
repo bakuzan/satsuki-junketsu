@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Strings from 'constants/strings';
 import withColour from './PieceSvgWrapper';
 
 const kingStyleOuter = {
@@ -78,5 +79,7 @@ const King = ({ size, styleSettings }) => {
     </svg>
   );
 };
+
+King.displayName = Strings.pieces.king;
 
 export default withColour(King);

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Strings from 'constants/strings';
 import withColour from './PieceSvgWrapper';
 
 const pawnStyle = {
@@ -29,5 +30,7 @@ const Pawn = ({ size, styleSettings }) => (
     />
   </svg>
 );
+
+Pawn.displayName = Strings.pieces.pawn;
 
 export default withColour(Pawn);
