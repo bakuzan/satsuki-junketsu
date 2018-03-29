@@ -16,14 +16,15 @@ export const resolveSliderValue = v =>
 
 export const getMoveIndexForPlayback = (moves, playback) => {
   if (playback.sliderPosition === SLIDER_END) return moves.length;
-  if (playback.sliderPosition === SLIDER_START) return SLIDER_START;
+  if (playback.sliderPosition === SLIDER_START) return null;
 
-  const percentage = playback.sliderPosition / SLIDER_END;
-  const moveNumber = Math.round(moves.length * percentage);
+  const stepValue = Math.round(SLIDER_END / moves.length, 2);
+  const moveNumber = Math.floor(playback.sliderPosition / stepValue, 1);
   return moveNumber;
 };
 
-export const selectNextMoveSquareId = (moves, moveIndex) => {
+export const selectNextMoveSquareId = (moves, selectedIndex) => {
+  const moveIndex = selectedIndex + 1;
   const nextMove = moves[moveIndex];
   if (!nextMove) return null;
   return nextMove.from.id;

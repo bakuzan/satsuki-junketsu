@@ -25,13 +25,19 @@ const BoardContainer = ({ board, ...props }) => {
    *  for the currently active move according to the playback.sliderPosition
   */
   const activeMoveIndex = getMoveIndexForPlayback(board.moves, board.playback);
-  const moves = board.moves.slice(0, activeMoveIndex);
+
+  const moves = isNaN(activeMoveIndex)
+    ? board.moves.slice(0, 1)
+    : board.moves.slice(0, activeMoveIndex);
+
   const selectedSquareId = !isReadOnly
     ? board.selectedSquareId
     : selectNextMoveSquareId(board.moves, activeMoveIndex);
+
   const squares = !isReadOnly
     ? board.squares
     : createBoardLayoutForMoveList(moves);
+
   const currentBoardForDisplay = {
     ...board,
     selectedSquareId,

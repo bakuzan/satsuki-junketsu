@@ -6,7 +6,7 @@ import * as actions from 'actions/playback';
 
 const mapStateToProps = state => ({
   ...state.board.playback,
-  isDisabled: state.board.moves.length === 0
+  isDisabled: state.board.moves.length < 2
 });
 
 const mapDispatchToProps = dispatch => ({
