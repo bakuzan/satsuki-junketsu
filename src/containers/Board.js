@@ -26,9 +26,7 @@ const BoardContainer = ({ board, ...props }) => {
   */
   const activeMoveIndex = getMoveIndexForPlayback(board.moves, board.playback);
 
-  const moves = isNaN(activeMoveIndex)
-    ? board.moves.slice(0, 1)
-    : board.moves.slice(0, activeMoveIndex);
+  const moves = board.moves.slice(0, activeMoveIndex);
 
   const selectedSquareId = !isReadOnly
     ? board.selectedSquareId
