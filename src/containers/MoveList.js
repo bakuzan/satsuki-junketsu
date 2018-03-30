@@ -1,16 +1,11 @@
 import { connect } from 'react-redux';
 
 import MoveList from 'components/moveList/MoveList';
-
 import { mapMovesToPGN } from 'utils/pgn';
-import { getMoveIndexForPlayback } from 'utils/playback';
 
 const mapStateToProps = state => ({
   moves: mapMovesToPGN(state.board.moves),
-  activeMoveIndex: getMoveIndexForPlayback(
-    state.board.moves,
-    state.board.playback
-  )
+  activeMoveIndex: state.board.playback.sliderPosition
 });
 
 export default connect(mapStateToProps)(MoveList);

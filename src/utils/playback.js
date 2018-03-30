@@ -1,5 +1,5 @@
 import Strings from 'constants/strings';
-import { SLIDER_START, SLIDER_END } from 'constants/slider';
+import { SLIDER_START } from 'constants/slider';
 import { buildStartingBoard } from './board';
 import {
   mapPieceToMovedPiece,
@@ -11,17 +11,8 @@ import {
   updateSquaresToRemovePassedPawn
 } from './squaresUpdate';
 
-export const resolveSliderValue = v =>
-  v > SLIDER_END ? SLIDER_END : v < SLIDER_START ? SLIDER_START : v;
-
-export const getMoveIndexForPlayback = (moves, playback) => {
-  if (playback.sliderPosition === SLIDER_END) return moves.length;
-  if (playback.sliderPosition === SLIDER_START) return SLIDER_START;
-
-  const stepValue = Math.round(SLIDER_END / moves.length, 2);
-  const moveNumber = Math.floor(playback.sliderPosition / stepValue, 1);
-  return moveNumber;
-};
+export const resolveSliderValue = (v, max) =>
+  v > max ? max : v < SLIDER_START ? SLIDER_START : v;
 
 export const selectNextMoveSquareId = (moves, moveIndex) => {
   const nextMove = moves[moveIndex];

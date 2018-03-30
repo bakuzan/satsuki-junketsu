@@ -1,4 +1,5 @@
 import { createReducer } from './utils';
+import { compose } from 'utils/common';
 import { buildStartingBoard } from 'utils/board';
 import performMovementFromCurrentToTarget from 'utils/squaresUpdate';
 
@@ -16,7 +17,10 @@ import {
   PLAYBACK_STEP_BACK
 } from 'actions/playback';
 import specialMoveSubReducer from './board-specialMove';
-import playbackSubReducer, { playbackInitialState } from './board-playback';
+import playbackSubReducer, {
+  PLAYBACK_STARTING_VALUE,
+  getPlaybackInitialState
+} from './board-playback';
 import importSubReducer from './board-import';
 
 const initialState = {
@@ -25,8 +29,13 @@ const initialState = {
   squares: buildStartingBoard(),
   selectedSquareId: null,
   promotionAt: null,
-  playback: playbackInitialState
+  playback: getPlaybackInitialState(PLAYBACK_STARTING_VALUE)
 };
+
+const updateSlideMaximum = state => ({
+  ...state,
+  playback: getPlaybackInitialState(state.moves.length)
+});
 
 const handlePieceMovement = (state, action) =>
   performMovementFromCurrentToTarget(
@@ -35,19 +44,27 @@ const handlePieceMovement = (state, action) =>
     action.targetSquareId
   );
 
+const handleImport = freshState => (state, action) =>
+  importSubReducer(freshState, action);
+
+const composedPieceMovement = compose(updateSlideMaximum, handlePieceMovement);
+
+const composedSpecialMove = compose(updateSlideMaximum, specialMoveSubReducer);
+
+const composedImport = compose(updateSlideMaximum, handleImport(initialState));
+
 const board = createReducer(initialState, {
   [BOARD_SELECT_SQUARE]: (state, action) => ({
     ...state,
     selectedSquareId: action.squareId
   }),
-  [BOARD_MOVE_PIECE]: handlePieceMovement,
-  [BOARD_TAKE_PIECE]: handlePieceMovement,
-  [BOARD_SPECIAL_MOVE]: specialMoveSubReducer,
+  [BOARD_MOVE_PIECE]: composedPieceMovement,
+  [BOARD_TAKE_PIECE]: composedPieceMovement,
+  [BOARD_SPECIAL_MOVE]: composedSpecialMove,
   [PLAYBACK_UPDATE_SLIDE_POSITION]: playbackSubReducer,
   [PLAYBACK_STEP_FORWARD]: playbackSubReducer,
   [PLAYBACK_STEP_BACK]: playbackSubReducer,
-  [BOARD_IMPORT_GAME]: (state, action) =>
-    importSubReducer(initialState, action),
+  [BOARD_IMPORT_GAME]: composedImport,
   [BOARD_RESET]: () => initialState
 });
 

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import Icons from 'constants/icons';
-import { SLIDER_START, SLIDER_END } from 'constants/slider';
+import { SLIDER_START } from 'constants/slider';
 import './playback.css';
 
 const PlaybackButton = props => (
@@ -42,11 +42,12 @@ class Playback extends React.Component {
       () => {
         clearInterval(this.timer);
         if (!this.state.isPlaying) return;
-        if (this.props.sliderPosition === SLIDER_END)
+        if (this.props.sliderPosition === this.props.sliderMaximum)
           this.props.actions.onSlide(this.props.name, SLIDER_START);
 
         this.timer = setInterval(() => {
-          if (this.previousPosition === SLIDER_END) return this.stopPlaying();
+          if (this.previousPosition === this.props.sliderMaximum)
+            return this.stopPlaying();
           this.previousPosition = this.props.sliderPosition;
           this.props.actions.onStepForward(this.props.name, STEP_FORWARD);
         }, this.props.playbackInterval);
@@ -75,14 +76,20 @@ class Playback extends React.Component {
 
   render() {
     const { isPlaying } = this.state;
-    const { name, isDisabled, isHidden, sliderPosition } = this.props;
+    const {
+      name,
+      isDisabled,
+      isHidden,
+      sliderPosition,
+      sliderMaximum
+    } = this.props;
 
     if (isHidden) return null;
 
     const AT_THE_START = sliderPosition === SLIDER_START;
-    const AT_THE_END = sliderPosition === SLIDER_END;
+    const AT_THE_END = sliderPosition === sliderMaximum;
     const toggleIcon = isPlaying ? Icons.pause : Icons.play;
-    const width = sliderPosition;
+    const width = sliderPosition / sliderMaximum * 100;
     const sliderStyle = {
       backgroundImage: `linear-gradient(90deg, currentcolor, currentcolor ${width}%, transparent ${width}%)`
     };
@@ -103,6 +110,7 @@ class Playback extends React.Component {
             name={name}
             style={sliderStyle}
             value={sliderPosition}
+            max={sliderMaximum}
             disabled={isDisabled}
             onChange={this.handleSliderChange}
           />
@@ -128,6 +136,7 @@ class Playback extends React.Component {
 
 Playback.defaultProps = {
   name: 'slider',
+  sliderMaximum: 100,
   playbackInterval: 1000,
   isDisabled: false,
   isHidden: false
@@ -135,6 +144,7 @@ Playback.defaultProps = {
 
 Playback.propTypes = {
   name: PropTypes.string,
+  sliderMaximum: PropTypes.number,
   playbackInterval: PropTypes.number,
   isDisabled: PropTypes.bool,
   isHidden: PropTypes.bool,

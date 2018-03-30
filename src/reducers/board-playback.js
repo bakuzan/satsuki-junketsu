@@ -5,16 +5,24 @@ import {
 } from 'actions/playback';
 import { resolveSliderValue } from 'utils/playback';
 
-export const playbackInitialState = {
-  sliderPosition: 100
-};
+export const PLAYBACK_STARTING_VALUE = 0;
+export const getPlaybackInitialState = n => ({
+  sliderMaximum: n,
+  sliderPosition: n
+});
 
 function handlePlaybackStep(state, action) {
-  const stepValue = Math.round(100 / state.moves.length, 2);
   const sliderPosition = resolveSliderValue(
-    state.playback.sliderPosition + stepValue * action.stepDirection
+    state.playback.sliderPosition + action.stepDirection,
+    state.playback.sliderMaximum
   );
-  return { ...state, playback: { sliderPosition } };
+  return {
+    ...state,
+    playback: {
+      ...state.playback,
+      sliderPosition
+    }
+  };
 }
 
 function playbackSubReducer(state, action) {
@@ -23,7 +31,10 @@ function playbackSubReducer(state, action) {
       const sliderPosition = action.sliderValue;
       return {
         ...state,
-        playback: { sliderPosition }
+        playback: {
+          ...state.playback,
+          sliderPosition
+        }
       };
     }
     case PLAYBACK_STEP_FORWARD:
@@ -33,7 +44,7 @@ function playbackSubReducer(state, action) {
     default:
       return {
         ...state,
-        playback: playbackInitialState
+        playback: getPlaybackInitialState(PLAYBACK_STARTING_VALUE)
       };
   }
 }

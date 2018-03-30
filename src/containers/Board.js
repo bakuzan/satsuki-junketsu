@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 
 import Board from 'components/board/Board';
 
-import { SLIDER_END } from 'constants/slider';
 import * as actions from 'actions/board';
 import { isWhitesTurn, getCurrentPlayerColour } from 'utils/game';
 import {
@@ -13,19 +12,17 @@ import {
 } from 'utils/piece';
 import availableSpecialMovesForSelectedPiece from 'utils/specialMoves';
 import {
-  getMoveIndexForPlayback,
   selectNextMoveSquareId,
   createBoardLayoutForMoveList
 } from 'utils/playback';
 
 const BoardContainer = ({ board, ...props }) => {
-  const isReadOnly = board.playback.sliderPosition !== SLIDER_END;
+  const activeMoveIndex = board.playback.sliderPosition;
+  const isReadOnly = activeMoveIndex !== board.moves.length;
   /*  For Playback
    *  Here we need to calculate the moves, squares, and set the selectedSquareId
    *  for the currently active move according to the playback.sliderPosition
   */
-  const activeMoveIndex = getMoveIndexForPlayback(board.moves, board.playback);
-
   const moves = board.moves.slice(0, activeMoveIndex);
 
   const selectedSquareId = !isReadOnly

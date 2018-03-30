@@ -5,7 +5,6 @@ import Graveyard from 'components/graveyard/Graveyard';
 
 import Constants from 'constants/index';
 import { isWhitesTurn } from 'utils/game';
-import { getMoveIndexForPlayback } from 'utils/playback';
 
 const DualGraveyards = ({ isReversed, whitePieces, blackPieces }) => (
   <div id="paired-graveyards">
@@ -15,10 +14,7 @@ const DualGraveyards = ({ isReversed, whitePieces, blackPieces }) => (
 );
 
 const getPiecesForColour = (state, colour) => {
-  const activeMoveIndex = getMoveIndexForPlayback(
-    state.board.moves,
-    state.board.playback
-  );
+  const activeMoveIndex = state.board.playback.sliderPosition;
   const moves = state.board.moves.slice(0, activeMoveIndex);
   return state.board.graveyard.filter(
     x =>
