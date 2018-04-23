@@ -1,4 +1,4 @@
-@import './styles/_variables.scss';
+@import './styles/_variables';
 
 body {
   padding: 0;
@@ -7,7 +7,7 @@ body {
 
 body,
 .button {
-  font: 16px 'Roboto mono', monospace;
+  font: $base-font-size 'Roboto mono', monospace;
 }
 
 main {
@@ -15,6 +15,7 @@ main {
   padding: 5px {
     top: $fixed-header-height;
   }
+  box-sizing: border-box;
 }
 
 .center-contents {
@@ -25,13 +26,30 @@ main {
 
 #chess-game {
   @extend .center-contents;
-  justify-content: space-evenly;
-  height: calc(100% - #{$chess-game-actions-height});
+  justify-content: space-between;
+  height: calc(100% - #{$chess-game-actions--height});
   width: 100%;
+  padding: {
+    left: #{$chess-game--padding + $move-list--width};
+    right: $chess-game--padding;
+  }
+  box-sizing: border-box;
+}
+#chess-game-inner-wrapper {
+  display: flex;
+  flex: 1;
+
+  > div {
+    margin: auto;
+  }
 }
 
-#chess-game-actions > .button:not(:last-child) {
-  margin-right: 5px;
+#chess-game-actions {
+  margin-bottom: 10px;
+
+  > .button:not(:last-child) {
+    margin-right: 5px;
+  }
 }
 
 #chess-game-status {
@@ -42,16 +60,22 @@ main {
   > div {
     display: flex;
     flex: 1;
-    flex-flow: column;
     justify-content: center;
+    height: $chess-game-status--height;
+    text-align: center;
+    white-space: pre-line;
   }
 }
 
 #paired-graveyards {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   height: calc(
-    100vh - #{$fixed-header-height * 2} - #{$chess-game-actions-height}
+    100vh - #{$fixed-header-height * 2} - #{$chess-game-actions--height}
   );
   min-width: 200px;
+  max-width: 320px;
 }
 // Hide file inputs in favour of nice button
 .button > input[type='file'] {

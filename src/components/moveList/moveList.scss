@@ -1,7 +1,9 @@
+@import '../../styles/_variables';
+
 #move-list {
   position: fixed;
   left: 0;
-  width: 150px;
+  width: $move-list--width;
   height: 100%;
 
   li {
