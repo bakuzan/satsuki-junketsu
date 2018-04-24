@@ -59,11 +59,11 @@ class ChessGame extends React.Component {
         </div>
         <div id="chess-game" className="row">
           <div className="column fill">
-            <div id="chess-game-status" />
             <div id="chess-game-inner-wrapper">
+              <div id="chess-game-status" />
               <Board />
+              <Playback />
             </div>
-            <Playback />
           </div>
           <Graveyard />
         </div>
