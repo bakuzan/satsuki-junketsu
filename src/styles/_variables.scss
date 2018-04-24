@@ -25,7 +25,7 @@ $pieces: (
 );
 
 $square: (
-  size: 45,
+  size: calc(100%/8),
   light-background: $square-background-light,
   dark-background: $square-background-dark,
   selected: $square-background-selected,
@@ -40,7 +40,7 @@ $square: (
   special-move-border: $square-border-special-move
 );
 $chess-board: (
-  size: map-get($square, size) * 8,
+  size: 'auto',
   border-colour: $board-border-colour
 );
 // z-index

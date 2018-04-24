@@ -1,4 +1,4 @@
-@import "../../styles/_variables";
+@import '../../styles/_variables';
 
 .scale {
   position: absolute;
@@ -6,7 +6,12 @@
     display: inline-flex;
     justify-content: space-around;
     height: #{$scale-size}px;
-    width: #{map-get($chess-board, size)}px;
+    width: 100%; //#{map-get($chess-board, size)}px;
+    > div {
+      display: inline-flex;
+      justify-content: center;
+      width: calc(100%/8);
+    }
     &.top {
       top: -#{$scale-size + 5}px;
     }
@@ -19,7 +24,12 @@
     justify-content: space-around;
     flex-direction: column;
     width: #{$scale-size}px;
-    height: #{map-get($chess-board, size)}px;
+    height: 100%; //#{map-get($chess-board, size)}px;
+    > div {
+      display: flex;
+      align-items: center;
+      height: calc(100%/8);
+    }
     &.left {
       left: -#{$scale-size}px;
     }

@@ -5,12 +5,18 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  width: #{map-get($chess-board, size)}px;
-  height: #{map-get($chess-board, size)}px;
+  width: #{map-get($chess-board, size)};
+  height: #{map-get($chess-board, size)};
   border: {
     width: $border-width;
     style: solid;
     color: map-get($chess-board, border-colour);
   }
   margin: 25px;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

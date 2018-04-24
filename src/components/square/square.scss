@@ -3,9 +3,10 @@
 .square {
   position: relative;
   display: inline-flex;
-  flex-shrink: 0;
-  width: #{map-get($square, size)}px;
-  height: #{map-get($square, size)}px;
+  justify-content: center;
+  // flex-shrink: 0;
+  width: #{map-get($square, size)}; //px;
+  height: #{map-get($square, size)}; //px;
   border: 1px solid;
   box-sizing: border-box;
 
