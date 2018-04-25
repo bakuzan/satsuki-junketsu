@@ -57,15 +57,17 @@ class ChessGame extends React.Component {
             />
           </label>
         </div>
-        <div id="chess-game" className="row">
-          <div className="column fill">
+        <div id="chess-game">
+          <div className="left-column">
+            <div id="chess-game-status" />
             <div id="chess-game-inner-wrapper">
-              <div id="chess-game-status" />
               <Board />
-              <Playback />
             </div>
+            <Playback />
           </div>
-          <Graveyard />
+          <div className="right-column">
+            <Graveyard />
+          </div>
         </div>
       </React.Fragment>
     );

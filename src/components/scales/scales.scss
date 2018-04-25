@@ -35,7 +35,9 @@
     }
     &.right {
       right: -#{$scale-size}px;
-      text-align: right;
+      > div {
+        justify-content: flex-end;
+      }
     }
   }
 }

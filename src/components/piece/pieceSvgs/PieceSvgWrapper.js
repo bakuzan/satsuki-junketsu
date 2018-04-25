@@ -2,7 +2,7 @@ import React from 'react';
 
 import Strings from 'constants/strings';
 
-const PIECE_SIZE = 45;
+const PIECE_SIZE = 'auto';
 const setColour = c =>
   c === Strings.colours.white
     ? Strings.colours.whiteHex
