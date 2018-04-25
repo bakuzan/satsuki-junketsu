@@ -3,6 +3,7 @@
 .graveyard {
   position: relative;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   width: 100%;
   height: 50%;
@@ -16,7 +17,7 @@
     position: relative;
     display: inline-flex;
     flex-shrink: 0;
-    width: #{map-get($square, size)}px;
-    height: #{map-get($square, size)}px;
+    max-width: #{map-get($square, graveyard-max-size)};
+    max-height: #{map-get($square, graveyard-max-size)};
   }
 }

@@ -12,7 +12,7 @@ body,
 }
 
 main {
-  height: calc(100vh - #{$fixed-header-height});
+  height: 100vh;
   padding: 5px {
     top: $fixed-header-height;
   }
@@ -39,6 +39,8 @@ main {
   > div {
     @extend %column;
     @extend %flex-all;
+    max-height: 100%;
+
     &.left-column {
       flex-basis: 60%;
     }
@@ -64,8 +66,6 @@ main {
 }
 
 #chess-game-actions {
-  margin-bottom: 10px;
-
   > .button:not(:last-child) {
     margin-right: 5px;
   }
@@ -74,9 +74,7 @@ main {
 #chess-game-status {
   display: flex;
   justify-content: center;
-  margin: 0 {
-    bottom: #{$scale-size + 15}px;
-  }
+  margin: 0;
 
   > div {
     display: flex;

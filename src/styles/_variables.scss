@@ -26,6 +26,7 @@ $pieces: (
 
 $square: (
   size: calc(100%/8),
+  graveyard-max-size: 45px,
   light-background: $square-background-light,
   dark-background: $square-background-dark,
   selected: $square-background-selected,

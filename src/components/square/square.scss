@@ -4,9 +4,8 @@
   position: relative;
   display: inline-flex;
   justify-content: center;
-  // flex-shrink: 0;
-  width: #{map-get($square, size)}; //px;
-  height: #{map-get($square, size)}; //px;
+  width: #{map-get($square, size)};
+  height: #{map-get($square, size)};
   border: 1px solid;
   box-sizing: border-box;
 
