@@ -10,6 +10,7 @@ import Playback from './Playback';
 import { resetBoard, importGame } from 'actions/board';
 import { exportPGNForMoves } from 'utils/exportImport';
 
+const MAX_WIDTH_FALLBACK = '525px';
 const GameAction = ({ children, ...props }) => (
   <button type="button" className="button ripple primary" {...props}>
     {children}
@@ -19,8 +20,9 @@ const GameAction = ({ children, ...props }) => (
 class ChessGame extends React.Component {
   constructor(props) {
     super(props);
-    this.fileSelector = null;
 
+    this.fileSelector = React.createRef();
+    this.gameElement = React.createRef();
     this.handleImport = this.handleImport.bind(this);
   }
 
@@ -31,8 +33,20 @@ class ChessGame extends React.Component {
     this.props.actions.importGame(fileText);
   }
 
+  getBoardWidth() {
+    return (
+      (this.gameElement.current && this.gameElement.current.clientHeight) ||
+      MAX_WIDTH_FALLBACK
+    );
+  }
+
   render() {
     const { moves, actions } = this.props;
+    console.log(this.gameElement, this.gameElement.clientHeight);
+    const boardContainerStyle = {
+      maxWidth: this.getBoardWidth()
+    };
+
     return (
       <React.Fragment>
         <MoveList />
@@ -50,20 +64,20 @@ class ChessGame extends React.Component {
           >
             Import
             <input
-              ref={el => (this.fileSelector = el)}
+              ref={this.fileSelector}
               type="file"
               accept=".pgn"
               onChange={this.handleImport}
             />
           </label>
         </div>
-        <div id="chess-game">
+        <div id="chess-game" ref={this.getGameContainer}>
           <div className="left-column">
-            <div id="chess-game-inner-wrapper">
+            <div id="chess-game-status" />
+            <div id="chess-game-inner-wrapper" style={boardContainerStyle}>
               <Board />
             </div>
             <Playback />
-            <div id="chess-game-status" />
           </div>
           <div className="right-column">
             <Graveyard />

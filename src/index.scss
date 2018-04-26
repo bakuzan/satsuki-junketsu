@@ -39,29 +39,29 @@ main {
   > div {
     @extend %column;
     @extend %flex-all;
-    max-height: 100%;
+    // max-height: 100%;
 
     &.left-column {
       flex-basis: 60%;
     }
     &.right-column {
-      flex-basis: 40%;
+      flex-basis: 20%;
       align-items: flex-end;
     }
   }
 }
 
 #chess-game-inner-wrapper {
-  @extend %fill;
   position: relative;
   display: flex;
-  flex: 1;
   flex-flow: column;
+  width: 100%;
   padding: 10px;
+  margin: auto;
   &:before {
     content: '';
     display: block;
-    margin-top: 100%;
+    padding-top: 100%;
   }
 }
 
@@ -81,6 +81,7 @@ main {
     flex: 1;
     justify-content: center;
     height: $chess-game-status--height;
+    margin: 10px 0;
     text-align: center;
     white-space: pre-line;
   }
