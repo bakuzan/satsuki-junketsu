@@ -41,7 +41,7 @@ $square: (
   special-move-border: $square-border-special-move
 );
 $chess-board: (
-  size: 'auto',
+  size: '100%',
   border-colour: $board-border-colour
 );
 // z-index

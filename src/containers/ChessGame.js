@@ -6,11 +6,11 @@ import Board from './Board';
 import Graveyard from './Graveyard';
 import MoveList from './MoveList';
 import Playback from './Playback';
+import MaintainAspectRatio from './MaintainAspectRatio';
 
 import { resetBoard, importGame } from 'actions/board';
 import { exportPGNForMoves } from 'utils/exportImport';
 
-const MAX_WIDTH_FALLBACK = '525px';
 const GameAction = ({ children, ...props }) => (
   <button type="button" className="button ripple primary" {...props}>
     {children}
@@ -22,7 +22,6 @@ class ChessGame extends React.Component {
     super(props);
 
     this.fileSelector = React.createRef();
-    this.gameElement = React.createRef();
     this.handleImport = this.handleImport.bind(this);
   }
 
@@ -33,19 +32,8 @@ class ChessGame extends React.Component {
     this.props.actions.importGame(fileText);
   }
 
-  getBoardWidth() {
-    return (
-      (this.gameElement.current && this.gameElement.current.clientHeight) ||
-      MAX_WIDTH_FALLBACK
-    );
-  }
-
   render() {
     const { moves, actions } = this.props;
-    console.log(this.gameElement, this.gameElement.clientHeight);
-    const boardContainerStyle = {
-      maxWidth: this.getBoardWidth()
-    };
 
     return (
       <React.Fragment>
@@ -72,13 +60,17 @@ class ChessGame extends React.Component {
           </label>
         </div>
         <div id="chess-game" ref={this.getGameContainer}>
-          <div className="left-column">
-            <div id="chess-game-status" />
-            <div id="chess-game-inner-wrapper" style={boardContainerStyle}>
-              <Board />
-            </div>
-            <Playback />
-          </div>
+          <MaintainAspectRatio>
+            {(ref, style) => (
+              <div ref={ref} className="left-column">
+                <div id="chess-game-status" />
+                <div id="chess-game-inner-wrapper" style={style}>
+                  <Board />
+                </div>
+                <Playback />
+              </div>
+            )}
+          </MaintainAspectRatio>
           <div className="right-column">
             <Graveyard />
           </div>

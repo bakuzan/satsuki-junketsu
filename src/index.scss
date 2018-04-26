@@ -39,10 +39,9 @@ main {
   > div {
     @extend %column;
     @extend %flex-all;
-    // max-height: 100%;
 
     &.left-column {
-      flex-basis: 60%;
+      flex-basis: 70%;
     }
     &.right-column {
       flex-basis: 20%;
@@ -55,14 +54,8 @@ main {
   position: relative;
   display: flex;
   flex-flow: column;
-  width: 100%;
-  padding: 10px;
+  padding: #{$scale-size}px;
   margin: auto;
-  &:before {
-    content: '';
-    display: block;
-    padding-top: 100%;
-  }
 }
 
 #chess-game-actions {
