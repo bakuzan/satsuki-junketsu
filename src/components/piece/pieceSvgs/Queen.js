@@ -46,12 +46,13 @@ const queenStyleWhitePath2 = {
   fill: 'none'
 };
 
-const Queen = ({ size, styleSettings }) => {
+const Queen = ({ size, viewBox, styleSettings }) => {
   if (styleSettings.isWhite)
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
+        viewBox={viewBox}
         width={size}
         height={size}
       >
@@ -100,6 +101,7 @@ const Queen = ({ size, styleSettings }) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
+      viewBox={viewBox}
       width={size}
       height={size}
     >

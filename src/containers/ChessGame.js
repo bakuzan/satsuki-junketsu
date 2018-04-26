@@ -64,9 +64,7 @@ class ChessGame extends React.Component {
             {(ref, style) => (
               <div ref={ref} className="left-column">
                 <div id="chess-game-status" />
-                <div id="chess-game-inner-wrapper" style={style}>
-                  <Board />
-                </div>
+                <Board style={style} />
                 <Playback />
               </div>
             )}

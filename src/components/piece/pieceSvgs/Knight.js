@@ -32,7 +32,7 @@ const knightStyleMane = {
   stroke: 'none'
 };
 
-const Knight = ({ size, styleSettings }) => {
+const Knight = ({ size, viewBox, styleSettings }) => {
   const mane = { ...knightStyleMane, ...styleSettings.mane };
   const face = { ...knightStyleFace, ...styleSettings.face };
   const mainBody = { ...knightStyleMainBody, ...styleSettings.mainBody };
@@ -40,6 +40,7 @@ const Knight = ({ size, styleSettings }) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
+      viewBox={viewBox}
       width={size}
       height={size}
     >

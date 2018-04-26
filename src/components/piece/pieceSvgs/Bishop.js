@@ -29,13 +29,14 @@ const bishopStyleDetail = {
   strokeLinejoin: 'miter'
 };
 
-const Bishop = ({ size, styleSettings }) => {
+const Bishop = ({ size, viewBox, styleSettings }) => {
   const outline = { ...bishopStyleOutline, ...styleSettings.outline };
   const detail = { ...bishopStyleDetail, ...styleSettings.detail };
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
+      viewBox={viewBox}
       width={size}
       height={size}
     >

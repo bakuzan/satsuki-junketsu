@@ -2,6 +2,7 @@ import React from 'react';
 
 import Strings from 'constants/strings';
 
+const VIEW_BOX = '-2 0 50 50';
 const PIECE_SIZE = '100%';
 const setColour = c =>
   c === Strings.colours.white
@@ -52,7 +53,13 @@ export default function withColour(WrappedPiece) {
         WrappedPiece.displayName,
         this.props.colour
       );
-      return <WrappedPiece size={PIECE_SIZE} styleSettings={colourSettings} />;
+      return (
+        <WrappedPiece
+          size={PIECE_SIZE}
+          viewBox={VIEW_BOX}
+          styleSettings={colourSettings}
+        />
+      );
     }
   }
 

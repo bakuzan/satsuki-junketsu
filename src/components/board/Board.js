@@ -74,6 +74,7 @@ class Board extends React.Component {
 
   render() {
     const {
+      style,
       themeClass,
       squares,
       selectedSquareId,
@@ -109,6 +110,7 @@ class Board extends React.Component {
     return (
       <React.Fragment>
         <div
+          style={style}
           className={classNames('chess-board', themeClass, {
             'read-only': isLocked
           })}
@@ -130,7 +132,7 @@ class Board extends React.Component {
           {!checkStatus.isCheckmate && (
             <React.Fragment>
               <PromotionOptions />
-              {`Current player: ${capitalise(currentPlayerColour)}`}
+              {`${capitalise(currentPlayerColour)}'s turn`}
               {isCheck && `\n${capitalise(currentPlayerColour)} is in Check!`}
             </React.Fragment>
           )}

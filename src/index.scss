@@ -49,13 +49,8 @@ main {
     }
   }
 }
-
-#chess-game-inner-wrapper {
-  position: relative;
-  display: flex;
-  flex-flow: column;
-  padding: #{$scale-size}px;
-  margin: auto;
+.left-column .chess-board {
+  margin: 20px auto;
 }
 
 #chess-game-actions {
@@ -71,9 +66,11 @@ main {
 
   > div {
     display: flex;
-    flex: 1;
     justify-content: center;
+    align-items: center;
     height: $chess-game-status--height;
+    background: $chess-game-status--background-colour;
+    padding: 5px;
     margin: 10px 0;
     text-align: center;
     white-space: pre-line;

@@ -45,7 +45,7 @@ const kingStyleLines = {
   stroke: '#ffffff'
 };
 
-const King = ({ size, styleSettings }) => {
+const King = ({ size, viewBox, styleSettings }) => {
   const topCap = { ...kingStyleTopCap, ...styleSettings.topCap };
   const mainBody = { ...kingStyleMainBody, ...styleSettings.mainBody };
   const lines = { ...kingStyleLines, ...styleSettings.lines };
@@ -53,6 +53,7 @@ const King = ({ size, styleSettings }) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
+      viewBox={viewBox}
       width={size}
       height={size}
     >

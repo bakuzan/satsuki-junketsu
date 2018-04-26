@@ -3,6 +3,13 @@ import React from 'react';
 
 const MAX_WIDTH_FALLBACK = '525px';
 
+const AccountFor = {
+  header: 50,
+  actions: 45,
+  status: 52,
+  playback: 62
+};
+
 export default class MaintainAspectRatio extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +23,6 @@ export default class MaintainAspectRatio extends React.Component {
   }
 
   componentDidMount() {
-    console.log('M.A.R MOUNT >', this.wrappedComponent);
     window.addEventListener('resize', this.onResize);
     this.onResize();
   }
@@ -28,26 +34,21 @@ export default class MaintainAspectRatio extends React.Component {
 
   onResize(e) {
     clearTimeout(this.timer);
-    console.log('resize', this.wrappedComponent);
     this.timer = setTimeout(() => {
-      console.log('update', this.wrappedComponent);
       const el = this.wrappedComponent.current;
-      const value = Math.min(el.clientHeight, el.clientWidth);
-      console.log(el.clientHeight, el.clientWidth);
+      const rawValue = Math.min(el.clientHeight, el.clientWidth);
+      const value = Object.keys(AccountFor).reduce(
+        (p, c) => p - AccountFor[c],
+        rawValue
+      );
       this.setState({
         width: `${value}px`,
         height: `${value}px`
       });
-    }, 500);
+    }, 200);
   }
 
   render() {
-    console.log(
-      'M.A.R RENDER > ',
-      this.props,
-      this.state,
-      this.wrappedComponent
-    );
     return this.props.children(this.wrappedComponent, this.state);
   }
 }

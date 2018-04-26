@@ -17,10 +17,11 @@ const pawnStyle = {
   strokeOpacity: 1
 };
 
-const Pawn = ({ size, styleSettings }) => (
+const Pawn = ({ size, viewBox, styleSettings }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
+    viewBox={viewBox}
     width={size}
     height={size}
   >
