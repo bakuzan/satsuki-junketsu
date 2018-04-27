@@ -13,7 +13,7 @@ export const possibleMovesForSelectedPiece = ({
   selectedSquareId,
   squares
 }) => {
-  if (!selectedSquareId) return [];
+  if (selectedSquareId === null) return [];
   const pieceSquare = squares.find(x => x.id === selectedSquareId);
   return squares.reduce((p, square, index) => {
     const func = square.contains ? isValidTake : isValidMove;
@@ -34,7 +34,12 @@ const matchKingForGivenColour = colour => x =>
 
 const getAttacksOnKingSquare = (kingSquare, squares) =>
   squares
-    .filter(x => x.contains && x.contains.colour !== kingSquare.contains.colour)
+    .filter(
+      x =>
+        kingSquare &&
+        x.contains &&
+        x.contains.colour !== kingSquare.contains.colour
+    )
     .reduce((p, square) => {
       if (!isValidTake(square, kingSquare, squares)) return p;
       return [...p, square];
