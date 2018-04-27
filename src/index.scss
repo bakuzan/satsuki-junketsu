@@ -42,6 +42,7 @@ main {
 
     &.left-column {
       flex-basis: 70%;
+      min-height: 100%;
     }
     &.right-column {
       flex-basis: 20%;
