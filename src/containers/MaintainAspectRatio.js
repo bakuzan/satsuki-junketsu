@@ -41,7 +41,7 @@ export default class MaintainAspectRatio extends React.Component {
         (p, c) => p - AccountFor[c],
         rawValue
       );
-      const { width, height } = el.getBoundingClientRect();
+      // const { width, height } = el.getBoundingClientRect();
       // console.group("resize")
       // console.log("client > ", el.clientWidth, el.clientHeight)
       // console.log("offset > ", el.offsetWidth, el.offsetHeight)

@@ -1,3 +1,4 @@
+@import './_variables.scss';
 
 @mixin lightenOrDarken($key, $colour, $percentage) {
   @if lightness($colour) < 50% {
@@ -8,5 +9,25 @@
 }
 
 @mixin shiftBackgroundColourLightness($colour, $percentage) {
-  @include lightenOrDarken("background-color", $colour, $percentage);
+  @include lightenOrDarken('background-color', $colour, $percentage);
+}
+
+@mixin respond-to($media) {
+  @if ($media == xs) {
+    @media (max-width: $screen-xs-max) {
+      @content;
+    }
+  } @else if($media == sm) {
+    @media (min-width: $screen-sm) and (max-width: $screen-sm-max) {
+      @content;
+    }
+  } @else if($media == md) {
+    @media (min-width: $screen-md) and (max-width: $screen-md-max) {
+      @content;
+    }
+  } @else if($media == lg) {
+    @media (min-width: $screen-lg) {
+      @content;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 @import './styles/_extendables';
+@import './styles/_mixins';
 @import './styles/_variables';
 
 body {
@@ -50,6 +51,32 @@ main {
     }
   }
 }
+
+#chess-game {
+  @include respond-to(xs) {
+    flex-direction: column;
+
+    > div {
+      width: 100%;
+
+      &.left-column {
+        min-height: 80%;
+      }
+      &.right-column {
+        min-height: 20%;
+        flex-direction: row;
+      }
+    }
+
+    #paired-graveyards {
+      flex-direction: row;
+      height: 100%;
+      min-width: 100%;
+      max-width: unset;
+    }
+  }
+}
+
 .left-column .chess-board {
   margin: 20px auto;
 }
