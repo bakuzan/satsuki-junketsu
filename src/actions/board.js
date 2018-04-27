@@ -32,3 +32,13 @@ export const importGame = fileText => ({
   type: BOARD_IMPORT_GAME,
   fileText
 });
+
+export const BOARD_SAVE_GAME = 'BOARD_SAVE_GAME';
+export const saveGame = () => ({
+  type: BOARD_SAVE_GAME
+});
+
+export const BOARD_LOAD_GAME = 'BOARD_LOAD_GAME';
+export const loadGame = () => ({
+  type: BOARD_LOAD_GAME
+});

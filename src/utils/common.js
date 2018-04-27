@@ -1,14 +1,28 @@
 import Strings from 'constants/strings';
 
-export const getUserSettings = () =>
-  JSON.parse(localStorage.getItem(Strings.localUserSettings)) || null;
+const getObjectFromLocalStorageByProperty = property =>
+  JSON.parse(localStorage.getItem(property)) || null;
 
-export const persistUserSettings = settingUpdate => {
-  const settings = getUserSettings();
-  const updated = { ...settings, ...settingUpdate };
-  localStorage.setItem(Strings.localUserSettings, JSON.stringify(updated));
+const persistObjectToLocalStorage = property => newValues => {
+  const values = getObjectFromLocalStorageByProperty(property) || {};
+  const updated = { ...values, ...newValues };
+  localStorage.setItem(property, JSON.stringify(updated));
   return updated;
 };
+
+export const getUserSettings = () =>
+  getObjectFromLocalStorageByProperty(Strings.localUserSettings);
+
+export const persistUserSettings = persistObjectToLocalStorage(
+  Strings.localUserSettings
+);
+
+export const getSavedGame = () =>
+  getObjectFromLocalStorageByProperty(Strings.localGameState);
+
+export const persistChessGame = persistObjectToLocalStorage(
+  Strings.localGameState
+);
 
 export const updateArrayPreservingOrder = (arr, i, o) => [
   ...arr.slice(0, i),

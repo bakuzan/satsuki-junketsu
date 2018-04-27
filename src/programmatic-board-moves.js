@@ -80,6 +80,7 @@ export default {
   },
   actions: {
     newGame: () => document.getElementById('new-game').click(),
+    saveGame: () => document.getElementById('save-game').click(),
     export: () => document.getElementById('export-game').click(),
     import: () => document.getElementById('import-game').click()
   },

@@ -45,6 +45,7 @@ const castling = {
 
 const Strings = {
   localUserSettings: 'satsukiUserSettings',
+  localGameState: 'satsukiSavedGame',
   colours,
   pieces,
   specialMoves,

@@ -7,15 +7,10 @@ import Graveyard from './Graveyard';
 import MoveList from './MoveList';
 import Playback from './Playback';
 import MaintainAspectRatio from './MaintainAspectRatio';
+import GameAction from 'components/GameAction';
 
-import { resetBoard, importGame } from 'actions/board';
+import { resetBoard, importGame, saveGame, loadGame } from 'actions/board';
 import { exportPGNForMoves } from 'utils/exportImport';
-
-const GameAction = ({ children, ...props }) => (
-  <button type="button" className="button ripple primary" {...props}>
-    {children}
-  </button>
-);
 
 class ChessGame extends React.Component {
   constructor(props) {
@@ -23,6 +18,10 @@ class ChessGame extends React.Component {
 
     this.fileSelector = React.createRef();
     this.handleImport = this.handleImport.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.actions.loadGame();
   }
 
   async handleImport(event) {
@@ -41,6 +40,9 @@ class ChessGame extends React.Component {
         <div id="chess-game-actions" className="button-group right">
           <GameAction id="new-game" onClick={actions.resetBoard}>
             New Game
+          </GameAction>
+          <GameAction id="save-game" onClick={actions.saveGame}>
+            Save Game
           </GameAction>
           <GameAction id="export-game" onClick={() => exportPGNForMoves(moves)}>
             Export
@@ -83,7 +85,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ resetBoard, importGame }, dispatch)
+  actions: bindActionCreators(
+    { resetBoard, importGame, saveGame, loadGame },
+    dispatch
+  )
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChessGame);
