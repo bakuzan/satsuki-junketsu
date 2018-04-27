@@ -10,7 +10,7 @@ export const exportPGNForMoves = moves => {
     const hasNumber = i === 0 || i % 2 === 0;
     const nextStr = hasNumber ? ` ${moveNumber}. ${c.pgn}` : `${c.pgn}`;
     if (!hasNumber) moveNumber++;
-    return `${p} ${nextStr}${!hasNumber && !moveNumber % 5 ? `\n` : ''}`;
+    return `${p} ${nextStr}${!hasNumber && moveNumber % 5 === 0 ? `\n ` : ''}`;
   }, '');
 
   const date = formatDate(new Date());
