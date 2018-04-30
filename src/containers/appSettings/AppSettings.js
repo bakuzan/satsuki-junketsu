@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 
 import Portal from 'components/Portal';
 import SelectBox from 'components/selectBox/SelectBox';
+import Tickbox from 'components/tickbox/Tickbox';
 
 import { setApplicationTheme, setBoardTheme } from 'actions/theme';
+import { toggleReverseBoard } from 'actions/board';
 import Constants from 'constants/index';
 import './appSettings.css';
 
@@ -50,7 +52,9 @@ class AppSettings extends React.Component {
       appTheme,
       boardTheme,
       setApplicationTheme,
-      setBoardTheme
+      setBoardTheme,
+      reverseBoard,
+      toggleReverseBoard
     } = this.props;
     applyThemeToBody(appTheme);
 
@@ -94,6 +98,14 @@ class AppSettings extends React.Component {
                   onSelect={this.handleDropdownChange(setBoardTheme)}
                 />
               </li>
+              <li>
+                <Tickbox
+                  name="reverseBoard"
+                  text="Flip board on move"
+                  checked={reverseBoard}
+                  onChange={toggleReverseBoard}
+                />
+              </li>
             </ul>
           </Portal>
         )}
@@ -106,17 +118,21 @@ AppSettings.propTypes = {
   appTheme: PropTypes.string.isRequired,
   boardTheme: PropTypes.string.isRequired,
   setApplicationTheme: PropTypes.func.isRequired,
-  setBoardTheme: PropTypes.func.isRequired
+  setBoardTheme: PropTypes.func.isRequired,
+  reverseBoard: PropTypes.bool.isRequired,
+  toggleReverseBoard: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   appTheme: state.theme.app,
-  boardTheme: state.theme.board
+  boardTheme: state.theme.board,
+  reverseBoard: state.board.reverseBoard
 });
 
 const mapDispatchToProps = {
   setApplicationTheme,
-  setBoardTheme
+  setBoardTheme,
+  toggleReverseBoard
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppSettings);

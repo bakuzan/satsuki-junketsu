@@ -11,7 +11,8 @@ import {
   BOARD_RESET,
   BOARD_IMPORT_GAME,
   BOARD_SAVE_GAME,
-  BOARD_LOAD_GAME
+  BOARD_LOAD_GAME,
+  BOARD_TOGGLE_REVERSE
 } from 'actions/board';
 import {
   PLAYBACK_UPDATE_SLIDE_POSITION,
@@ -26,6 +27,7 @@ import playbackSubReducer, {
 import importSubReducer from './board-import';
 
 const initialState = {
+  reverseBoard: false,
   graveyard: [],
   moves: [],
   squares: buildStartingBoard(),
@@ -72,7 +74,11 @@ const board = createReducer(initialState, {
     if (savedGame) return savedGame;
     console.info('%c No saved game found.', 'color: royalblue');
     return state;
-  }
+  },
+  [BOARD_TOGGLE_REVERSE]: state => ({
+    ...state,
+    reverseBoard: !state.reverseBoard
+  })
 });
 
 export default board;

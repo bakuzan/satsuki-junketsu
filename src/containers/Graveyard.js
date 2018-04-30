@@ -13,9 +13,13 @@ const DualGraveyards = ({ isReversed, whitePieces, blackPieces }) => (
   </div>
 );
 
-const getPiecesForColour = (state, colour) => {
+const getCurrentMovesForPlaybackPosition = state => {
   const activeMoveIndex = state.board.playback.sliderPosition;
-  const moves = state.board.moves.slice(0, activeMoveIndex);
+  return state.board.moves.slice(0, activeMoveIndex);
+};
+
+const getPiecesForColour = (state, colour) => {
+  const moves = getCurrentMovesForPlaybackPosition(state);
   return state.board.graveyard.filter(
     x =>
       x.colour === colour &&
@@ -23,8 +27,13 @@ const getPiecesForColour = (state, colour) => {
   );
 };
 
+const resolveBoardDirection = state => {
+  const moves = getCurrentMovesForPlaybackPosition(state);
+  return state.board.reverseBoard && !isWhitesTurn(moves.length);
+};
+
 const mapStateToProps = state => ({
-  isReversed: !isWhitesTurn(state.board.moves.length),
+  isReversed: resolveBoardDirection(state),
   whitePieces: getPiecesForColour(state, Constants.Strings.colours.white),
   blackPieces: getPiecesForColour(state, Constants.Strings.colours.black)
 });

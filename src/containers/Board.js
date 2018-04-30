@@ -46,7 +46,7 @@ const BoardContainer = ({ board, ...props }) => {
     currentBoardForDisplay
   );
   const checkStatus = getCheckStatusForColour(currentPlayerColour, squares);
-  const isReversed = !isWhitesTurn(moves.length);
+  const isReversed = board.reverseBoard && !isWhitesTurn(moves.length);
 
   return (
     <Board

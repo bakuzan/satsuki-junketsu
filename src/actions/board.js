@@ -42,3 +42,8 @@ export const BOARD_LOAD_GAME = 'BOARD_LOAD_GAME';
 export const loadGame = () => ({
   type: BOARD_LOAD_GAME
 });
+
+export const BOARD_TOGGLE_REVERSE = 'BOARD_TOGGLE_REVERSE';
+export const toggleReverseBoard = () => ({
+  type: BOARD_TOGGLE_REVERSE
+});
