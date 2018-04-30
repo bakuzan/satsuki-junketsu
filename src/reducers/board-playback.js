@@ -29,6 +29,7 @@ function playbackSubReducer(state, action) {
   switch (action.type) {
     case PLAYBACK_UPDATE_SLIDE_POSITION: {
       const sliderPosition = action.sliderValue;
+      console.log(action);
       return {
         ...state,
         playback: {

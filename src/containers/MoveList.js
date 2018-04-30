@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 
 import MoveList from 'components/moveList/MoveList';
+
+import { updateSlidePosition } from 'actions/playback';
 import { mapMovesToPGN } from 'utils/pgn';
 
 const mapStateToProps = state => ({
@@ -8,4 +10,8 @@ const mapStateToProps = state => ({
   activeMoveIndex: state.board.playback.sliderPosition
 });
 
-export default connect(mapStateToProps)(MoveList);
+const mapDispatchToProps = {
+  onSelect: updateSlidePosition
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoveList);

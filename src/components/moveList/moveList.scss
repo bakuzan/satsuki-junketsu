@@ -9,11 +9,19 @@
   li {
     text-align: center;
 
-    &.title {
+    button {
+      min-width: 100%;
+      min-height: auto;
+      padding: 0;
+    }
+
+    &.title,
+    &.active > button {
       font-weight: bold;
     }
-    &.active {
-      text-decoration: underline;
+    &.active > button {
+      background-color: transparent !important;
+      color: inherit !important;
     }
   }
 }
