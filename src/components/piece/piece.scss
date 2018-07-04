@@ -1,5 +1,9 @@
 .piece {
   cursor: pointer;
+
+  &--dragging {
+    visibility: hidden;
+  }
 }
 
 .read-only {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Board from 'components/board/Board';
+import DragAndDropContext from 'components/dragAndDrop';
 
 import * as actions from 'actions/board';
 import { isWhitesTurn, getCurrentPlayerColour } from 'utils/game';
@@ -71,4 +72,6 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(actions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  DragAndDropContext(BoardContainer)
+);

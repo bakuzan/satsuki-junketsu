@@ -16,6 +16,8 @@ class Board extends React.Component {
     super(props);
 
     this.handleSquareSelection = this.handleSquareSelection.bind(this);
+    this.handleCanDrop = this.handleCanDrop.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
   }
 
   handleSquareSelection(squareId) {
@@ -72,6 +74,14 @@ class Board extends React.Component {
     );
   }
 
+  handleCanDrop(piece) {
+    console.log('can drop', piece)
+  }
+
+  handleDrop(piece) {
+    console.log('drop', piece)
+  }
+
   render() {
     const {
       style,
@@ -100,6 +110,10 @@ class Board extends React.Component {
     const isLocked = isReadOnly || checkStatus.isCheckmate;
     const onSquareClick = isLocked ? () => null : this.handleSquareSelection;
 
+    const dropActions = {
+      canDrop: this.handleCanDrop,
+      onDrop: this.handleDrop
+    };
     console.groupCollapsed('BOARD RENDER');
     console.log('selectedSquareId', selectedSquareId);
     console.log('boardSquares', boardSquares);
@@ -125,6 +139,7 @@ class Board extends React.Component {
               isInCheck={o.id === checkedKingSquareId}
               isSelected={o.id === selectedSquareId}
               onClick={onSquareClick}
+              dropActions={dropActions}
             />
           ))}
         </div>
