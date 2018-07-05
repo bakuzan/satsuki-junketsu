@@ -6,12 +6,10 @@ import DnDType from 'constants/dnd-type';
 
 const squareTarget = {
   canDrop(props, monitor) {
-    console.log('can drop', props);
-    return props.dropActions.canDrop(monitor.getItem());
+    return props.dropActions.canDrop(props.id, monitor.getItem());
   },
   drop(props, monitor) {
-    console.log('drop', props);
-    return props.dropActions.onDrop(monitor.getItem());
+    return props.dropActions.onDrop(props.id, monitor.getItem());
   }
 };
 
@@ -37,5 +35,5 @@ export default function withDropTarget(WrappedComponent) {
     }
   }
 
-  return DropTarget(DnDType.square, squareTarget, collectTarget)(Target);
+  return DropTarget(DnDType.piece, squareTarget, collectTarget)(Target);
 }

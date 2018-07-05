@@ -31,18 +31,19 @@ class Square extends React.Component {
       contains,
       onClick
     } = this.props;
-    
+
     const classes = classNames('square', {
       'selected': isSelected,
       'potential-move': isPotentialMove && !contains,
       'potential-take': isPotentialMove && contains,
       'special-move': isSpecialMove,
       'in-check': isInCheck,
+      'is-over': this.props.isOver,
+      'can-drop': this.props.canDrop,
       [`rank-${rank}`]: true,
       [`file-${file}`]: true
     });
 
-    console.log('square', this.props);
     return (
       <div id={id} className={classes} onClick={() => onClick(id)}>
         {!!contains && <Piece {...contains} onDrag={this.handleDragPiece} />}

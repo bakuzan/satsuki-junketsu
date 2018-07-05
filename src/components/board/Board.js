@@ -37,35 +37,41 @@ class Board extends React.Component {
     const isSpecialMove = !!specialMove;
 
     if (!selectedSquare && !square.contains) return;
+
     if (selectedSquare && !square.contains)
       return isSpecialMove
         ? actions.performSpecialMove(specialMove)
         : isPotentialMove
           ? actions.moveSelectedPiece(squareId)
           : console.log(
-              '%c invalid move',
-              'color: red; font-size: 22px;',
-              selectedSquare,
-              square
-            );
+            '%c invalid move',
+            'color: red; font-size: 22px;',
+            selectedSquare,
+            square
+          );
+
     if (!selectedSquare && square.contains.colour !== currentPlayerColour)
       return;
+
     if (!selectedSquare && square.contains.colour === currentPlayerColour)
       return actions.selectBoardSquare(squareId);
+
     if (selectedSquare && isSameSquare) return actions.selectBoardSquare(null);
+
     if (selectedSquare && square.contains.colour === currentPlayerColour)
       return actions.selectBoardSquare(squareId);
+
     if (selectedSquare && square.contains.colour !== currentPlayerColour)
       return isSpecialMove
         ? actions.performSpecialMove(specialMove)
         : isPotentialMove
           ? actions.takePiece(squareId)
           : console.log(
-              '%c invalid take',
-              'color: red; font-size: 22px;',
-              selectedSquare,
-              square
-            );
+            '%c invalid take',
+            'color: red; font-size: 22px;',
+            selectedSquare,
+            square
+          );
 
     console.log(
       '%c square selection case not handled!',
@@ -74,12 +80,17 @@ class Board extends React.Component {
     );
   }
 
-  handleCanDrop(piece) {
-    console.log('can drop', piece)
+  handleCanDrop(squareId) {
+    const { potentialMoves, specialMoves } = this.props;
+    const isPotentialMove = potentialMoves.some(x => x === squareId);
+    const specialMove = specialMoves.find(x => x.squareId === squareId);
+    const isSpecialMove = !!specialMove;
+
+    return isPotentialMove || isSpecialMove;
   }
 
-  handleDrop(piece) {
-    console.log('drop', piece)
+  handleDrop(squareId) {
+    this.handleSquareSelection(squareId);
   }
 
   render() {

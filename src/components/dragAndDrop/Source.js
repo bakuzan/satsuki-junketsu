@@ -4,14 +4,17 @@ import { DragSource } from 'react-dnd';
 
 import DnDType from 'constants/dnd-type';
 
-const pieceSource = {
-  beginDrag(props) {
-    if (props.onDrag) {
-      props.onDrag(props);
-    }
-    
-    return props;
+function handleDrag(props) {
+  if (props.onDrag) {
+    props.onDrag(props);
   }
+
+  return props;
+}
+
+const pieceSource = {
+  beginDrag: handleDrag,
+  endDrag: handleDrag
 };
 
 function collectSource(connect, monitor) {
