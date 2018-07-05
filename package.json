@@ -28,8 +28,10 @@
       "git add"
     ]
   },
+  "pre-commit": ["precommit-msg", "lint"],
   "scripts": {
-    "pre-commit": "lint-staged",
+    "lint": "lint-staged",
+    "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
