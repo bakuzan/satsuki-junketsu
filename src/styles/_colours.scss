@@ -27,8 +27,12 @@ $magenta: #ff00ff;
 
 $satsuki-blue: #0117ff;
 $satsuki-white: #fefefe;
-$junketsu-eye-red: #ca273c;
 $satsuki-hair-black: #1a1323;
+$junketsu-eye-red: #ca273c;
+
+$senketsu-base: #333366;
+$senketsu-eye: #fde274;
+$senketsu-straps: #de2b07;
 
 // USAGES
 $primary-background: $satsuki-blue;
@@ -68,18 +72,24 @@ $theme-maps: (
       anchor-colour: $anchor-colour,
       anchor-colour-hover: $anchor-colour-hover,
       disabled-colour: $grey40,
-      disabled-background: $grey80
+      disabled-background: $grey80,
+      status-background: $junketsu-eye-red,
+      menu-outline: $junketsu-eye-red,
+      active: $junketsu-eye-red
     ),
   theme-two:
     (
-      base-background: $black,
-      base-colour: $white,
-      colour: $junketsu-eye-red,
-      contrast: $satsuki-hair-black,
+      base-background: $senketsu-base,
+      base-colour: $senketsu-eye,
+      colour: $senketsu-straps,
+      contrast: $senketsu-eye,
       anchor-colour: $anchor-colour-hover,
       anchor-colour-hover: $anchor-colour,
       disabled-colour: $grey40,
-      disabled-background: $grey80
+      disabled-background: $grey80,
+      status-background: $senketsu-eye,
+      menu-outline: $senketsu-eye,
+      active: $senketsu-straps
     )
 );
 $board-themes: (

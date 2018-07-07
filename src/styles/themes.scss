@@ -10,16 +10,52 @@
   $anchor-colour-hover: map-get($values, anchor-colour-hover);
   $disabled-colour: map-get($values, disabled-colour);
   $disabled-background: map-get($values, disabled-background);
+  $menu-outline: map-get($values, menu-outline);
 
   .#{$name} {
     background: $base-background;
     color: $base-colour;
+
+    .satsuki-header {
+      background-color: $colour;
+      color: $contrast;
+    }
+
+    #navigation-links a,
+    .svg-logo svg {
+      background-color: $colour;
+      color: $contrast;
+      &:hover {
+        background-color: darken($colour, $darken-amount);
+      }
+    }
 
     a {
       color: $anchor-colour;
       &:hover {
         color: $anchor-colour-hover;
       }
+    }
+
+    .tickbox input,
+    select {
+      background-color: $base-background;
+      color: $base-colour;
+    }
+
+    .button.primary,
+    .button-icon.primary {
+      background-color: $colour;
+      color: $contrast;
+      &:hover,
+      &.active {
+        @include lightenOrDarken('background-color', $colour, $darken-amount * 3);
+      }
+    }
+
+    #chess-game-status > div {
+      background: map-get($values, status-background);
+      color: $base-background;
     }
 
     #request-indicator-loader {
@@ -36,11 +72,22 @@
     }
 
     #move-list li.active {
-      color: $anchor-colour;
+      color: map-get($values, active);
     }
 
     .graveyard {
       border-color: $base-colour;
+    }
+
+    .dropdown-menu {
+      box-shadow: 2px 2px 10px $menu-outline;
+    }
+    .dropdown-arrow {
+      border-bottom-color: $base-background;
+      filter: drop-shadow(0 -2px 2px $menu-outline);
+    }
+    .dropdown-menu {
+      background-color: $base-background;
     }
   }
 }

@@ -5,8 +5,8 @@ const Constants = {
   Paths,
   Strings,
   themes: [
-    { name: 'Light', class: 'theme-one' },
-    { name: 'Dark', class: 'theme-two' }
+    { name: 'Junketsu', class: 'theme-one' },
+    { name: 'Senketsu', class: 'theme-two' }
   ],
   boardThemes: [
     { name: 'Standard', class: 'board-one' },
