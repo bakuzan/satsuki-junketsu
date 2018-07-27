@@ -1,3 +1,4 @@
+import Strings from 'constants/strings';
 import { getCurrentPlayerColour } from 'utils/game';
 import { possibleMovesForSelectedPiece } from 'utils/piece';
 import availableSpecialMovesForSelectedPiece from 'utils/specialMoves';
@@ -5,18 +6,20 @@ import availableSpecialMovesForSelectedPiece from 'utils/specialMoves';
 import performMovementFromCurrentToTarget from 'utils/squaresUpdate';
 import getPieceSquareValue from './piece-sqaure-tables';
 
+const { pieces: Pieces } = Strings;
+
 const getPieceCount = (arr, pieceName) =>
   arr.filter((x) => x.contains.name === pieceName).length;
 
 const getScoreForPiece = (weight, pieceName) => (aSq, bSq) =>
   weight * (getPieceCount(aSq, pieceName) - getPieceCount(bSq, pieceName));
 
-const scoreKings = getScoreForPiece(20000, 'king');
-const scoreQueens = getScoreForPiece(900, 'queen');
-const scoreRooks = getScoreForPiece(500, 'rook');
-const scoreBishops = getScoreForPiece(330, 'bishop');
-const scoreKnights = getScoreForPiece(320, 'knight');
-const scorePawns = getScoreForPiece(100, 'pawn');
+const scoreKings = getScoreForPiece(20000, Pieces.king);
+const scoreQueens = getScoreForPiece(900, Pieces.queen);
+const scoreRooks = getScoreForPiece(500, Pieces.rook);
+const scoreBishops = getScoreForPiece(330, Pieces.bishop);
+const scoreKnights = getScoreForPiece(320, Pieces.knight);
+const scorePawns = getScoreForPiece(100, Pieces.pawn);
 
 function getPossibleMovesForPiece(board, squares, squareId) {
   const fakeBoardState = {
@@ -50,14 +53,14 @@ function getAllUniquePossibleMoves(board, pSquares, isEngine = false) {
 }
 
 function evaluateBoard(playingAsColour) {
-  const sign = playingAsColour === 'white' ? 1 : -1;
+  const sign = playingAsColour === Strings.colours.white ? 1 : -1;
   return (board) => {
     const { squares } = board;
     const wp = squares.filter(
-      (x) => x.contains && x.contains.colour === 'white'
+      (x) => x.contains && x.contains.colour === Strings.colours.white
     );
     const bp = squares.filter(
-      (x) => x.contains && x.contains.colour !== 'black'
+      (x) => x.contains && x.contains.colour === Strings.colours.black
     );
 
     // KQRBNP counts
