@@ -14,6 +14,8 @@ import './styles/ripple.css';
 import './styles/button.css';
 import './styles/themes.css';
 
+import Engine from 'utils/engine';
+window.Engine = Engine;
 window.AutomateBoard = AutomateBoard;
 const history = createHistory();
 const store = configureStore(history);
