@@ -8,16 +8,23 @@ import MoveList from './MoveList';
 import Playback from './Playback';
 import MaintainAspectRatio from './MaintainAspectRatio';
 import GameAction from 'components/GameAction';
+import NewGameOptions from 'components/newGameOptions';
 
 import { resetBoard, importGame, saveGame, loadGame } from 'actions/board';
 import { exportPGNForMoves } from 'utils/exportImport';
 
+const ACTIONS_ID = 'chess-game-actions';
+
 class ChessGame extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isStartingNewGame: false
+    };
 
     this.fileSelector = React.createRef();
     this.handleImport = this.handleImport.bind(this);
+    this.handleNewGame = this.handleNewGame.bind(this);
   }
 
   componentDidMount() {
@@ -31,14 +38,24 @@ class ChessGame extends React.Component {
     this.props.actions.importGame(fileText);
   }
 
+  handleNewGame(option) {
+    if (!this.state.isStartingNewGame) {
+      this.setState({ isStartingNewGame: true });
+    } else {
+      this.setState({ isStartingNewGame: false }, () =>
+        this.props.actions.resetBoard(option)
+      );
+    }
+  }
+
   render() {
     const { moves, actions } = this.props;
 
     return (
       <React.Fragment>
         <MoveList />
-        <div id="chess-game-actions" className="button-group right">
-          <GameAction id="new-game" onClick={actions.resetBoard}>
+        <div id={ACTIONS_ID} className="button-group right">
+          <GameAction id="new-game" onClick={this.handleNewGame}>
             New Game
           </GameAction>
           <GameAction id="save-game" onClick={actions.saveGame}>
@@ -75,16 +92,21 @@ class ChessGame extends React.Component {
             <Graveyard />
           </div>
         </div>
+        <NewGameOptions
+          targetSelector={`#${ACTIONS_ID}`}
+          display={this.state.isStartingNewGame}
+          onSelect={this.handleNewGame}
+        />
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   moves: state.board.moves
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(
     { resetBoard, importGame, saveGame, loadGame },
     dispatch

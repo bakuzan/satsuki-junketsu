@@ -86,7 +86,8 @@
       border-bottom-color: $base-background;
       filter: drop-shadow(0 -2px 2px $menu-outline);
     }
-    .dropdown-menu {
+    .dropdown-menu,
+    .game-options {
       background-color: $base-background;
     }
   }

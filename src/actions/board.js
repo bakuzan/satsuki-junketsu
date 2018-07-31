@@ -23,8 +23,9 @@ export const performSpecialMove = (specialMove) => ({
 });
 
 export const BOARD_RESET = 'BOARD_RESET';
-export const resetBoard = () => ({
-  type: BOARD_RESET
+export const resetBoard = (option) => ({
+  type: BOARD_RESET,
+  option
 });
 
 export const BOARD_IMPORT_GAME = 'BOARD_IMPORT_GAME';

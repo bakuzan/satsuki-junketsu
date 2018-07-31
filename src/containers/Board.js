@@ -28,9 +28,10 @@ class BoardContainer extends React.Component {
 
   componentDidUpdate() {
     const { vsComputer, moves } = this.props.board;
-    const { isComputer, isBlack } = vsComputer;
+    const { isComputer, isComputerBlack } = vsComputer;
     const isWhite = isWhitesTurn(moves.length);
-    const notComputerTurn = (isBlack && isWhite) || (!isBlack && !isWhite);
+    const notComputerTurn =
+      (isComputerBlack && isWhite) || (!isComputerBlack && !isWhite);
 
     if (!isComputer || notComputerTurn) return;
     console.log('CDU > ', this.props, this.state);

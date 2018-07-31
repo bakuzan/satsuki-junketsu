@@ -1,0 +1,17 @@
+@import '../../styles/_variables';
+
+.game-options {
+  position: fixed;
+  top: $fixed-header-height;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% - #{$fixed-header-height});
+  z-index: map-get($z-index, above-siblings);
+
+  li {
+    width: 100%;
+    margin: 2px 0;
+  }
+}

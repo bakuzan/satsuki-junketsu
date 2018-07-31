@@ -27,6 +27,8 @@ import playbackSubReducer, {
 import importSubReducer from './board-import';
 import { BOARD_COMPUTER_MOVE } from '../actions/board';
 
+import { NewGameOptions } from 'constants/new-game-options';
+
 const initialState = {
   reverseBoard: false,
   graveyard: [],
@@ -37,7 +39,7 @@ const initialState = {
   playback: getPlaybackInitialState(PLAYBACK_STARTING_VALUE),
   vsComputer: {
     isComputer: true,
-    isBlack: true
+    isComputerBlack: true
   }
 };
 
@@ -74,7 +76,21 @@ const board = createReducer(initialState, {
   [PLAYBACK_STEP_FORWARD]: playbackSubReducer,
   [PLAYBACK_STEP_BACK]: playbackSubReducer,
   [BOARD_IMPORT_GAME]: composedImport,
-  [BOARD_RESET]: () => initialState,
+  [BOARD_RESET]: (state, action) => {
+    const { option } = action;
+    if (option === NewGameOptions.vsComputerYouBlack)
+      return {
+        ...initialState,
+        vsComputer: { ...initialState.vsComputer, isComputerBlack: false }
+      };
+    if (option === NewGameOptions.vsPlayer)
+      return {
+        ...initialState,
+        vsComputer: { ...initialState.vsComputer, isComputer: false }
+      };
+
+    return initialState;
+  },
   [BOARD_SAVE_GAME]: (state) => persistChessGame(state),
   [BOARD_LOAD_GAME]: (state) => {
     const savedGame = getSavedGame();
