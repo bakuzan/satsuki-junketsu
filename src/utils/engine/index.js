@@ -1,4 +1,5 @@
 import Strings from 'constants/strings';
+import { getMoveWithBestScore, getKeyForMaxValue } from 'utils/common';
 import { getCurrentPlayerColour } from 'utils/game';
 import { possibleMovesForSelectedPiece } from 'utils/piece';
 import availableSpecialMovesForSelectedPiece from 'utils/specialMoves';
@@ -53,9 +54,9 @@ function getAllUniquePossibleMoves(board, pSquares, isEngine = false) {
 }
 
 function evaluateBoard(playingAsColour) {
-  const sign = playingAsColour === Strings.colours.white ? 1 : -1;
-  return (board) => {
+  return (board, targetId) => {
     const { squares } = board;
+    const squareMovedTo = squares.find((x) => x.id === targetId);
     const wp = squares.filter(
       (x) => x.contains && x.contains.colour === Strings.colours.white
     );
@@ -64,7 +65,7 @@ function evaluateBoard(playingAsColour) {
     );
 
     // KQRBNP counts
-    let score =
+    const counts =
       scoreKings(wp, bp) +
       scoreQueens(wp, bp) +
       scoreRooks(wp, bp) +
@@ -72,20 +73,28 @@ function evaluateBoard(playingAsColour) {
       scoreKnights(wp, bp) +
       scorePawns(wp, bp);
 
+    // Account for piece-square rating
+    const pieceSquare = getPieceSquareValue(squareMovedTo);
+
     // Doubled, Blocked, and Isolated pawns
     // score -= 50 * (D-D + B-B + I-I);
 
     // Mobility
     const wpMoves = getAllUniquePossibleMoves(board, wp, true);
     const bpMoves = getAllUniquePossibleMoves(board, bp);
+    const mobility = 10 * (wpMoves.size - bpMoves.size);
 
-    score += 10 * (wpMoves.size - bpMoves.size);
-
-    return score * sign;
+    const score = counts + pieceSquare + mobility;
+    console.groupCollapsed('score', score);
+    console.log('couunts', counts);
+    console.log('pieceSquare', pieceSquare);
+    console.log('mobility', mobility);
+    console.groupEnd();
+    return score;
   };
 }
 
-export default function sjChessEngine(board) {
+function selectNextMove(board) {
   const { moves, squares } = board;
   const currentColour = getCurrentPlayerColour(moves);
   const getBoardScore = evaluateBoard(currentColour);
@@ -106,7 +115,8 @@ export default function sjChessEngine(board) {
         results.set(
           targetId,
           getBoardScore(
-            performMovementFromCurrentToTarget(board, squareId, targetId)
+            performMovementFromCurrentToTarget(board, squareId, targetId),
+            targetId
           )
         ),
       new Map([])
@@ -118,21 +128,33 @@ export default function sjChessEngine(board) {
     return [...p, { squareId, moveResults, specialMoveResults }];
   }, []);
 
+  const bestPieceMove = pieceMoves.reduce((bestMove, curr) =>
+    getMoveWithBestScore(bestMove, curr)
+  );
+  const bestTargetId = getKeyForMaxValue(bestPieceMove.moveResults);
+  const engineMoveChoice = {
+    fromId: bestPieceMove.squareId,
+    toId: bestTargetId
+  };
+
   console.groupCollapsed('%c engine in progress', 'color: magenta');
   console.log('input > ', board);
   console.log('current player > ', currentColour);
   console.log('pieces > ', pieceSquares);
   console.log('moves for pieces > ', pieceMoves);
+  console.log('best >> ', bestPieceMove);
+  console.log('output > ', engineMoveChoice);
   console.groupEnd();
 
+  return engineMoveChoice;
   /* TODO
    *
-   * 1) forEach item in moveResults
-   *        compare to current, give a 'score' to the move.
-   *
-   * 2) pick best scoring move, perform move
+   * Account for next player taking pieces!
+   * Account for special moves!
    * 
-   * 3) return something that can be used to trigger redux actions
-   *       
    */
 }
+
+export default {
+  selectNextMove
+};

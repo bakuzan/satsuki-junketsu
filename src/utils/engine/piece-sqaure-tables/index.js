@@ -32,6 +32,6 @@ export default function tableInteragator(square) {
   const { id, contains } = square;
   const { name, colour } = contains;
 
-  const table = getTable(name, id);
+  const table = getTable(name);
   return table[colour][id];
 }

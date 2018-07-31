@@ -1,3 +1,4 @@
+import { splitMirrorAndJoin } from 'utils/common';
 const base = [
   0,
   0,
@@ -66,4 +67,4 @@ const base = [
 ];
 
 export const white = Object.freeze(base);
-export const black = Object.freeze(base.slice().reverse());
+export const black = splitMirrorAndJoin(base);

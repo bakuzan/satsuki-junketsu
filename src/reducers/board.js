@@ -25,6 +25,7 @@ import playbackSubReducer, {
   getPlaybackInitialState
 } from './board-playback';
 import importSubReducer from './board-import';
+import { BOARD_COMPUTER_MOVE } from '../actions/board';
 
 const initialState = {
   reverseBoard: false,
@@ -33,10 +34,19 @@ const initialState = {
   squares: buildStartingBoard(),
   selectedSquareId: null,
   promotionAt: null,
-  playback: getPlaybackInitialState(PLAYBACK_STARTING_VALUE)
+  playback: getPlaybackInitialState(PLAYBACK_STARTING_VALUE),
+  vsComputer: {
+    isComputer: true,
+    isBlack: true
+  }
 };
 
-const updateSlideMaximum = state => ({
+const setSelectedSquareId = (state, action) => ({
+  ...state,
+  selectedSquareId: action.squareId
+});
+
+const updateSlideMaximum = (state) => ({
   ...state,
   playback: getPlaybackInitialState(state.moves.length)
 });
@@ -48,7 +58,7 @@ const handlePieceMovement = (state, action) =>
     action.targetSquareId
   );
 
-const handleImport = freshState => (state, action) =>
+const handleImport = (freshState) => (state, action) =>
   importSubReducer(freshState, action);
 
 const composedPieceMovement = compose(updateSlideMaximum, handlePieceMovement);
@@ -56,10 +66,7 @@ const composedSpecialMove = compose(updateSlideMaximum, specialMoveSubReducer);
 const composedImport = compose(updateSlideMaximum, handleImport(initialState));
 
 const board = createReducer(initialState, {
-  [BOARD_SELECT_SQUARE]: (state, action) => ({
-    ...state,
-    selectedSquareId: action.squareId
-  }),
+  [BOARD_SELECT_SQUARE]: setSelectedSquareId,
   [BOARD_MOVE_PIECE]: composedPieceMovement,
   [BOARD_TAKE_PIECE]: composedPieceMovement,
   [BOARD_SPECIAL_MOVE]: composedSpecialMove,
@@ -68,17 +75,22 @@ const board = createReducer(initialState, {
   [PLAYBACK_STEP_BACK]: playbackSubReducer,
   [BOARD_IMPORT_GAME]: composedImport,
   [BOARD_RESET]: () => initialState,
-  [BOARD_SAVE_GAME]: state => persistChessGame(state),
-  [BOARD_LOAD_GAME]: state => {
+  [BOARD_SAVE_GAME]: (state) => persistChessGame(state),
+  [BOARD_LOAD_GAME]: (state) => {
     const savedGame = getSavedGame();
     if (savedGame) return savedGame;
     console.info('%c No saved game found.', 'color: royalblue');
     return state;
   },
-  [BOARD_TOGGLE_REVERSE]: state => ({
+  [BOARD_TOGGLE_REVERSE]: (state) => ({
     ...state,
     reverseBoard: !state.reverseBoard
-  })
+  }),
+  [BOARD_COMPUTER_MOVE]: (state, action) => {
+    const { fromId, toId } = action.move;
+    const midState = setSelectedSquareId(state, { squareId: fromId });
+    return composedPieceMovement(midState, { targetSquareId: toId });
+  }
 });
 
 export default board;
