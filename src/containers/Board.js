@@ -49,6 +49,7 @@ class BoardContainer extends React.Component {
    *  for the currently active move according to the playback.sliderPosition
   */
     const moves = board.moves.slice(0, activeMoveIndex);
+    const [nextMove] = board.moves.slice(activeMoveIndex, activeMoveIndex + 1);
 
     const selectedSquareId = !isReadOnly
       ? board.selectedSquareId
@@ -80,6 +81,7 @@ class BoardContainer extends React.Component {
         {...props}
         {...currentBoardForDisplay}
         currentPlayerColour={currentPlayerColour}
+        nextMove={nextMove}
         potentialMoves={potentialMoves}
         specialMoves={specialMoves}
         checkStatus={checkStatus}

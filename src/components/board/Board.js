@@ -28,12 +28,12 @@ class Board extends React.Component {
       selectedSquareId,
       actions
     } = this.props;
-    const selectedSquare = squares.find(x => x.id === selectedSquareId);
-    const square = squares.find(x => x.id === squareId);
+    const selectedSquare = squares.find((x) => x.id === selectedSquareId);
+    const square = squares.find((x) => x.id === squareId);
     const isSameSquare = selectedSquareId === squareId;
     const currentPlayerColour = this.props.currentPlayerColour;
-    const isPotentialMove = potentialMoves.some(x => x === squareId);
-    const specialMove = specialMoves.find(x => x.squareId === squareId);
+    const isPotentialMove = potentialMoves.some((x) => x === squareId);
+    const specialMove = specialMoves.find((x) => x.squareId === squareId);
     const isSpecialMove = !!specialMove;
 
     if (!selectedSquare && !square.contains) return;
@@ -44,11 +44,11 @@ class Board extends React.Component {
         : isPotentialMove
           ? actions.moveSelectedPiece(squareId)
           : console.log(
-            '%c invalid move',
-            'color: red; font-size: 22px;',
-            selectedSquare,
-            square
-          );
+              '%c invalid move',
+              'color: red; font-size: 22px;',
+              selectedSquare,
+              square
+            );
 
     if (!selectedSquare && square.contains.colour !== currentPlayerColour)
       return;
@@ -67,11 +67,11 @@ class Board extends React.Component {
         : isPotentialMove
           ? actions.takePiece(squareId)
           : console.log(
-            '%c invalid take',
-            'color: red; font-size: 22px;',
-            selectedSquare,
-            square
-          );
+              '%c invalid take',
+              'color: red; font-size: 22px;',
+              selectedSquare,
+              square
+            );
 
     console.log(
       '%c square selection case not handled!',
@@ -82,8 +82,8 @@ class Board extends React.Component {
 
   handleCanDrop(squareId) {
     const { potentialMoves, specialMoves } = this.props;
-    const isPotentialMove = potentialMoves.some(x => x === squareId);
-    const specialMove = specialMoves.find(x => x.squareId === squareId);
+    const isPotentialMove = potentialMoves.some((x) => x === squareId);
+    const specialMove = specialMoves.find((x) => x.squareId === squareId);
     const isSpecialMove = !!specialMove;
 
     return isPotentialMove || isSpecialMove;
@@ -104,7 +104,8 @@ class Board extends React.Component {
       specialMoves,
       checkStatus,
       isReversed,
-      isReadOnly
+      isReadOnly,
+      nextMove
     } = this.props;
 
     const boardSquares = isReversed ? reverseArray(squares) : squares;
@@ -141,18 +142,27 @@ class Board extends React.Component {
           })}
         >
           <Scales files={boardFiles} ranks={boardRanks} />
-          {boardSquares.map(o => (
-            <Square
-              key={o.id}
-              {...o}
-              isPotentialMove={potentialMoves.some(x => x === o.id)}
-              isSpecialMove={specialMoves.some(x => x.squareId === o.id)}
-              isInCheck={o.id === checkedKingSquareId}
-              isSelected={o.id === selectedSquareId}
-              onClick={onSquareClick}
-              dropActions={dropActions}
-            />
-          ))}
+          {boardSquares.map((o) => {
+            const isPotentialMove = !isReadOnly
+              ? potentialMoves.some((x) => x === o.id)
+              : nextMove.to.id === o.id;
+            const isSpecialMove = !isReadOnly
+              ? specialMoves.some((x) => x.squareId === o.id)
+              : nextMove.to.id === o.id;
+
+            return (
+              <Square
+                key={o.id}
+                {...o}
+                isPotentialMove={isPotentialMove}
+                isSpecialMove={isSpecialMove}
+                isInCheck={o.id === checkedKingSquareId}
+                isSelected={o.id === selectedSquareId}
+                onClick={onSquareClick}
+                dropActions={dropActions}
+              />
+            );
+          })}
         </div>
         <Portal targetSelector="#chess-game-status">
           {!checkStatus.isCheckmate && (
