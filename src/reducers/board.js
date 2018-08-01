@@ -3,6 +3,7 @@ import { compose, getSavedGame, persistChessGame } from 'utils/common';
 import { buildStartingBoard } from 'utils/board';
 import performMovementFromCurrentToTarget from 'utils/squaresUpdate';
 import upgradeSavedGameState from 'utils/state';
+import toaster from 'utils/toaster';
 
 import {
   BOARD_SELECT_SQUARE,
