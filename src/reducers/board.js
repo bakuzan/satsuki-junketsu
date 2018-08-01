@@ -2,6 +2,7 @@ import { createReducer } from './utils';
 import { compose, getSavedGame, persistChessGame } from 'utils/common';
 import { buildStartingBoard } from 'utils/board';
 import performMovementFromCurrentToTarget from 'utils/squaresUpdate';
+import upgradeSavedGameState from 'utils/state';
 
 import {
   BOARD_SELECT_SQUARE,
@@ -94,7 +95,7 @@ const board = createReducer(initialState, {
   [BOARD_SAVE_GAME]: (state) => persistChessGame(state),
   [BOARD_LOAD_GAME]: (state) => {
     const savedGame = getSavedGame();
-    if (savedGame) return savedGame;
+    if (savedGame) return upgradeSavedGameState(savedGame);
     console.info('%c No saved game found.', 'color: royalblue');
     return state;
   },
