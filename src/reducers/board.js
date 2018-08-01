@@ -92,12 +92,17 @@ const board = createReducer(initialState, {
 
     return initialState;
   },
-  [BOARD_SAVE_GAME]: (state) => persistChessGame(state),
+  [BOARD_SAVE_GAME]: (state) => {
+    const newState = persistChessGame(state);
+    toaster.success('Saved Game');
+    return newState;
+  },
   [BOARD_LOAD_GAME]: (state) => {
     const savedGame = getSavedGame();
-    if (savedGame) return upgradeSavedGameState(savedGame);
-    console.info('%c No saved game found.', 'color: royalblue');
-    return state;
+    if (!savedGame) return state;
+
+    toaster.success('Loaded Game');
+    return upgradeSavedGameState(savedGame);
   },
   [BOARD_TOGGLE_REVERSE]: (state) => ({
     ...state,

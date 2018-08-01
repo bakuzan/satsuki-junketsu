@@ -25,6 +25,11 @@ $dark-green: #515e54;
 $mauve: #b784a7;
 $magenta: #ff00ff;
 
+$red: #ff0000;
+$green: #00ff00;
+$cyan: #00ffff;
+$orange: #ff9900;
+
 $satsuki-blue: #0117ff;
 $satsuki-white: #fefefe;
 $satsuki-hair-black: #1a1323;
@@ -112,3 +117,7 @@ $board-themes: (
       light-square: $emerald
     )
 );
+$info-colour: $cyan;
+$success-colour: $green;
+$alert-colour: $orange;
+$danger-colour: $red;
