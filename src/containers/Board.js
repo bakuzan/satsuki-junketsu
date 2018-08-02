@@ -27,16 +27,21 @@ class BoardContainer extends React.Component {
   }
 
   componentDidUpdate() {
-    const { vsComputer, moves } = this.props.board;
+    const { vsComputer, moves, squares } = this.props.board;
     const { isComputer, isComputerBlack } = vsComputer;
     const isWhite = isWhitesTurn(moves.length);
     const notComputerTurn =
       (isComputerBlack && isWhite) || (!isComputerBlack && !isWhite);
 
     if (!isComputer || notComputerTurn) return;
-    console.log('CDU > ', this.props, this.state);
-    // TODO handle special moves!!
+
+    const currentPlayerColour = getCurrentPlayerColour(moves);
+    const checkStatus = getCheckStatusForColour(currentPlayerColour, squares);
+    if (checkStatus && checkStatus.isCheckmate) return;
+
     const computerSelected = SJEngine.selectNextMove(this.props.board);
+    if (!computerSelected) return;
+
     this.props.actions.performComputerMove(computerSelected);
   }
 
