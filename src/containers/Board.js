@@ -24,6 +24,7 @@ class BoardContainer extends React.Component {
     this.state = {
       computerSelected: null
     };
+    this.timer = null;
   }
 
   componentDidUpdate() {
@@ -42,7 +43,11 @@ class BoardContainer extends React.Component {
     const computerSelected = SJEngine.selectNextMove(this.props.board);
     if (!computerSelected) return;
 
-    this.props.actions.performComputerMove(computerSelected);
+    clearTimeout(this.timer);
+    this.timer = setTimeout(
+      () => this.props.actions.performComputerMove(computerSelected),
+      1000
+    );
   }
 
   render() {
