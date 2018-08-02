@@ -23,8 +23,8 @@ const PromotionOptions = ({ promotionAt, actions }) => {
   return (
     <div id="promotion-options-container">
       <div>Please select a piece to promote to: </div>
-      <ul className="list column one">
-        {promotionChoices.map(option => {
+      <ul className="list column">
+        {promotionChoices.map((option) => {
           const promoteTo = () =>
             actions.performSpecialMove({ ...promotion, promoteTo: option });
           return (
@@ -40,11 +40,11 @@ const PromotionOptions = ({ promotionAt, actions }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   promotionAt: state.board.promotionAt
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({ performSpecialMove }, dispatch)
 });
 

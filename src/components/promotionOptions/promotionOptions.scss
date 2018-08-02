@@ -1,4 +1,21 @@
+@import '../../styles/_mixins';
+@import '../../styles/_variables';
+
 #promotion-options-container {
   display: flex;
   flex-flow: column;
+  position: fixed;
+  top: $fixed-header-height;
+  left: 50%;
+  background-color: inherit;
+  padding: 5px;
+  margin: 10px;
+  z-index: 10;
+  transform: translateX(-50%);
+
+  @include respond-to(xs) {
+    > .list {
+      justify-content: center;
+    }
+  }
 }
