@@ -1,11 +1,15 @@
 export default function upgradeSavedGameState(state) {
-  if (state.hasOwnProperty('vsComputer')) return state;
+  let upgradedState = { ...state };
 
-  return {
-    ...state,
-    vsComputer: {
-      isComputer: false,
-      isComputerBlack: true
-    }
-  };
+  if (!state.hasOwnProperty('vsComputer')) {
+    upgradedState = {
+      ...upgradedState,
+      vsComputer: {
+        isComputer: false,
+        isComputerBlack: true
+      }
+    };
+  }
+
+  return upgradedState;
 }
