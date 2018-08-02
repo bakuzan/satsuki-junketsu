@@ -1,5 +1,6 @@
 import { Paths } from './paths';
 import Strings from './strings';
+import * as board from './board';
 
 const Constants = {
   Paths,
@@ -13,8 +14,7 @@ const Constants = {
     { name: 'Desert', class: 'board-two' },
     { name: 'Forest', class: 'board-three' }
   ],
-  files: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
-  ranks: [8, 7, 6, 5, 4, 3, 2, 1]
+  ...board
 };
 
 export default Constants;
