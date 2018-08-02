@@ -143,12 +143,15 @@ class Board extends React.Component {
         >
           <Scales files={boardFiles} ranks={boardRanks} />
           {boardSquares.map((o) => {
-            const isPotentialMove = !isReadOnly
-              ? potentialMoves.some((x) => x === o.id)
-              : nextMove.to.id === o.id;
-            const isSpecialMove = !isReadOnly
-              ? specialMoves.some((x) => x.squareId === o.id)
-              : nextMove.to.id === o.id;
+            let isPotentialMove = potentialMoves.some((x) => x === o.id);
+            isPotentialMove =
+              isPotentialMove &&
+              (!isReadOnly || (isReadOnly && nextMove.to.id === o.id));
+
+            let isSpecialMove = specialMoves.some((x) => x.squareId === o.id);
+            isSpecialMove =
+              isSpecialMove &&
+              (!isReadOnly || (isReadOnly && nextMove.to.id === o.id));
 
             return (
               <Square
