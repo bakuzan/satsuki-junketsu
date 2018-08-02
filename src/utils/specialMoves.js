@@ -36,17 +36,21 @@ function checkPawnEnPassant(pawnSquare, boardState) {
     lastMove.piece.colour === Strings.colours.white
       ? WHITE_PAWN_ROW
       : BLACK_PAWN_ROW;
-  if (lastMove.from.rank !== fromRank || lastMove.to.rank !== pawnSquare.rank)
-    return [];
-
-  const toIndex = Constants.files.findIndex(x => x === lastMove.to.file);
-  const pawnIndex = Constants.files.findIndex(x => x === pawnSquare.file);
-  if (Math.abs(toIndex - pawnIndex) !== 1) return [];
 
   const direction =
     pawnSquare.contains.colour === Strings.colours.white ? -1 : 1;
+  const twoRanksForward = fromRank + 2 * direction;
+
+  if (lastMove.from.rank !== fromRank || lastMove.to.rank !== twoRanksForward)
+    return [];
+
+  const toIndex = Constants.files.findIndex((x) => x === lastMove.to.file);
+  const pawnIndex = Constants.files.findIndex((x) => x === pawnSquare.file);
+  if (Math.abs(toIndex - pawnIndex) !== 1) return [];
+
   const targetSquare = squares.find(
-    x => x.file === lastMove.to.file && x.rank === lastMove.to.rank - direction
+    (x) =>
+      x.file === lastMove.to.file && x.rank === lastMove.to.rank - direction
   );
   return [mapSquareIdToEnPassant(targetSquare.id)];
 }
@@ -62,7 +66,7 @@ function kingSpecialMoves(kingSquare, squares) {
   if (kingSquare.contains.hasMoved) return [];
   if (willResultInCheck(kingSquare, squares)) return [];
   const rookSquares = squares.filter(
-    x =>
+    (x) =>
       x.contains &&
       x.contains.name === Strings.pieces.rook &&
       x.contains.colour === kingSquare.contains.colour &&
@@ -78,11 +82,13 @@ function kingSpecialMoves(kingSquare, squares) {
       new Array(endId - startId - 1),
       (x, i) => 1 + i + startId
     );
-    if (!squares.filter(x => squareIds.includes(x.id)).every(x => !x.contains))
+    if (
+      !squares.filter((x) => squareIds.includes(x.id)).every((x) => !x.contains)
+    )
       return p;
 
-    return squareIds.slice(0, 2).every(sqId => {
-      const squareIndex = squares.findIndex(x => x.id === sqId);
+    return squareIds.slice(0, 2).every((sqId) => {
+      const squareIndex = squares.findIndex((x) => x.id === sqId);
       return !willResultInCheck(
         kingSquare,
         mapPieceToNewSquare(squares, squareIndex, kingSquare)
@@ -98,7 +104,7 @@ function kingSpecialMoves(kingSquare, squares) {
 
 function availableSpecialMovesForSelectedPiece(boardState) {
   const { squares, selectedSquareId } = boardState;
-  const square = squares.find(x => x.id === selectedSquareId);
+  const square = squares.find((x) => x.id === selectedSquareId);
   if (!square) return [];
 
   switch (square.contains.name) {
