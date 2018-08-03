@@ -51,7 +51,7 @@ export function download(downloadUrl, fileName) {
 const getProcessedLine = (arr, str) => {
   const line = arr.find((x) => x.includes(str));
   if (!line) return '';
-  return line.match(TEXT_IN_QUOTES)[0].replace('"', '');
+  return line.match(TEXT_IN_QUOTES)[0].replace(/"/g, '');
 };
 
 const resolvePlayers = (information) => {
