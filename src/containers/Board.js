@@ -28,13 +28,20 @@ class BoardContainer extends React.Component {
   }
 
   componentDidUpdate() {
-    const { vsComputer, moves, squares } = this.props.board;
+    const { vsComputer, moves } = this.props.board;
     const { isComputer, isComputerBlack } = vsComputer;
     const isWhite = isWhitesTurn(moves.length);
     const notComputerTurn =
       (isComputerBlack && isWhite) || (!isComputerBlack && !isWhite);
 
     if (!isComputer || notComputerTurn) return;
+
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.makeComputerMove(), 1000);
+  }
+
+  makeComputerMove() {
+    const { moves, squares } = this.props.board;
 
     const currentPlayerColour = getCurrentPlayerColour(moves);
     const checkStatus = getCheckStatusForColour(currentPlayerColour, squares);
@@ -43,11 +50,7 @@ class BoardContainer extends React.Component {
     const computerSelected = SJEngine.selectNextMove(this.props.board);
     if (!computerSelected) return;
 
-    clearTimeout(this.timer);
-    this.timer = setTimeout(
-      () => this.props.actions.performComputerMove(computerSelected),
-      1000
-    );
+    this.props.actions.performComputerMove(computerSelected);
   }
 
   render() {
