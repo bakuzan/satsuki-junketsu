@@ -88,20 +88,7 @@ export const objectsAreEqual = (o1, o2) => {
   });
 };
 
-export const getMoveWithBestScore = (o1, o2) => {
-  const { moveResults: m1 } = o1;
-  const { moveResults: m2 } = o2;
-
-  const v1 = [...m1.values()];
-  const v2 = [...m2.values()];
-
-  const max1 = Math.max(...v1);
-  const max2 = Math.max(...v2);
-
-  return max1 >= max2 ? o1 : o2;
-};
-
-export const getKeyForMaxValue = (pairs) =>
+export const getKeyWithBestScore = (pairs) =>
   [...pairs.keys()].reduce(
     (pk, ck) => (pairs.get(pk) >= pairs.get(ck) ? pk : ck)
   );

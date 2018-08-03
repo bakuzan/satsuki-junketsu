@@ -1,11 +1,11 @@
-import { getMoveWithBestScore, getKeyForMaxValue } from 'utils/common';
+import { getKeyWithBestScore } from 'utils/common';
 import { getCurrentPlayerColour } from 'utils/game';
 
 import performMovementFromCurrentToTarget from 'utils/squaresUpdate';
 import * as PossibleMoves from './possible-moves';
 import evaluateBoard from './evaluate-board';
 
-function selectNextMove(board) {
+function generatePossibilities(board) {
   const { moves, squares } = board;
   const currentColour = getCurrentPlayerColour(moves);
   const pieceSquares = squares.filter(
@@ -14,44 +14,77 @@ function selectNextMove(board) {
 
   const pieceMoves = pieceSquares.reduce((p, sq) => {
     const squareId = sq.id;
-    const {
-      possibleMoves,
-      possibleSMoves
-    } = PossibleMoves.getPossibleMovesForPiece(board, squares, squareId);
-
-    const moveResults = possibleMoves.reduce(
-      (results, targetId) =>
-        results.set(
-          targetId,
-          evaluateBoard(
-            currentColour,
-            performMovementFromCurrentToTarget(board, squareId, targetId)
-          )
-        ),
-      new Map([])
+    const { possibleMoves } = PossibleMoves.getPossibleMovesForPiece(
+      board,
+      squares,
+      squareId
     );
 
-    // TODO will require refactor of board-specialMove reducer
-    const specialMoveResults = possibleSMoves.map((targetId) => targetId);
+    return [
+      ...p,
+      ...possibleMoves.map((targetId) => {
+        const newBoard = performMovementFromCurrentToTarget(
+          board,
+          squareId,
+          targetId
+        );
+        const score = evaluateBoard(currentColour, newBoard);
 
-    return [...p, { squareId, moveResults, specialMoveResults }];
+        return {
+          squareId,
+          targetId,
+          board: newBoard,
+          score
+        };
+      })
+    ];
   }, []);
-
-  const bestPieceMove = pieceMoves.reduce((bestMove, curr) =>
-    getMoveWithBestScore(bestMove, curr)
-  );
-  const bestTargetId = getKeyForMaxValue(bestPieceMove.moveResults);
-  const engineMoveChoice = {
-    fromId: bestPieceMove.squareId,
-    toId: bestTargetId
-  };
 
   console.groupCollapsed('%c engine in progress', 'color: magenta');
   console.log('input > ', board);
   console.log('current player > ', currentColour);
   console.log('pieces > ', pieceSquares);
   console.log('moves for pieces > ', pieceMoves);
-  console.log('best >> ', bestPieceMove);
+  console.groupEnd();
+
+  return pieceMoves;
+}
+
+function processPotentialFutures(board) {
+  const levelOne = generatePossibilities(board);
+  const levelTwo = levelOne.map((option) => ({
+    ...option,
+    outcomes: generatePossibilities(option.board)
+  }));
+
+  const moveResults = levelTwo.reduce((results, option) => {
+    const key = `${option.squareId}-${option.targetId}`;
+
+    const bestOutcome = option.outcomes.reduce(
+      (p, c) => (p.score > c.score ? p : c)
+    );
+
+    return results.set(key, bestOutcome.score);
+  }, new Map([]));
+
+  return moveResults;
+}
+
+function selectNextMove(board) {
+  const outcomes = processPotentialFutures(board);
+
+  const bestOutcome = getKeyWithBestScore(outcomes);
+  const [squareId, targetId] = bestOutcome.split('-');
+
+  const engineMoveChoice = {
+    fromId: Number(squareId),
+    toId: Number(targetId)
+  };
+
+  console.groupCollapsed('%c engine done', 'color: forestgreen');
+  console.log('input > ', board);
+  console.log('moves for pieces > ', outcomes);
+  console.log('bestOutcome >> ', bestOutcome);
   console.log('output > ', engineMoveChoice);
   console.groupEnd();
 
