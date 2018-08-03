@@ -41,7 +41,11 @@ function checkPawnEnPassant(pawnSquare, boardState) {
     pawnSquare.contains.colour === Strings.colours.white ? -1 : 1;
   const twoRanksForward = fromRank + 2 * direction;
 
-  if (lastMove.from.rank !== fromRank || lastMove.to.rank !== twoRanksForward)
+  if (
+    lastMove.from.rank !== fromRank ||
+    lastMove.to.rank !== pawnSquare.rank ||
+    lastMove.to.rank !== twoRanksForward
+  )
     return [];
 
   const toIndex = Constants.files.findIndex((x) => x === lastMove.to.file);
