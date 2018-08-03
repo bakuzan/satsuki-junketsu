@@ -22,7 +22,7 @@ function canDoSpecialMove(state, move, square) {
     selectedSquareId: square.id
   });
   const containsTheMatchingMove = specialMovesPieceCanDo.some(
-    x => x.type === move.specialMove.type
+    (x) => x.type === move.specialMove.type
   );
   return containsTheMatchingMove;
 }
@@ -34,7 +34,7 @@ function importSubReducer(cleanState, action) {
 
   return processedMoves.reduce((p, move) => {
     const toIndex = p.squares.findIndex(
-      x => x.file === move.to.file && x.rank === move.to.rank
+      (x) => x.file === move.to.file && x.rank === move.to.rank
     );
     const to = { ...p.squares[toIndex] };
     const toHasPiece = !!to && !!to.contains;
@@ -42,7 +42,7 @@ function importSubReducer(cleanState, action) {
     const func = toHasPiece ? isValidTake : isValidMove;
 
     const from = p.squares.find(
-      x =>
+      (x) =>
         (!move.from ||
           (move.from &&
             x.file === move.from.file &&
@@ -76,11 +76,12 @@ function importSubReducer(cleanState, action) {
     const newState = {
       ...p,
       squares,
-      graveyard: [...p.graveyard, captured].filter(x => !!x),
+      graveyard: [...p.graveyard, captured].filter((x) => !!x),
       moves: [
         ...p.moves,
         mapSquaresToMove(from, squares[toIndex], squares, captured, specialMove)
-      ]
+      ],
+      vsComputer: data.vsComputer
     };
 
     return !isEnPassant

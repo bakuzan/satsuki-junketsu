@@ -3,7 +3,11 @@ import { mapMovesToPGN } from './pgn';
 
 import * as Regexes from 'constants/regex';
 
-export const exportPGNForMoves = moves => {
+const PLAYER = 'Player';
+const COMPUTER = 'Computer';
+const TEXT_IN_QUOTES = /\\.|"([^"\\]*\\.)*[^"\\]*"/;
+
+export const exportPGNForMoves = (moves, vsComputer) => {
   const pgnForMoves = mapMovesToPGN(moves);
   let moveNumber = 1;
   const pgn = pgnForMoves.reduce((p, c, i) => {
@@ -14,10 +18,15 @@ export const exportPGNForMoves = moves => {
   }, '');
 
   const date = formatDate(new Date());
+  const players = !vsComputer.isComputer
+    ? [PLAYER, PLAYER]
+    : vsComputer.isComputerBlack ? [PLAYER, COMPUTER] : [COMPUTER, PLAYER];
+
   const dataForFile = `
   [Site "https://bakuzan.github.io/satsuki-junketsu/"]
   [Date "${date}"]
-
+  [White "${players[0]}"]
+  [Black "${players[1]}"]
   ${pgn}
   `;
 
@@ -27,7 +36,7 @@ export const exportPGNForMoves = moves => {
   );
 };
 
-const processDataIntoDownloadUrl = dataStr =>
+const processDataIntoDownloadUrl = (dataStr) =>
   URL.createObjectURL(new Blob([dataStr]));
 
 export function download(downloadUrl, fileName) {
@@ -39,19 +48,40 @@ export function download(downloadUrl, fileName) {
   document.body.removeChild(link);
 }
 
-export const importPGNFromFile = fileText => {
+const getProcessedLine = (arr, str) => {
+  const line = arr.find((x) => x.includes(str));
+  if (!line) return '';
+  return line.match(TEXT_IN_QUOTES)[0].replace('"', '');
+};
+
+const resolvePlayers = (information) => {
+  const lines = information.split('\n');
+  const wPlayer = getProcessedLine(lines, 'White');
+  const bPlayer = getProcessedLine(lines, 'Black');
+
+  return {
+    isComputer: wPlayer === COMPUTER || bPlayer === COMPUTER,
+    isComputerBlack: bPlayer === COMPUTER
+  };
+};
+
+export const importPGNFromFile = (fileText) => {
   const [gameInformation, ...movePairs] = fileText
     .replace(Regexes.MATCH_PGN_COMMENTS_PGN_GAME_RESULT, '')
     .split(Regexes.MATCH_DIGIT_DOT_SPACE);
+
   const pgnMoves = movePairs.reduce(
     (p, movePair) => [
       ...p,
       ...movePair
         .replace(Regexes.MATCH_NEW_LINE, ' ')
         .split(' ')
-        .filter(x => !!x && isNaN(x))
+        .filter((x) => !!x && isNaN(x))
     ],
     []
   );
-  return { gameInformation, pgnMoves };
+
+  const vsComputer = resolvePlayers(gameInformation);
+
+  return { gameInformation, pgnMoves, vsComputer };
 };

@@ -49,7 +49,7 @@ class ChessGame extends React.Component {
   }
 
   render() {
-    const { moves, actions } = this.props;
+    const { moves, vsComputer, actions } = this.props;
 
     return (
       <React.Fragment>
@@ -61,7 +61,10 @@ class ChessGame extends React.Component {
           <GameAction id="save-game" onClick={actions.saveGame}>
             Save Game
           </GameAction>
-          <GameAction id="export-game" onClick={() => exportPGNForMoves(moves)}>
+          <GameAction
+            id="export-game"
+            onClick={() => exportPGNForMoves(moves, vsComputer)}
+          >
             Export
           </GameAction>
           <label
@@ -103,7 +106,8 @@ class ChessGame extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  moves: state.board.moves
+  moves: state.board.moves,
+  vsComputer: state.board.vsComputer
 });
 
 const mapDispatchToProps = (dispatch) => ({
