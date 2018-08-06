@@ -37,7 +37,7 @@ class BoardContainer extends React.Component {
     if (!isComputer || notComputerTurn) return;
 
     clearTimeout(this.timer);
-    this.timer = setTimeout(() => this.makeComputerMove(), 1000);
+    this.timer = setTimeout(() => this.makeComputerMove(), 250);
   }
 
   makeComputerMove() {

@@ -1,4 +1,4 @@
-import { getKeyWithBestScore } from 'utils/common';
+import { getKeyWithBestScore, getObjWithBestScore } from 'utils/common';
 import { getCurrentPlayerColour } from 'utils/game';
 
 import performMovementFromCurrentToTarget from 'utils/squaresUpdate';
@@ -50,21 +50,19 @@ function generatePossibilities(board) {
   return pieceMoves;
 }
 
+const mapOutcomeToNextOutcome = (option) => ({
+  ...option,
+  board: generatePossibilities(option.board).reduce(getObjWithBestScore)
+});
+
 function processPotentialFutures(board) {
-  const levelOne = generatePossibilities(board);
-  const levelTwo = levelOne.map((option) => ({
-    ...option,
-    outcomes: generatePossibilities(option.board)
-  }));
+  const possibleOutcomes = generatePossibilities(board);
+  const opponentOutcomes = possibleOutcomes.map(mapOutcomeToNextOutcome);
+  const nextMoveOptions = opponentOutcomes.map(mapOutcomeToNextOutcome);
 
-  const moveResults = levelTwo.reduce((results, option) => {
+  const moveResults = nextMoveOptions.reduce((results, option) => {
     const key = `${option.squareId}-${option.targetId}`;
-
-    const bestOutcome = option.outcomes.reduce(
-      (p, c) => (p.score > c.score ? p : c)
-    );
-
-    return results.set(key, bestOutcome.score);
+    return results.set(key, option.board.score);
   }, new Map([]));
 
   return moveResults;
@@ -93,6 +91,7 @@ function selectNextMove(board) {
    *
    * Account for next player taking pieces!
    * Account for special moves!
+   * Check scoring (?)
    * 
    */
 }

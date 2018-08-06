@@ -88,10 +88,16 @@ export const objectsAreEqual = (o1, o2) => {
   });
 };
 
-export const getKeyWithBestScore = (pairs) =>
-  [...pairs.keys()].reduce(
-    (pk, ck) => (pairs.get(pk) >= pairs.get(ck) ? pk : ck)
-  );
+const getKeyWithScoreComparison = (compare) => (pairs) =>
+  [...pairs.keys()].reduce((pk, ck) => (compare(pairs, pk, ck) ? pk : ck));
+
+export const getKeyWithLowestScore = getKeyWithScoreComparison(
+  (m, pk, ck) => m.get(pk) <= m.get(ck)
+);
+export const getKeyWithBestScore = getKeyWithScoreComparison(
+  (m, pk, ck) => m.get(pk) >= m.get(ck)
+);
+export const getObjWithBestScore = (p, c) => (p.score >= c.score ? p : c);
 
 const mirrorMatrix = (arr) => arr.map((a) => a.reverse());
 const splitArray = (arr, len = 8) => {
