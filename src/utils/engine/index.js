@@ -40,20 +40,27 @@ function generatePossibilities(board) {
     ];
   }, []);
 
-  console.groupCollapsed('%c engine in progress', 'color: magenta');
-  console.log('input > ', board);
-  console.log('current player > ', currentColour);
-  console.log('pieces > ', pieceSquares);
-  console.log('moves for pieces > ', pieceMoves);
-  console.groupEnd();
+  // console.groupCollapsed('%c engine in progress', 'color: magenta');
+  // console.log('input > ', board);
+  // console.log('current player > ', currentColour);
+  // console.log('pieces > ', pieceSquares);
+  // console.log('moves for pieces > ', pieceMoves);
+  // console.groupEnd();
 
   return pieceMoves;
 }
 
-const mapOutcomeToNextOutcome = (option) => ({
-  ...option,
-  board: generatePossibilities(option.board).reduce(getObjWithBestScore)
-});
+const mapOutcomeToNextOutcome = (option) => {
+  const { score, board } = generatePossibilities(option.board).reduce(
+    getObjWithBestScore
+  );
+
+  return {
+    ...option,
+    board,
+    score
+  };
+};
 
 function processPotentialFutures(board) {
   const possibleOutcomes = generatePossibilities(board);
@@ -62,7 +69,7 @@ function processPotentialFutures(board) {
 
   const moveResults = nextMoveOptions.reduce((results, option) => {
     const key = `${option.squareId}-${option.targetId}`;
-    return results.set(key, option.board.score);
+    return results.set(key, option.score);
   }, new Map([]));
 
   return moveResults;
@@ -89,9 +96,8 @@ function selectNextMove(board) {
   return engineMoveChoice;
   /* TODO
    *
-   * Account for next player taking pieces!
    * Account for special moves!
-   * Check scoring (?)
+   * Scoring for Check(mate) (?)
    * 
    */
 }
