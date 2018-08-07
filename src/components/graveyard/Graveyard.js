@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Piece from 'components/piece/Piece';
+import { Piece } from 'components/piece/Piece';
 
 import './graveyard.css';
 

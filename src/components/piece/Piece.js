@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import { withDragSource } from 'components/dragAndDrop';
 import SVGS from './pieceSvgs';
 import Strings from 'constants/strings';
-import {objectsAreEqual} from 'utils/common';
+import { objectsAreEqual } from 'utils/common';
 
 import './piece.css';
 
-class Piece extends React.Component {
+export class Piece extends React.Component {
   shouldComponentUpdate(nextProps) {
     const isDraggingChanged = nextProps.isDragging !== this.props.isDragging;
     const dataChanged = !objectsAreEqual(nextProps, this.props);
@@ -37,12 +37,14 @@ class Piece extends React.Component {
 
   render() {
     const { name, colour, isDragging } = this.props;
-    
+
     return (
-      <div className={classNames('piece', { 
-        [`${colour}-${name}`]: true,
-        'piece--dragging': isDragging
-      })}>
+      <div
+        className={classNames('piece', {
+          [`${colour}-${name}`]: true,
+          'piece--dragging': isDragging
+        })}
+      >
         {this.renderCoolChessPieceSvg(name, colour)}
       </div>
     );
