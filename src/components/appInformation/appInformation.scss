@@ -1,0 +1,29 @@
+.app-information {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 1em;
+
+  &::before {
+    content: '\D83D\DEC8';
+  }
+
+  &__detail {
+    position: fixed;
+    right: -100%;
+    bottom: 0;
+    background-color: inherit;
+    padding: 5px;
+    margin: 1em;
+    border: 1px solid;
+    pointer-events: none;
+    visibility: hidden;
+    transition: 1s;
+
+    &--visible {
+      transition: 1s;
+      visibility: visible;
+      right: 0;
+    }
+  }
+}
