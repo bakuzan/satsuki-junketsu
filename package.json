@@ -1,6 +1,6 @@
 {
   "name": "satsuki-junketsu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "homepage": "https://bakuzan.github.io/satsuki-junketsu/",
   "dependencies": {
@@ -28,18 +28,18 @@
       "git add"
     ]
   },
-  "pre-commit": ["precommit-msg", "lint"],
+  "pre-commit": [
+    "precommit-msg",
+    "lint"
+  ],
   "scripts": {
     "lint": "lint-staged",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
     "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css":
-      "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-js":
-      "for /f %i in ('git rev-parse --abbrev-ref HEAD') do set REACT_APP_BRANCH=%i && react-scripts start",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "for /f %i in ('git rev-parse --abbrev-ref HEAD') do set REACT_APP_BRANCH=%i && react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
-    "build-js":
-      "for /f %i in ('git rev-parse --abbrev-ref HEAD') do set REACT_APP_BRANCH=%i && react-scripts build",
+    "build-js": "for /f %i in ('git rev-parse --abbrev-ref HEAD') do set REACT_APP_BRANCH=%i && react-scripts build",
     "build": "npm-run-all build-css build-js",
     "eject": "react-scripts eject",
     "deploy": "npm run build&&gh-pages -d build",
