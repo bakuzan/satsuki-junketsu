@@ -63,9 +63,14 @@ const mapOutcomeToNextOutcome = (option) => {
 };
 
 function processPotentialFutures(board) {
+  const aiColour = getCurrentPlayerColour(board.moves);
+
   const possibleOutcomes = generatePossibilities(board);
   const opponentOutcomes = possibleOutcomes.map(mapOutcomeToNextOutcome);
-  const nextMoveOptions = opponentOutcomes.map(mapOutcomeToNextOutcome);
+  const nextMoveOptions = opponentOutcomes.map((o) => ({
+    ...o,
+    score: evaluateBoard(aiColour, o.board)
+  }));
 
   const moveResults = nextMoveOptions.reduce((results, option) => {
     const key = `${option.squareId}-${option.targetId}`;

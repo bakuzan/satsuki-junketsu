@@ -1,13 +1,13 @@
-const getSquare = n => document.getElementById(n);
-const selectSquare = n =>
+const getSquare = (n) => document.getElementById(n);
+const selectSquare = (n) =>
   (getSquare(n) || { click: () => console.log('nothing to click') }).click();
 const moveFromSquareToSquare = async (n, m) => {
   await selectSquare(n);
   await selectSquare(m);
 };
 
-const prepareBoard = arr => moveFromSquareToSquare(...arr);
-const makeMoves = arr => {
+const prepareBoard = (arr) => moveFromSquareToSquare(...arr);
+const makeMoves = (arr) => {
   const move = arr.pop();
   if (!move) return console.log('board ready');
 
@@ -79,7 +79,15 @@ export default {
     ambiguous: () => makeMoves(ambiguous)
   },
   actions: {
-    newGame: () => document.getElementById('new-game').click(),
+    newGame: (type) => {
+      document.getElementById('new-game').click();
+      if (type) {
+        setTimeout(
+          () => document.getElementById(`new-game-option-${type}`).click(),
+          100
+        );
+      }
+    },
     saveGame: () => document.getElementById('save-game').click(),
     export: () => document.getElementById('export-game').click(),
     import: () => document.getElementById('import-game').click()

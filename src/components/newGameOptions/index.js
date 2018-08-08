@@ -4,13 +4,13 @@ import React from 'react';
 import Portal from 'components/Portal';
 import GameAction from 'components/GameAction';
 
-import Options, { NewGameOptions as GG } from 'constants/new-game-options';
+import Options from 'constants/new-game-options';
 
 import './newGameOptions.css';
 
 const NewGameOptions = ({ display, targetSelector, onSelect }) => {
   if (!display) return null;
-  console.log(Options, GG);
+
   return (
     <Portal targetSelector={targetSelector}>
       <div className="game-options">
@@ -18,7 +18,12 @@ const NewGameOptions = ({ display, targetSelector, onSelect }) => {
         <ul className="list column one">
           {Options.map((o) => (
             <li key={o.id}>
-              <GameAction onClick={() => onSelect(o.id)}>{o.text}</GameAction>
+              <GameAction
+                id={`new-game-option-${o.id}`}
+                onClick={() => onSelect(o.id)}
+              >
+                {o.text}
+              </GameAction>
             </li>
           ))}
         </ul>
