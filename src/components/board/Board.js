@@ -9,7 +9,7 @@ import PromotionOptions from 'components/promotionOptions/PromotionOptions';
 import Constants from 'constants/index';
 import { reverseArray, capitalise } from 'utils/common';
 import { getWinningPlayerColour } from 'utils/game';
-import './board.css';
+import './board.scss';
 
 class Board extends React.Component {
   constructor(props) {

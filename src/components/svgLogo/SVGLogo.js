@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import './svgLogo.css';
+import './svgLogo.scss';
 
 class SvgLogo extends Component {
   constructor() {
@@ -18,7 +18,7 @@ class SvgLogo extends Component {
   cycleCharacters() {
     clearInterval(this.interval);
     this.interval = setInterval(() => {
-      const letterIndex = Array.from(this.characters).findIndex(x => {
+      const letterIndex = Array.from(this.characters).findIndex((x) => {
         return x.getAttribute('class').indexOf(this.animate) > -1;
       });
 

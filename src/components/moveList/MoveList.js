@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import Strings from 'constants/strings';
-import './moveList.css';
+import './moveList.scss';
 
 const MoveItem = ({ pgn, isActive, onClick }) => (
   <li className={classNames({ active: isActive })}>

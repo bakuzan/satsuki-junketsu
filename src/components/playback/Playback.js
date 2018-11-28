@@ -4,9 +4,9 @@ import React from 'react';
 
 import Icons from 'constants/icons';
 import { SLIDER_START } from 'constants/slider';
-import './playback.css';
+import './playback.scss';
 
-const PlaybackButton = props => (
+const PlaybackButton = (props) => (
   <button
     type="button"
     className={classNames(
@@ -38,7 +38,7 @@ class Playback extends React.Component {
 
   handleTogglePlay() {
     this.setState(
-      prev => ({ isPlaying: !prev.isPlaying }),
+      (prev) => ({ isPlaying: !prev.isPlaying }),
       () => {
         clearInterval(this.timer);
         if (!this.state.isPlaying) return;

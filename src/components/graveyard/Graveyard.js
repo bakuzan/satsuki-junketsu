@@ -2,7 +2,7 @@ import React from 'react';
 
 import Piece from 'components/piece/Piece';
 
-import './graveyard.css';
+import './graveyard.scss';
 
 const Graveyard = ({ pieces }) => (
   <div className="graveyard">

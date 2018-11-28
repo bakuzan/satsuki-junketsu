@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import './tickbox.css';
+import './tickbox.scss';
 
 const Tickbox = ({ name, checked, disabled, onChange, text }) => (
   <div className="input-container">

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Strings from 'constants/strings';
 import { performSpecialMove } from 'actions/board';
 
-import './promotionOptions.css';
+import './promotionOptions.scss';
 
 const promotionChoices = [
   Strings.pieces.rook,

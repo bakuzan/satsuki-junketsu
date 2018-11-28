@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import toaster from 'utils/toaster';
 
-import './toaster.css';
+import './toaster.scss';
 
 class Toaster extends React.Component {
   constructor() {

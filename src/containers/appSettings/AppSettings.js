@@ -9,16 +9,16 @@ import Tickbox from 'components/tickbox/Tickbox';
 import { setApplicationTheme, setBoardTheme } from 'actions/theme';
 import { toggleReverseBoard } from 'actions/board';
 import Constants from 'constants/index';
-import './appSettings.css';
+import './appSettings.scss';
 
-const themeMapper = theme => ({
+const themeMapper = (theme) => ({
   text: theme.name,
   value: theme.class
 });
 const appThemes = Constants.themes.map(themeMapper);
 const boardThemes = Constants.boardThemes.map(themeMapper);
 
-const applyThemeToBody = theme => (document.body.className = theme);
+const applyThemeToBody = (theme) => (document.body.className = theme);
 
 class AppSettings extends React.Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class AppSettings extends React.Component {
   }
 
   handleDropdownChange(onChange) {
-    return e => {
+    return (e) => {
       onChange(e.target.value);
       this.handleCloseAppSettings();
     };
@@ -44,7 +44,7 @@ class AppSettings extends React.Component {
   }
 
   toggleDropdown() {
-    this.setState(prev => ({ isDropdownOpen: !prev.isDropdownOpen }));
+    this.setState((prev) => ({ isDropdownOpen: !prev.isDropdownOpen }));
   }
 
   render() {
@@ -123,7 +123,7 @@ AppSettings.propTypes = {
   toggleReverseBoard: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   appTheme: state.theme.app,
   boardTheme: state.theme.board,
   reverseBoard: state.board.reverseBoard

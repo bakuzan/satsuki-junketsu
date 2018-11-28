@@ -6,7 +6,7 @@ import GameAction from 'components/GameAction';
 
 import Options, { NewGameOptions as GG } from 'constants/new-game-options';
 
-import './newGameOptions.css';
+import './newGameOptions.scss';
 
 const NewGameOptions = ({ display, targetSelector, onSelect }) => {
   if (!display) return null;

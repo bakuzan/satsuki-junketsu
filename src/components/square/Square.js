@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { withDropTarget } from 'components/dragAndDrop';
 import Piece from 'components/piece/Piece';
 
-import './square.css';
+import './square.scss';
 
 class Square extends React.Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class Square extends React.Component {
     } = this.props;
 
     const classes = classNames('square', {
-      'selected': isSelected,
+      selected: isSelected,
       'potential-move': isPotentialMove && !contains,
       'potential-take': isPotentialMove && contains,
       'special-move': isSpecialMove,
@@ -49,7 +49,7 @@ class Square extends React.Component {
         {!!contains && <Piece {...contains} onDrag={this.handleDragPiece} />}
       </div>
     );
-  };
+  }
 }
 
 export default withDropTarget(Square);

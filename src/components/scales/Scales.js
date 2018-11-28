@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './scales.css';
+import './scales.scss';
 
 class Scales extends Component {
   renderScale(array) {
-    return array.map(item => <div key={item}>{item}</div>);
+    return array.map((item) => <div key={item}>{item}</div>);
   }
 
   render() {

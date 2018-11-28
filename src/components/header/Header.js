@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import AppSettings from 'containers/appSettings/AppSettings';
 import SvgLogo from '../svgLogo/SVGLogo.js';
 import { Paths } from 'constants/paths';
-import './header.css';
+import './header.scss';
 
 class Header extends Component {
   render() {
