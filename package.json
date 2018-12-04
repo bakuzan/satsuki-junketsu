@@ -1,6 +1,6 @@
 {
   "name": "satsuki-junketsu",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "private": true,
   "homepage": "https://bakuzan.github.io/satsuki-junketsu/",
   "dependencies": {
@@ -31,8 +31,10 @@
   "scripts": {
     "lint": "lint-staged",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start":
+      "for /f %i in ('git rev-parse --abbrev-ref HEAD') do set REACT_APP_BRANCH=%i && react-scripts start",
+    "build":
+      "for /f %i in ('git rev-parse --abbrev-ref HEAD') do set REACT_APP_BRANCH=%i && react-scripts build",
     "eject": "react-scripts eject",
     "deploy": "npm run build&&gh-pages -d build",
     "storybook": "export NODE_PATH=src && start-storybook -p 9009 -s public",

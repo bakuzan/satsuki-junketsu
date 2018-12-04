@@ -87,7 +87,8 @@
       filter: drop-shadow(0 -2px 2px $menu-outline);
     }
     .dropdown-menu,
-    .game-options {
+    .game-options,
+    .app-information__detail {
       background-color: $base-background;
     }
   }
