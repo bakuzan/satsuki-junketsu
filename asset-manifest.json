@@ -1,13 +1,13 @@
 {
-  "main.css": "/satsuki-junketsu/static/css/main.e957f8ec.chunk.css",
-  "main.js": "/satsuki-junketsu/static/js/main.375ca6b1.chunk.js",
-  "main.js.map": "/satsuki-junketsu/static/js/main.375ca6b1.chunk.js.map",
-  "static/js/1.da018938.chunk.js": "/satsuki-junketsu/static/js/1.da018938.chunk.js",
-  "static/js/1.da018938.chunk.js.map": "/satsuki-junketsu/static/js/1.da018938.chunk.js.map",
+  "main.css": "/satsuki-junketsu/static/css/main.7ec2e74d.chunk.css",
+  "main.js": "/satsuki-junketsu/static/js/main.886837c0.chunk.js",
+  "main.js.map": "/satsuki-junketsu/static/js/main.886837c0.chunk.js.map",
+  "static/js/1.5d64e86d.chunk.js": "/satsuki-junketsu/static/js/1.5d64e86d.chunk.js",
+  "static/js/1.5d64e86d.chunk.js.map": "/satsuki-junketsu/static/js/1.5d64e86d.chunk.js.map",
   "runtime~main.js": "/satsuki-junketsu/static/js/runtime~main.10830399.js",
   "runtime~main.js.map": "/satsuki-junketsu/static/js/runtime~main.10830399.js.map",
-  "static/css/main.e957f8ec.chunk.css.map": "/satsuki-junketsu/static/css/main.e957f8ec.chunk.css.map",
+  "static/css/main.7ec2e74d.chunk.css.map": "/satsuki-junketsu/static/css/main.7ec2e74d.chunk.css.map",
   "index.html": "/satsuki-junketsu/index.html",
-  "precache-manifest.95384c308dbb75cdf8a563500c427b65.js": "/satsuki-junketsu/precache-manifest.95384c308dbb75cdf8a563500c427b65.js",
+  "precache-manifest.f2267b8d7b3e9a3dfb815bf8112041a8.js": "/satsuki-junketsu/precache-manifest.f2267b8d7b3e9a3dfb815bf8112041a8.js",
   "service-worker.js": "/satsuki-junketsu/service-worker.js"
 }
