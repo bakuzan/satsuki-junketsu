@@ -58,7 +58,7 @@ const King = ({ size, viewBox, styleSettings }) => {
       height={size}
     >
       <g style={kingStyleOuter}>
-        <path d="M 22.5,11.63 L 22.5,6" style={kingStylePath1} id="path6570" />
+        <path d="M 22.5,11.63 L 22.5,6" style={kingStylePath1} />
         <path
           d="M 22.5,25 C 22.5,25 27,17.5 25.5,14.5 C 25.5,14.5 24.5,12 22.5,12 C 20.5,12 19.5,14.5 19.5,14.5 C 18,17.5 22.5,25 22.5,25"
           style={topCap}

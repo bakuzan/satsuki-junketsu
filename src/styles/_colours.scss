@@ -36,8 +36,8 @@ $satsuki-hair-black: #1a1323;
 $junketsu-eye-red: #ca273c;
 
 $senketsu-base: #333366;
-$senketsu-eye: #fde274;
-$senketsu-straps: #de2b07;
+$senketsu-eye: lighten(#fde274, 2%);
+$senketsu-straps: darken(#de2b07, 5%);
 
 // USAGES
 $primary-background: $satsuki-blue;

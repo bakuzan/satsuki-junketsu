@@ -4,7 +4,7 @@ import Strings from 'constants/strings';
 
 const VIEW_BOX = '-2 0 50 50';
 const PIECE_SIZE = '100%';
-const setColour = c =>
+const setColour = (c) =>
   c === Strings.colours.white
     ? Strings.colours.whiteHex
     : Strings.colours.blackHex;

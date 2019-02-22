@@ -32,6 +32,10 @@ class Square extends React.Component {
       onClick
     } = this.props;
 
+    const hasPiece = !!contains;
+    const label = `${file}${rank}${
+      hasPiece ? `, ${contains.colour} ${contains.name}` : ''
+    }`;
     const classes = classNames('square', {
       selected: isSelected,
       'potential-move': isPotentialMove && !contains,
@@ -45,9 +49,14 @@ class Square extends React.Component {
     });
 
     return (
-      <div id={id} className={classes} onClick={() => onClick(id)}>
-        {!!contains && <Piece {...contains} onDrag={this.handleDragPiece} />}
-      </div>
+      <button
+        id={id}
+        className={classes}
+        aria-label={label}
+        onClick={() => onClick(id)}
+      >
+        {hasPiece && <Piece {...contains} onDrag={this.handleDragPiece} />}
+      </button>
     );
   }
 }

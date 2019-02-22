@@ -40,6 +40,7 @@ class Piece extends React.Component {
 
     return (
       <div
+        aria-label={`${colour} ${name}`}
         className={classNames('piece', {
           [`${colour}-${name}`]: true,
           'piece--dragging': isDragging

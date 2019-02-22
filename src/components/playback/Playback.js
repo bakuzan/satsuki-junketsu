@@ -6,16 +6,11 @@ import Icons from 'constants/icons';
 import { SLIDER_START } from 'constants/slider';
 import './playback.scss';
 
-const PlaybackButton = (props) => (
+const PlaybackButton = ({ className, ...props }) => (
   <button
     type="button"
-    className={classNames(
-      'button-icon ripple playback-button',
-      props.className
-    )}
-    icon={props.icon}
-    disabled={props.disabled}
-    onClick={props.onClick}
+    className={classNames('button-icon ripple playback-button', className)}
+    {...props}
   />
 );
 
@@ -41,13 +36,19 @@ class Playback extends React.Component {
       (prev) => ({ isPlaying: !prev.isPlaying }),
       () => {
         clearInterval(this.timer);
-        if (!this.state.isPlaying) return;
-        if (this.props.sliderPosition === this.props.sliderMaximum)
+        if (!this.state.isPlaying) {
+          return;
+        }
+
+        if (this.props.sliderPosition === this.props.sliderMaximum) {
           this.props.actions.onSlide(this.props.name, SLIDER_START);
+        }
 
         this.timer = setInterval(() => {
-          if (this.previousPosition === this.props.sliderMaximum)
+          if (this.previousPosition === this.props.sliderMaximum) {
             return this.stopPlaying();
+          }
+
           this.previousPosition = this.props.sliderPosition;
           this.props.actions.onStepForward(this.props.name, STEP_FORWARD);
         }, this.props.playbackInterval);
@@ -84,12 +85,17 @@ class Playback extends React.Component {
       sliderMaximum
     } = this.props;
 
-    if (isHidden) return null;
+    if (isHidden) {
+      return null;
+    }
 
     const AT_THE_START = sliderPosition === SLIDER_START;
     const AT_THE_END = sliderPosition === sliderMaximum;
-    const toggleIcon = isPlaying ? Icons.pause : Icons.play;
     const width = sliderPosition / sliderMaximum * 100;
+    const toggleData = isPlaying
+      ? { icon: Icons.pause, 'aria-label': 'Pause playback' }
+      : { icon: Icons.play, 'aria-label': 'Start playback' };
+
     const sliderStyle = {
       backgroundImage: `linear-gradient(90deg, currentcolor, currentcolor ${width}%, transparent ${width}%)`
     };
@@ -99,7 +105,7 @@ class Playback extends React.Component {
         <div className="button-group">
           <PlaybackButton
             className="playback-toggle-play"
-            icon={toggleIcon}
+            {...toggleData}
             onClick={this.handleTogglePlay}
             disabled={isDisabled}
           />
@@ -108,6 +114,7 @@ class Playback extends React.Component {
           <input
             type="range"
             name={name}
+            aria-label="playback slider"
             style={sliderStyle}
             value={sliderPosition}
             max={sliderMaximum}
@@ -118,12 +125,14 @@ class Playback extends React.Component {
         <div className="button-group">
           <PlaybackButton
             className="playback-back"
+            aria-label="Move playback backward a step"
             icon={Icons.back}
             onClick={this.createSliderStepHandler(STEP_BACK)}
             disabled={AT_THE_START || isDisabled}
           />
           <PlaybackButton
             className="playback-forward"
+            aria-label="Move playback forward a step"
             icon={Icons.forward}
             onClick={this.createSliderStepHandler(STEP_FORWARD)}
             disabled={AT_THE_END || isDisabled}
