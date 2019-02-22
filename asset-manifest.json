@@ -1,13 +1,14 @@
 {
-  "main.css": "/satsuki-junketsu/static/css/main.7ec2e74d.chunk.css",
-  "main.js": "/satsuki-junketsu/static/js/main.886837c0.chunk.js",
-  "main.js.map": "/satsuki-junketsu/static/js/main.886837c0.chunk.js.map",
-  "static/js/1.5d64e86d.chunk.js": "/satsuki-junketsu/static/js/1.5d64e86d.chunk.js",
-  "static/js/1.5d64e86d.chunk.js.map": "/satsuki-junketsu/static/js/1.5d64e86d.chunk.js.map",
-  "runtime~main.js": "/satsuki-junketsu/static/js/runtime~main.10830399.js",
-  "runtime~main.js.map": "/satsuki-junketsu/static/js/runtime~main.10830399.js.map",
-  "static/css/main.7ec2e74d.chunk.css.map": "/satsuki-junketsu/static/css/main.7ec2e74d.chunk.css.map",
+  "main.css": "/satsuki-junketsu/static/css/main.95aba12a.chunk.css",
+  "main.js": "/satsuki-junketsu/static/js/main.606cbcf7.chunk.js",
+  "main.js.map": "/satsuki-junketsu/static/js/main.606cbcf7.chunk.js.map",
+  "runtime~main.js": "/satsuki-junketsu/static/js/runtime~main.9462604d.js",
+  "runtime~main.js.map": "/satsuki-junketsu/static/js/runtime~main.9462604d.js.map",
+  "static/js/2.9842c99e.chunk.js": "/satsuki-junketsu/static/js/2.9842c99e.chunk.js",
+  "static/js/2.9842c99e.chunk.js.map": "/satsuki-junketsu/static/js/2.9842c99e.chunk.js.map",
   "index.html": "/satsuki-junketsu/index.html",
-  "precache-manifest.f2267b8d7b3e9a3dfb815bf8112041a8.js": "/satsuki-junketsu/precache-manifest.f2267b8d7b3e9a3dfb815bf8112041a8.js",
-  "service-worker.js": "/satsuki-junketsu/service-worker.js"
+  "precache-manifest.ef276adb4445f60d62b102438b3981d3.js": "/satsuki-junketsu/precache-manifest.ef276adb4445f60d62b102438b3981d3.js",
+  "service-worker.js": "/satsuki-junketsu/service-worker.js",
+  "static/css/main.95aba12a.chunk.css.map": "/satsuki-junketsu/static/css/main.95aba12a.chunk.css.map",
+  "static/media/index.scss": "/satsuki-junketsu/static/media/roboto-mono.e92cc0fb.woff2"
 }
