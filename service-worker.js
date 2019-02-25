@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/satsuki-junketsu/precache-manifest.ef276adb4445f60d62b102438b3981d3.js"
+  "/satsuki-junketsu/precache-manifest.d68f0ed1cd4ae9626fc0767bd126e935.js"
 );
 
 workbox.clientsClaim();

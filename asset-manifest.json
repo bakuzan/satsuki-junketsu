@@ -1,14 +1,14 @@
 {
-  "main.css": "/satsuki-junketsu/static/css/main.95aba12a.chunk.css",
-  "main.js": "/satsuki-junketsu/static/js/main.606cbcf7.chunk.js",
-  "main.js.map": "/satsuki-junketsu/static/js/main.606cbcf7.chunk.js.map",
+  "main.css": "/satsuki-junketsu/static/css/main.6400244e.chunk.css",
+  "main.js": "/satsuki-junketsu/static/js/main.3a653b93.chunk.js",
+  "main.js.map": "/satsuki-junketsu/static/js/main.3a653b93.chunk.js.map",
   "runtime~main.js": "/satsuki-junketsu/static/js/runtime~main.9462604d.js",
   "runtime~main.js.map": "/satsuki-junketsu/static/js/runtime~main.9462604d.js.map",
   "static/js/2.9842c99e.chunk.js": "/satsuki-junketsu/static/js/2.9842c99e.chunk.js",
   "static/js/2.9842c99e.chunk.js.map": "/satsuki-junketsu/static/js/2.9842c99e.chunk.js.map",
   "index.html": "/satsuki-junketsu/index.html",
-  "precache-manifest.ef276adb4445f60d62b102438b3981d3.js": "/satsuki-junketsu/precache-manifest.ef276adb4445f60d62b102438b3981d3.js",
+  "precache-manifest.d68f0ed1cd4ae9626fc0767bd126e935.js": "/satsuki-junketsu/precache-manifest.d68f0ed1cd4ae9626fc0767bd126e935.js",
   "service-worker.js": "/satsuki-junketsu/service-worker.js",
-  "static/css/main.95aba12a.chunk.css.map": "/satsuki-junketsu/static/css/main.95aba12a.chunk.css.map",
+  "static/css/main.6400244e.chunk.css.map": "/satsuki-junketsu/static/css/main.6400244e.chunk.css.map",
   "static/media/index.scss": "/satsuki-junketsu/static/media/roboto-mono.e92cc0fb.woff2"
 }

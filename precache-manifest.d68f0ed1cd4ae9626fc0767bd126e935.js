@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/satsuki-junketsu/static/js/runtime~main.9462604d.js"
   },
   {
-    "revision": "606cbcf7afe109b16de2",
-    "url": "/satsuki-junketsu/static/js/main.606cbcf7.chunk.js"
+    "revision": "3a653b93e944798affdb",
+    "url": "/satsuki-junketsu/static/js/main.3a653b93.chunk.js"
   },
   {
     "revision": "9842c99e8784fbe5c63d",
     "url": "/satsuki-junketsu/static/js/2.9842c99e.chunk.js"
   },
   {
-    "revision": "606cbcf7afe109b16de2",
-    "url": "/satsuki-junketsu/static/css/main.95aba12a.chunk.css"
+    "revision": "3a653b93e944798affdb",
+    "url": "/satsuki-junketsu/static/css/main.6400244e.chunk.css"
   },
   {
-    "revision": "26388c5b7f1705250fa4b1f43ecddbde",
+    "revision": "773bd4e01961b85f25f51fcc2dfd896e",
     "url": "/satsuki-junketsu/index.html"
   }
 ];
