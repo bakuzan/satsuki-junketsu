@@ -34,10 +34,6 @@
   min-width: 100px;
   min-height: 25px;
   text-decoration: none;
-
-  &:hover {
-    opacity: 0.75;
-  }
 }
 
 .button-link {
@@ -76,7 +72,11 @@
   color: $primary-colour-contrast;
   &:hover,
   &.active {
-    @include lightenOrDarken('background-color', $primary-background, $darken-amount * 3);
+    @include lightenOrDarken(
+      'background-color',
+      $primary-background,
+      $darken-amount * 3
+    );
   }
 }
 
@@ -100,7 +100,11 @@ a.button-link.active {
   background-color: $secondary-background;
   color: $secondary-colour-contrast;
   &:hover {
-    @include lightenOrDarken('background-color', $secondary-background, $darken-amount * 3);
+    @include lightenOrDarken(
+      'background-color',
+      $secondary-background,
+      $darken-amount * 3
+    );
   }
 }
 
