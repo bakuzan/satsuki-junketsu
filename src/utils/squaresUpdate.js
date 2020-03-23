@@ -12,8 +12,8 @@ export default function performMovementFromCurrentToTarget(
   toSquareId,
   specialMove
 ) {
-  const currentSquare = oldState.squares.find(x => x.id === fromSquareId);
-  const targetIndex = oldState.squares.findIndex(x => x.id === toSquareId);
+  const currentSquare = oldState.squares.find((x) => x.id === fromSquareId);
+  const targetIndex = oldState.squares.findIndex((x) => x.id === toSquareId);
   const movingPiece = mapPieceToMovedPiece(currentSquare.contains);
   const defendingPiece = !!oldState.squares[targetIndex].contains
     ? { ...oldState.squares[targetIndex].contains }
@@ -23,6 +23,7 @@ export default function performMovementFromCurrentToTarget(
     ...currentSquare,
     contains: movingPiece
   });
+
   const moves = [
     ...oldState.moves,
     mapSquaresToMove(
@@ -33,9 +34,11 @@ export default function performMovementFromCurrentToTarget(
       specialMove
     )
   ];
+
   const graveyard = !!defendingPiece
-    ? [...oldState.graveyard, defendingPiece].filter(x => !!x)
+    ? [...oldState.graveyard, defendingPiece].filter((x) => !!x)
     : oldState.graveyard;
+
   return {
     ...oldState,
     selectedSquareId: null,
@@ -46,20 +49,25 @@ export default function performMovementFromCurrentToTarget(
 }
 
 export function performRookMovementForCastling(currentSquares, kingSquareId) {
-  const newKingSquare = currentSquares.find(x => x.id === kingSquareId);
+  const newKingSquare = currentSquares.find((x) => x.id === kingSquareId);
+  newKingSquare.contains.hasCastled = true;
+
   const rookFileIndex = Strings.castling.kingTargets.findIndex(
-    x => x === newKingSquare.file
+    (x) => x === newKingSquare.file
   );
+
   const rookSquare = currentSquares.find(
-    x =>
+    (x) =>
       x.rank === newKingSquare.rank &&
       x.file === Strings.castling.rookStarts[rookFileIndex]
   );
+
   const rookTargetIndex = currentSquares.findIndex(
-    x =>
+    (x) =>
       x.rank === newKingSquare.rank &&
       x.file === Strings.castling.rookEnds[rookFileIndex]
   );
+
   const movingRook = mapPieceToMovedPiece(rookSquare.contains);
   const squares = mapPieceToNewSquare(currentSquares, rookTargetIndex, {
     ...rookSquare,
@@ -70,12 +78,14 @@ export function performRookMovementForCastling(currentSquares, kingSquareId) {
 }
 
 export function updateBoardToRemovePassedPawn(oldState, movedPieceSquareId) {
-  const movedToSquare = oldState.squares.find(x => x.id === movedPieceSquareId);
+  const movedToSquare = oldState.squares.find(
+    (x) => x.id === movedPieceSquareId
+  );
   const direction =
     movedToSquare.contains.colour === Strings.colours.white ? 1 : -1;
   const offsetRank = movedToSquare.rank - direction;
   const passedSquareIndex = oldState.squares.findIndex(
-    x => x.file === movedToSquare.file && x.rank === offsetRank
+    (x) => x.file === movedToSquare.file && x.rank === offsetRank
   );
   const passedPiece = {
     ...oldState.squares[passedSquareIndex].contains

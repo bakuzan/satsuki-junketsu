@@ -13,10 +13,15 @@ export const possibleMovesForSelectedPiece = ({
   selectedSquareId,
   squares
 }) => {
-  if (selectedSquareId === null) return [];
-  const pieceSquare = squares.find(x => x.id === selectedSquareId);
+  if (selectedSquareId === null) {
+    return [];
+  }
+
+  const pieceSquare = squares.find((x) => x.id === selectedSquareId);
+
   return squares.reduce((p, square, index) => {
     const func = square.contains ? isValidTake : isValidMove;
+
     return func(pieceSquare, square, squares) &&
       !willResultInCheck(
         pieceSquare,
@@ -27,7 +32,7 @@ export const possibleMovesForSelectedPiece = ({
   }, []);
 };
 
-const matchKingForGivenColour = colour => x =>
+const matchKingForGivenColour = (colour) => (x) =>
   x.contains &&
   x.contains.name === Constants.Strings.pieces.king &&
   x.contains.colour === colour;
@@ -35,7 +40,7 @@ const matchKingForGivenColour = colour => x =>
 const getAttacksOnKingSquare = (kingSquare, squares) =>
   squares
     .filter(
-      x =>
+      (x) =>
         kingSquare &&
         x.contains &&
         x.contains.colour !== kingSquare.contains.colour
@@ -47,10 +52,10 @@ const getAttacksOnKingSquare = (kingSquare, squares) =>
 
 const colourHasPossibleMoves = (colour, squares) => {
   const piecesForColour = squares.filter(
-    x => x.contains && x.contains.colour === colour
+    (x) => x.contains && x.contains.colour === colour
   );
   return piecesForColour.some(
-    x =>
+    (x) =>
       !!possibleMovesForSelectedPiece({ selectedSquareId: x.id, squares })
         .length
   );
@@ -96,7 +101,7 @@ export const checkForMoveAmbiguity = (
   if (CannotBeAmbiguous.includes(movedPiece.name)) return false;
 
   const potentiallyAmbiguiousSquares = squaresAfterMove.filter(
-    x =>
+    (x) =>
       x.id !== targetSquare.id &&
       x.contains &&
       x.contains.name === movedPiece.name &&
@@ -104,15 +109,15 @@ export const checkForMoveAmbiguity = (
   );
   if (potentiallyAmbiguiousSquares.length === 0) return false;
 
-  const fromIndex = squaresAfterMove.findIndex(x => x.id === oldSquare.id);
-  const toIndex = squaresAfterMove.findIndex(x => x.id === targetSquare.id);
+  const fromIndex = squaresAfterMove.findIndex((x) => x.id === oldSquare.id);
+  const toIndex = squaresAfterMove.findIndex((x) => x.id === targetSquare.id);
   let oldSquares = mapPieceToNewPiece(squaresAfterMove, fromIndex, {
     ...targetSquare.contains
   });
   oldSquares = mapPieceToNewPiece(oldSquares, toIndex, captured);
 
   const checkFunc = captured ? isValidTake : isValidMove;
-  return potentiallyAmbiguiousSquares.some(x =>
+  return potentiallyAmbiguiousSquares.some((x) =>
     checkFunc(x, targetSquare, oldSquares)
   );
 };

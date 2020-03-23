@@ -25,7 +25,8 @@ const getStartingPiece = (rank, file) => {
     id: `${colour.slice(0, 1)}-${pieceId}-${file}`,
     name: piece,
     colour,
-    hasMoved: false
+    hasMoved: false,
+    ...(piece === pieces.king ? { hasCastled: false } : {})
   };
 };
 

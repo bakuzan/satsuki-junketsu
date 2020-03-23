@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware } from 'redux';
-import { routerMiddleware } from 'react-router-redux';
-import rootReducer from 'reducers/index';
+import { routerMiddleware } from 'connected-react-router';
+import createRootReducer from 'reducers/index';
 
 const configureStore = (history, preloadedState) =>
   createStore(
-    rootReducer,
+    createRootReducer(history),
     preloadedState,
     applyMiddleware(routerMiddleware(history))
   );

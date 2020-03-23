@@ -4,7 +4,8 @@ const colours = {
   whiteHex: '#ffffff',
   blackHex: '#000000'
 };
-const pieces = {
+
+export const pieces = {
   pawn: 'pawn',
   rook: 'rook',
   knight: 'knight',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import AppSettings from 'containers/appSettings/AppSettings';
+import AppSettings from 'containers/AppSettings';
 import SvgLogo from '../svgLogo/SVGLogo.js';
 import { Paths } from 'constants/paths';
 import './header.scss';

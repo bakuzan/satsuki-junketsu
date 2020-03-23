@@ -69,6 +69,7 @@ function pawnSpecialMoves(pawnSquare, boardState) {
 function kingSpecialMoves(kingSquare, squares) {
   if (kingSquare.contains.hasMoved) return [];
   if (willResultInCheck(kingSquare, squares)) return [];
+
   const rookSquares = squares.filter(
     (x) =>
       x.contains &&
@@ -76,20 +77,27 @@ function kingSpecialMoves(kingSquare, squares) {
       x.contains.colour === kingSquare.contains.colour &&
       !x.contains.hasMoved
   );
-  if (!rookSquares.length) return [];
+
+  if (!rookSquares.length) {
+    return [];
+  }
+
   const kingId = kingSquare.id;
   const targetSquares = rookSquares.reduce((p, sq) => {
     const rookId = sq.id;
     const [startId, endId] =
       rookId < kingId ? [rookId, kingId] : [kingId, rookId];
+
     const squareIds = Array.from(
       new Array(endId - startId - 1),
       (x, i) => 1 + i + startId
     );
+
     if (
       !squares.filter((x) => squareIds.includes(x.id)).every((x) => !x.contains)
-    )
+    ) {
       return p;
+    }
 
     return squareIds.slice(0, 2).every((sqId) => {
       const squareIndex = squares.findIndex((x) => x.id === sqId);
@@ -102,14 +110,20 @@ function kingSpecialMoves(kingSquare, squares) {
       : p;
   }, []);
 
-  if (!targetSquares.length) return [];
+  if (!targetSquares.length) {
+    return [];
+  }
+
   return targetSquares.map(mapSquareIdToCastling);
 }
 
-function availableSpecialMovesForSelectedPiece(boardState) {
+export default function availableSpecialMovesForSelectedPiece(boardState) {
   const { squares, selectedSquareId } = boardState;
   const square = squares.find((x) => x.id === selectedSquareId);
-  if (!square) return [];
+
+  if (!square) {
+    return [];
+  }
 
   switch (square.contains.name) {
     case Strings.pieces.pawn:
@@ -120,5 +134,3 @@ function availableSpecialMovesForSelectedPiece(boardState) {
       return [];
   }
 }
-
-export default availableSpecialMovesForSelectedPiece;

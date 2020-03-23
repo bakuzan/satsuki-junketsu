@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import configureStore from './store/configureStore';
 
 import Routes from './Routes';
@@ -13,7 +13,7 @@ import './styles/index.scss';
 window.Engine = Engine;
 window.AutomateBoard = AutomateBoard;
 
-const history = createHistory();
+const history = createBrowserHistory();
 const store = configureStore(history);
 
 ReactDOM.render(
