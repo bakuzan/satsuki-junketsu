@@ -24,7 +24,7 @@ $fixed-header-height: 50px;
 $chess-game-actions--height: 50px;
 $chess-game--padding: 10px;
 $chess-game-status--background-colour: $grey;
-$chess-game-status--height: $base-font-size * 2;
+$chess-game-status--height: $base-font-size * 2 + 3;
 $move-list--width: 150px;
 
 $pieces: (
@@ -43,7 +43,7 @@ $pieces: (
 );
 
 $square: (
-  size: calc(100%/8),
+  size: calc(100% / 8),
   graveyard-max-size: 45px,
   light-background: $square-background-light,
   dark-background: $square-background-dark,
@@ -72,8 +72,24 @@ $z-index: (
 );
 
 $toasts: (
-  success: (background: $success-colour, colour: #000, icon: '\2713'),
-  error: (background: $danger-colour, colour: #fff, icon: '\0021'),
-  warning: (background: $alert-colour, colour: #000, icon: '\26a0'),
-  info: (background: $info-colour, colour: #000, icon: '\2139')
+  success: (
+    background: $success-colour,
+    colour: #000,
+    icon: '\2713'
+  ),
+  error: (
+    background: $danger-colour,
+    colour: #fff,
+    icon: '\0021'
+  ),
+  warning: (
+    background: $alert-colour,
+    colour: #000,
+    icon: '\26a0'
+  ),
+  info: (
+    background: $info-colour,
+    colour: #000,
+    icon: '\2139'
+  )
 );

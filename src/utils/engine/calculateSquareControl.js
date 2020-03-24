@@ -3,6 +3,31 @@ import { files as Files } from 'constants/board';
 
 const { pieces: Pieces } = Strings;
 
+function getSquareValuePawn(square, piece, fileIndex, leftOrRightMove) {
+  const rankIndex = square.rank - 1;
+
+  // promotion highly favorable
+  if (rankIndex === 0 || rankIndex === 7) {
+    return 9 * 50;
+  }
+
+  const direction = piece.colour === Strings.colours.white ? 1 : -1;
+  return [rankIndex + direction, fileIndex + leftOrRightMove].reduce(
+    (p, c) => p + c
+  );
+}
+
+function getPawnValue(square, piece) {
+  const fileIndex = Files.findIndex((x) => x === square.file);
+  if (fileIndex > 1) {
+    //if the pawn can move left
+    return getSquareValuePawn(square, piece, fileIndex, 1);
+  } else if (fileIndex < 7) {
+    //if the pawn can move right
+    return getSquareValuePawn(square, piece, fileIndex, -1);
+  }
+}
+
 export default function calculateSquareControl(
   rating,
   moveHistory,
@@ -26,7 +51,7 @@ export default function calculateSquareControl(
       }
     }
 
-    rating.squareControl += getPawnValue();
+    rating.squareControl += getPawnValue(square, piece);
   }
 
   // TODO - check this part...
@@ -53,29 +78,4 @@ export default function calculateSquareControl(
   }
 
   rating.squareControl += squareValueSum;
-
-  function getPawnValue() {
-    const fileIndex = Files.findIndex((x) => x === square.file);
-    if (fileIndex > 1) {
-      //if the pawn can move left
-      return getSquareValuePawn(fileIndex, 1);
-    } else if (fileIndex < 7) {
-      //if the pawn can move right
-      return getSquareValuePawn(fileIndex, -1);
-    }
-  }
-
-  function getSquareValuePawn(fileIndex, leftOrRightMove) {
-    const rankIndex = square.rank - 1;
-
-    // promotion highly favorable
-    if (rankIndex === 0 || rankIndex === 7) {
-      return 9 * 50;
-    }
-
-    const direction = piece.colour === Strings.colours.white ? 1 : -1;
-    return [rankIndex + direction, fileIndex + leftOrRightMove].reduce(
-      (p, c) => p + c
-    );
-  }
 }

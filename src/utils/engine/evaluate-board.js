@@ -74,7 +74,10 @@ export function rateBoard(playingColour, board) {
 
     sq.possibleMoves = [...moveSquares, ...spMoveSquares];
     sq.attackedBy = ap.filter(
-      (x) => x.contains.colour !== colour && isValidTake(x, sq, squares)
+      (x) =>
+        x.contains.id !== id &&
+        x.contains.colour !== colour &&
+        isValidTake(x, sq, squares)
     );
     sq.defendedBy = ap.filter(
       (x) =>
@@ -101,6 +104,9 @@ export function rateBoard(playingColour, board) {
 
   const whiteScore = resolvePositionScore(whitePositionScore);
   const blackScore = resolvePositionScore(blackPositionScore);
-
+  // console.groupCollapsed('<squares>');
+  // console.log('white > ', wp, whitePositionScore, whiteScore);
+  // console.log('black > ', bp, blackPositionScore, blackScore);
+  // console.groupEnd();
   return isWhite ? whiteScore - blackScore : blackScore - whiteScore;
 }

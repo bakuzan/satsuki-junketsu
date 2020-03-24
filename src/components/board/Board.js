@@ -5,6 +5,7 @@ import Portal from 'components/Portal';
 import Scales from 'components/scales/Scales';
 import Square from 'components/square/Square';
 import PromotionOptions from 'components/promotionOptions/PromotionOptions';
+import Thinking from 'components/Thinking';
 
 import Constants from 'constants/index';
 import { reverseArray, capitalise } from 'utils/common';
@@ -28,6 +29,7 @@ class Board extends React.Component {
       selectedSquareId,
       actions
     } = this.props;
+
     const selectedSquare = squares.find((x) => x.id === selectedSquareId);
     const square = squares.find((x) => x.id === squareId);
     const isSameSquare = selectedSquareId === squareId;
@@ -36,19 +38,21 @@ class Board extends React.Component {
     const specialMove = specialMoves.find((x) => x.squareId === squareId);
     const isSpecialMove = !!specialMove;
 
-    if (!selectedSquare && !square.contains) return;
+    if (!selectedSquare && !square.contains) {
+      return;
+    }
 
     if (selectedSquare && !square.contains)
       return isSpecialMove
         ? actions.performSpecialMove(specialMove)
         : isPotentialMove
-          ? actions.moveSelectedPiece(squareId)
-          : console.log(
-              '%c invalid move',
-              'color: red; font-size: 22px;',
-              selectedSquare,
-              square
-            );
+        ? actions.moveSelectedPiece(squareId)
+        : console.log(
+            '%c invalid move',
+            'color: red; font-size: 22px;',
+            selectedSquare,
+            square
+          );
 
     if (!selectedSquare && square.contains.colour !== currentPlayerColour)
       return;
@@ -65,13 +69,13 @@ class Board extends React.Component {
       return isSpecialMove
         ? actions.performSpecialMove(specialMove)
         : isPotentialMove
-          ? actions.takePiece(squareId)
-          : console.log(
-              '%c invalid take',
-              'color: red; font-size: 22px;',
-              selectedSquare,
-              square
-            );
+        ? actions.takePiece(squareId)
+        : console.log(
+            '%c invalid take',
+            'color: red; font-size: 22px;',
+            selectedSquare,
+            square
+          );
 
     console.log(
       '%c square selection case not handled!',
@@ -105,8 +109,13 @@ class Board extends React.Component {
       checkStatus,
       isReversed,
       isReadOnly,
-      nextMove
+      nextMove,
+      vsComputer
     } = this.props;
+
+    const isBlackTurn = currentPlayerColour === Constants.Strings.colours.black;
+    const isComputerTurn =
+      vsComputer.isComputer && vsComputer.isComputerBlack === isBlackTurn;
 
     const boardSquares = isReversed ? reverseArray(squares) : squares;
     const boardFiles = isReversed
@@ -172,6 +181,7 @@ class Board extends React.Component {
             <React.Fragment>
               <PromotionOptions />
               {`${capitalise(currentPlayerColour)}'s turn`}
+              {isComputerTurn && <Thinking />}
               {isCheck && `\n${capitalise(currentPlayerColour)} is in Check!`}
             </React.Fragment>
           )}

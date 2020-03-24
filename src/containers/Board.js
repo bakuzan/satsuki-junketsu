@@ -43,7 +43,7 @@ class BoardContainer extends React.Component {
     clearTimeout(this.timer);
     this.timer = setTimeout(
       () => requestAnimationFrame(this.makeComputerMove),
-      1000
+      50
     );
   }
 
