@@ -8,7 +8,7 @@ import { objectsAreEqual } from 'utils/common';
 
 import './piece.scss';
 
-class Piece extends React.Component {
+export class Piece extends React.Component {
   shouldComponentUpdate(nextProps) {
     const isDraggingChanged = nextProps.isDragging !== this.props.isDragging;
     const dataChanged = !objectsAreEqual(nextProps, this.props);

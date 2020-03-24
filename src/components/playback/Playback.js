@@ -67,6 +67,7 @@ class Playback extends React.Component {
       stepDirection === STEP_FORWARD
         ? this.props.actions.onStepForward
         : this.props.actions.onStepBack;
+
     return () => handler(this.props.name, stepDirection);
   }
 
@@ -91,13 +92,13 @@ class Playback extends React.Component {
 
     const AT_THE_START = sliderPosition === SLIDER_START;
     const AT_THE_END = sliderPosition === sliderMaximum;
-    const width = sliderPosition / sliderMaximum * 100;
+    const width = (sliderPosition / sliderMaximum) * 100;
     const toggleData = isPlaying
       ? { icon: Icons.pause, 'aria-label': 'Pause playback' }
       : { icon: Icons.play, 'aria-label': 'Start playback' };
 
     const sliderStyle = {
-      backgroundImage: `linear-gradient(90deg, currentcolor, currentcolor ${width}%, transparent ${width}%)`
+      backgroundImage: `linear-gradient(90deg, currentcolor, currentcolor ${width}%, #ddd ${width}%)`
     };
 
     return (

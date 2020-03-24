@@ -2,7 +2,7 @@ import Strings from 'constants/strings';
 import { getCurrentCheckStatusAfterMove, checkForMoveAmbiguity } from './piece';
 import { updateArrayPreservingOrder } from './common';
 
-export const mapPieceToMovedPiece = p => ({ ...p, hasMoved: true });
+export const mapPieceToMovedPiece = (p) => ({ ...p, hasMoved: true });
 
 const squarePosition = ({ id, rank, file }) => ({ id, rank, file });
 export const mapSquaresToMove = (
@@ -30,7 +30,7 @@ export const mapSquaresToMove = (
 });
 
 export const mapPieceToNewSquare = (squares, index, currentSquare) => {
-  const oldIndex = squares.findIndex(x => x.id === currentSquare.id);
+  const oldIndex = squares.findIndex((x) => x.id === currentSquare.id);
   return updateArrayPreservingOrder(
     updateArrayPreservingOrder(squares, index, {
       contains: currentSquare.contains
@@ -47,10 +47,11 @@ export const mapPieceToNewPiece = (squares, index, updatedPiece) =>
       : null
   });
 
-const mapToSpecialMove = type => squareId => ({
+const mapToSpecialMove = (type) => (squareId) => ({
   type,
   squareId
 });
+
 export const mapSquareIdToPromotion = mapToSpecialMove(
   Strings.specialMoves.promotionSelection
 );

@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux';
-import { routerReducer as routing } from 'react-router-redux';
+import { connectRouter } from 'connected-react-router';
 
 import theme from './theme';
 import board from './board';
 
-const rootReducer = combineReducers({
-  routing,
-  theme,
-  board
-});
+const createRootReducer = (history) =>
+  combineReducers({
+    router: connectRouter(history),
+    theme,
+    board
+  });
 
-export default rootReducer;
+export default createRootReducer;

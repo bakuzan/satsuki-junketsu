@@ -3,7 +3,7 @@ import { getCurrentPlayerColour } from 'utils/game';
 
 import performMovementFromCurrentToTarget from 'utils/squaresUpdate';
 import * as PossibleMoves from './possible-moves';
-import evaluateBoard from './evaluate-board';
+import { rateBoard } from './evaluate-board';
 
 function selectNextMove(board) {
   const { moves, squares } = board;
@@ -19,29 +19,27 @@ function selectNextMove(board) {
       possibleSMoves
     } = PossibleMoves.getPossibleMovesForPiece(board, squares, squareId);
 
-    const moveResults = possibleMoves.reduce(
-      (results, targetId) =>
-        results.set(
-          targetId,
-          evaluateBoard(
-            currentColour,
-            performMovementFromCurrentToTarget(board, squareId, targetId)
-          )
-        ),
-      new Map([])
-    );
+    const moveResults = possibleMoves.reduce((results, targetId) => {
+      const newMoveRating = rateBoard(
+        currentColour,
+        performMovementFromCurrentToTarget(board, squareId, targetId)
+      );
 
-    // TODO will require refactor of board-specialMove reducer
+      return results.set(targetId, newMoveRating);
+    }, new Map([]));
+
+    // TODO
+    // reduce, check moves, map to correct movement function,
+    // then mimic above to get ratings for the results.
     const specialMoveResults = possibleSMoves.map((targetId) => targetId);
 
     return [...p, { squareId, moveResults, specialMoveResults }];
   }, []);
 
-  const bestPieceMove = pieceMoves.reduce((bestMove, curr) =>
-    getMoveWithBestScore(bestMove, curr)
-  );
+  const bestPieceMove = pieceMoves.reduce(getMoveWithBestScore);
   const bestTargetId = getKeyForMaxValue(bestPieceMove.moveResults);
   const engineMoveChoice = {
+    moveType: 'standard',
     fromId: bestPieceMove.squareId,
     toId: bestTargetId
   };
@@ -60,7 +58,7 @@ function selectNextMove(board) {
    *
    * Account for next player taking pieces!
    * Account for special moves!
-   * 
+   *
    */
 }
 

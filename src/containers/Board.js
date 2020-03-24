@@ -24,7 +24,9 @@ class BoardContainer extends React.Component {
     this.state = {
       computerSelected: null
     };
+
     this.timer = null;
+    this.makeComputerMove = this.makeComputerMove.bind(this);
   }
 
   componentDidUpdate() {
@@ -34,10 +36,15 @@ class BoardContainer extends React.Component {
     const notComputerTurn =
       (isComputerBlack && isWhite) || (!isComputerBlack && !isWhite);
 
-    if (!isComputer || notComputerTurn) return;
+    if (!isComputer || notComputerTurn) {
+      return;
+    }
 
     clearTimeout(this.timer);
-    this.timer = setTimeout(() => this.makeComputerMove(), 1000);
+    this.timer = setTimeout(
+      () => requestAnimationFrame(this.makeComputerMove),
+      1000
+    );
   }
 
   makeComputerMove() {
@@ -45,10 +52,14 @@ class BoardContainer extends React.Component {
 
     const currentPlayerColour = getCurrentPlayerColour(moves);
     const checkStatus = getCheckStatusForColour(currentPlayerColour, squares);
-    if (checkStatus && checkStatus.isCheckmate) return;
+    if (checkStatus && checkStatus.isCheckmate) {
+      return;
+    }
 
     const computerSelected = SJEngine.selectNextMove(this.props.board);
-    if (!computerSelected) return;
+    if (!computerSelected) {
+      return;
+    }
 
     this.props.actions.performComputerMove(computerSelected);
   }
@@ -58,9 +69,9 @@ class BoardContainer extends React.Component {
     const activeMoveIndex = board.playback.sliderPosition;
     const isReadOnly = activeMoveIndex !== board.moves.length;
     /*  For Playback
-   *  Here we need to calculate the moves, squares, and set the selectedSquareId
-   *  for the currently active move according to the playback.sliderPosition
-  */
+     *  Here we need to calculate the moves, squares, and set the selectedSquareId
+     *  for the currently active move according to the playback.sliderPosition
+     */
     const moves = board.moves.slice(0, activeMoveIndex);
     const [nextMove] = board.moves.slice(activeMoveIndex, activeMoveIndex + 1);
 
@@ -114,6 +125,7 @@ const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(actions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  DragAndDropContext(BoardContainer)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DragAndDropContext(BoardContainer));

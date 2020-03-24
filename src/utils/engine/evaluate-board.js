@@ -1,65 +1,106 @@
 import Strings from 'constants/strings';
+import pieceValues from 'constants/values';
 
-import getPieceSquareValue from './piece-sqaure-tables';
-import * as PossibleMoves from './possible-moves';
-import checkPawnHealth from './pawn-health';
+import adjustGameDevelopment from './adjustGameDevelopment';
+import calculatePieceDangerAndSecurity from './calculatePieceDangerAndSecurity';
+import calculateSquareControl from './calculateSquareControl';
+
+import { isValidDefend, isValidTake } from 'utils/game';
+import { possibleMovesForSelectedPiece } from 'utils/piece';
+import availableSpecialMovesForSelectedPiece from 'utils/specialMoves';
 
 const { pieces: Pieces } = Strings;
 
-const getPieceCount = (arr, pieceName) =>
-  arr.filter((x) => x.contains.name === pieceName).length;
+const initPositionScoreValues = {
+  gameDevelopment: 0,
+  pieceDanger: 0,
+  pieceSecurity: 0,
+  pieceValue: 0,
+  squareControl: 0
+};
 
-const getScoreForPiece = (weight, pieceName) => (aSq, bSq) =>
-  weight * (getPieceCount(aSq, pieceName) - getPieceCount(bSq, pieceName));
+function incrementPieceValue(rating, piece) {
+  rating.pieceValue += pieceValues.get(piece.name);
+}
 
-const scoreKings = getScoreForPiece(20000, Pieces.king);
-const scoreQueens = getScoreForPiece(900, Pieces.queen);
-const scoreRooks = getScoreForPiece(500, Pieces.rook);
-const scoreBishops = getScoreForPiece(330, Pieces.bishop);
-const scoreKnights = getScoreForPiece(320, Pieces.knight);
-const scorePawns = getScoreForPiece(100, Pieces.pawn);
+function createPlayerPositionScore(colourTurn, moveHistory, squares) {
+  const rating = { ...initPositionScoreValues };
+  const teamMateCount = squares.length;
 
-export default function evaluateBoard(playingColour, board) {
-  const { squares } = board;
+  squares.forEach((square) => {
+    const piece = square.contains;
+
+    if (piece.name !== Pieces.king) {
+      incrementPieceValue(rating, piece);
+      calculatePieceDangerAndSecurity(rating, colourTurn, square);
+      calculateSquareControl(rating, moveHistory, teamMateCount, square);
+    }
+
+    adjustGameDevelopment(rating, moveHistory, square); // includes castling
+  });
+
+  return rating;
+}
+
+function resolvePositionScore(rating) {
+  return (
+    rating.pieceValue * 1.25 +
+    rating.pieceDanger +
+    rating.squareControl / 20 +
+    rating.pieceSecurity / 10 +
+    rating.gameDevelopment / 5
+  );
+}
+
+export function rateBoard(playingColour, board) {
+  const { moves, squares } = board;
 
   const isWhite = playingColour === Strings.colours.white;
-  const sign = isWhite ? 1 : -1;
+  const ap = squares.slice(0).filter((x) => x.contains);
 
-  const wp = squares.filter(
-    (x) => x.contains && x.contains.colour === Strings.colours.white
+  ap.forEach((sq) => {
+    const { id, colour } = sq.contains;
+
+    const moveSquares = possibleMovesForSelectedPiece({
+      selectedSquareId: sq.id,
+      squares
+    }).map((id) => squares.find((s) => s.id === id));
+
+    const spMoveSquares = availableSpecialMovesForSelectedPiece({
+      selectedSquareId: sq.id,
+      moves,
+      squares
+    }).map(({ squareId }) => squares.find((s) => s.id === squareId));
+
+    sq.possibleMoves = [...moveSquares, ...spMoveSquares];
+    sq.attackedBy = ap.filter(
+      (x) => x.contains.colour !== colour && isValidTake(x, sq, squares)
+    );
+    sq.defendedBy = ap.filter(
+      (x) =>
+        x.contains.id !== id &&
+        x.contains.colour === colour &&
+        isValidDefend(x, sq, squares)
+    );
+  });
+
+  const wp = ap.filter((x) => x.contains.colour === Strings.colours.white);
+  const bp = ap.filter((x) => x.contains.colour === Strings.colours.black);
+
+  const whitePositionScore = createPlayerPositionScore(
+    playingColour,
+    moves,
+    wp
   );
-  const bp = squares.filter(
-    (x) => x.contains && x.contains.colour === Strings.colours.black
+
+  const blackPositionScore = createPlayerPositionScore(
+    playingColour,
+    moves,
+    bp
   );
 
-  // KQRBNP counts
-  const counts =
-    scoreKings(wp, bp) +
-    scoreQueens(wp, bp) +
-    scoreRooks(wp, bp) +
-    scoreBishops(wp, bp) +
-    scoreKnights(wp, bp) +
-    scorePawns(wp, bp);
+  const whiteScore = resolvePositionScore(whitePositionScore);
+  const blackScore = resolvePositionScore(blackPositionScore);
 
-  // Account for piece-square rating
-  const pieceSquare = squares
-    .filter((x) => x.contains)
-    .reduce((v, sq) => v + getPieceSquareValue(sq), 0);
-
-  // Doubled, Blocked, and Isolated pawns
-  const pawnHealth = 50 * checkPawnHealth(squares);
-
-  // Mobility
-  const wpMoves = PossibleMoves.getAllUniquePossibleMoves(board, wp, isWhite);
-  const bpMoves = PossibleMoves.getAllUniquePossibleMoves(board, bp, !isWhite);
-  const mobility = 10 * (wpMoves.size - bpMoves.size);
-
-  const score = (counts - pawnHealth + mobility) * sign + pieceSquare;
-  console.groupCollapsed('score', score);
-  console.log('couunts', counts);
-  console.log('pieceSquare', pieceSquare);
-  console.log('mobility', wpMoves, bpMoves, mobility);
-  console.groupEnd();
-
-  return score;
+  return isWhite ? whiteScore - blackScore : blackScore - whiteScore;
 }

@@ -93,13 +93,20 @@ export const isValidTake = (from, to, squares) => {
   const toSquare = squares.find(
     (x) => x.file === to.file && x.rank === to.rank
   );
-  if (!toSquare || !toSquare.contains) return false;
-  if (toSquare.contains.colour === attacker.colour) return false;
+
+  if (!toSquare || !toSquare.contains) {
+    return false;
+  }
+
+  if (toSquare.contains.colour === attacker.colour) {
+    return false;
+  }
 
   switch (attacker.name) {
-    case Constants.Strings.pieces.pawn:
+    case Constants.Strings.pieces.pawn: {
       const fromIndex = Constants.files.findIndex((x) => x === from.file);
       const toIndex = Constants.files.findIndex((x) => x === to.file);
+
       return (
         Math.abs(toIndex - fromIndex) === 1 &&
         Math.abs(to.rank - from.rank) === 1 &&
@@ -108,6 +115,7 @@ export const isValidTake = (from, to, squares) => {
           (from.rank > to.rank &&
             attacker.colour === Constants.Strings.colours.black))
       );
+    }
     case Constants.Strings.pieces.rook:
     case Constants.Strings.pieces.knight:
     case Constants.Strings.pieces.bishop:
@@ -118,3 +126,39 @@ export const isValidTake = (from, to, squares) => {
       return false;
   }
 };
+
+// isValidTake, without the piece colour checks
+export function isValidDefend(from, to, squares) {
+  const { contains: attacker } = from;
+  const toSquare = squares.find(
+    (x) => x.file === to.file && x.rank === to.rank
+  );
+
+  if (!toSquare || !toSquare.contains) {
+    return false;
+  }
+
+  switch (attacker.name) {
+    case Constants.Strings.pieces.pawn: {
+      const fromIndex = Constants.files.findIndex((x) => x === from.file);
+      const toIndex = Constants.files.findIndex((x) => x === to.file);
+
+      return (
+        Math.abs(toIndex - fromIndex) === 1 &&
+        Math.abs(to.rank - from.rank) === 1 &&
+        ((from.rank < to.rank &&
+          attacker.colour === Constants.Strings.colours.white) ||
+          (from.rank > to.rank &&
+            attacker.colour === Constants.Strings.colours.black))
+      );
+    }
+    case Constants.Strings.pieces.rook:
+    case Constants.Strings.pieces.knight:
+    case Constants.Strings.pieces.bishop:
+    case Constants.Strings.pieces.queen:
+    case Constants.Strings.pieces.king:
+      return isValidMove(from, to, squares);
+    default:
+      return false;
+  }
+}

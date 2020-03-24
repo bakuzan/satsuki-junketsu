@@ -1,5 +1,5 @@
 import React from 'react';
-import { DragDropContext } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
 
@@ -7,21 +7,28 @@ import _withDropTarget from './Target';
 import _withDragSource from './Source';
 import isTouchDevice from './supportsTouch';
 
-const HTML5DND = DragDropContext(HTML5Backend);
-const TouchDND = DragDropContext(TouchBackend);
+function getBackend() {
+  if (isTouchDevice()) {
+    return TouchBackend;
+  } else {
+    return HTML5Backend;
+  }
+}
 
 export default function DnDBackend(WrappedComponent) {
+  const backend = getBackend();
+
   class HTML5DragDrop extends React.Component {
     render() {
-      return <WrappedComponent {...this.props} />;
+      return (
+        <DndProvider backend={backend} context={window}>
+          <WrappedComponent {...this.props} />
+        </DndProvider>
+      );
     }
   }
 
-  if (isTouchDevice()) {
-    return TouchDND(HTML5DragDrop);
-  } else {
-    return HTML5DND(HTML5DragDrop);
-  }
+  return HTML5DragDrop;
 }
 
 export const withDropTarget = _withDropTarget;
