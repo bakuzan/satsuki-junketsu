@@ -44,14 +44,18 @@ function generatePossibilities(board) {
 }
 
 function mapOutcomeToNextOutcome(futures, isMaximising) {
-  console.groupCollapsed('futures', futures.length);
-  futures.map((x) => console.log(x, x.score));
-  console.groupEnd();
   const thresholdFutures = futures.sort((a, b) =>
     isMaximising ? b.score - a.score : a.score - b.score
   );
 
-  return thresholdFutures.slice(0, 5).reduce(
+  console.groupCollapsed('futures', futures.length);
+  console.log('maxing ? ', isMaximising);
+  console.log('min > ', Math.min(...futures.map((x) => x.score)));
+  console.log('max > ', Math.max(...futures.map((x) => x.score)));
+  console.log('futures > ', thresholdFutures);
+  console.groupEnd();
+
+  return thresholdFutures.slice(0, 6).reduce(
     (p, option) => [
       ...p,
       ...generatePossibilities(option.board).map((x) => ({

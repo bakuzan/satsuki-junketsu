@@ -1,10 +1,10 @@
 import { pieces } from './strings';
 
 export default new Map([
-  [pieces.pawn, 1],
-  [pieces.rook, 5],
-  [pieces.knight, 3],
-  [pieces.bishop, 3],
-  [pieces.queen, 9],
+  [pieces.pawn, 10],
+  [pieces.rook, 50],
+  [pieces.knight, 30],
+  [pieces.bishop, 30],
+  [pieces.queen, 90],
   [pieces.king, 0] // captured king is game over duh
 ]);
