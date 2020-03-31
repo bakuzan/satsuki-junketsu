@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/satsuki-junketsu/static/css/main.81d2e307.chunk.css",
-    "main.js": "/satsuki-junketsu/static/js/main.5c7b4946.chunk.js",
-    "main.js.map": "/satsuki-junketsu/static/js/main.5c7b4946.chunk.js.map",
+    "main.js": "/satsuki-junketsu/static/js/main.07674a14.chunk.js",
+    "main.js.map": "/satsuki-junketsu/static/js/main.07674a14.chunk.js.map",
     "runtime-main.js": "/satsuki-junketsu/static/js/runtime-main.d1bce533.js",
     "runtime-main.js.map": "/satsuki-junketsu/static/js/runtime-main.d1bce533.js.map",
-    "static/js/2.d7cf5745.chunk.js": "/satsuki-junketsu/static/js/2.d7cf5745.chunk.js",
-    "static/js/2.d7cf5745.chunk.js.map": "/satsuki-junketsu/static/js/2.d7cf5745.chunk.js.map",
+    "static/js/2.c19a7dc5.chunk.js": "/satsuki-junketsu/static/js/2.c19a7dc5.chunk.js",
+    "static/js/2.c19a7dc5.chunk.js.map": "/satsuki-junketsu/static/js/2.c19a7dc5.chunk.js.map",
     "index.html": "/satsuki-junketsu/index.html",
-    "precache-manifest.d0866b180c1817d7f9e737277f842bd9.js": "/satsuki-junketsu/precache-manifest.d0866b180c1817d7f9e737277f842bd9.js",
+    "precache-manifest.8eebae2e246872bb16e55712e976ec1d.js": "/satsuki-junketsu/precache-manifest.8eebae2e246872bb16e55712e976ec1d.js",
     "service-worker.js": "/satsuki-junketsu/service-worker.js",
     "static/css/main.81d2e307.chunk.css.map": "/satsuki-junketsu/static/css/main.81d2e307.chunk.css.map",
-    "static/js/2.d7cf5745.chunk.js.LICENSE.txt": "/satsuki-junketsu/static/js/2.d7cf5745.chunk.js.LICENSE.txt",
+    "static/js/2.c19a7dc5.chunk.js.LICENSE.txt": "/satsuki-junketsu/static/js/2.c19a7dc5.chunk.js.LICENSE.txt",
     "static/media/index.scss": "/satsuki-junketsu/static/media/roboto-mono.e92cc0fb.woff2"
   },
   "entrypoints": [
     "static/js/runtime-main.d1bce533.js",
-    "static/js/2.d7cf5745.chunk.js",
+    "static/js/2.c19a7dc5.chunk.js",
     "static/css/main.81d2e307.chunk.css",
-    "static/js/main.5c7b4946.chunk.js"
+    "static/js/main.07674a14.chunk.js"
   ]
 }

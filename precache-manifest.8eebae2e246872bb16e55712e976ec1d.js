@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ffc1075ef430af415e514264cd773cb7",
+    "revision": "2d55425ab1ddacefb4380437ed38b0f0",
     "url": "/satsuki-junketsu/index.html"
   },
   {
-    "revision": "ef9d08b4b2f30bd21739",
+    "revision": "d058671fc44eb31b273c",
     "url": "/satsuki-junketsu/static/css/main.81d2e307.chunk.css"
   },
   {
-    "revision": "071e9284ab6ba19ec02b",
-    "url": "/satsuki-junketsu/static/js/2.d7cf5745.chunk.js"
+    "revision": "60127503e340671b0d7c",
+    "url": "/satsuki-junketsu/static/js/2.c19a7dc5.chunk.js"
   },
   {
     "revision": "b288553b0b8be16072c7792644e51c51",
-    "url": "/satsuki-junketsu/static/js/2.d7cf5745.chunk.js.LICENSE.txt"
+    "url": "/satsuki-junketsu/static/js/2.c19a7dc5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ef9d08b4b2f30bd21739",
-    "url": "/satsuki-junketsu/static/js/main.5c7b4946.chunk.js"
+    "revision": "d058671fc44eb31b273c",
+    "url": "/satsuki-junketsu/static/js/main.07674a14.chunk.js"
   },
   {
     "revision": "6f7534f0d6337966d5c6",

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/satsuki-junketsu/precache-manifest.d0866b180c1817d7f9e737277f842bd9.js"
+  "/satsuki-junketsu/precache-manifest.8eebae2e246872bb16e55712e976ec1d.js"
 );
 
 self.addEventListener('message', (event) => {
