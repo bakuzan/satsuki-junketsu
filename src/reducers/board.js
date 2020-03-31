@@ -30,6 +30,7 @@ import importSubReducer from './board-import';
 import { BOARD_COMPUTER_MOVE } from '../actions/board';
 
 import { NewGameOptions } from 'constants/new-game-options';
+import Strings from 'constants/strings';
 
 const initialState = {
   reverseBoard: false,
@@ -110,9 +111,20 @@ const board = createReducer(initialState, {
     reverseBoard: !state.reverseBoard
   }),
   [BOARD_COMPUTER_MOVE]: (state, action) => {
-    const { fromId, toId } = action.move;
+    const { moveType, fromId, toId } = action.move;
     const midState = setSelectedSquareId(state, { squareId: fromId });
-    return composedPieceMovement(midState, { targetSquareId: toId });
+
+    if (moveType === 'STANDARD') {
+      return composedPieceMovement(midState, { targetSquareId: toId });
+    }
+
+    return composedSpecialMove(midState, {
+      specialMove: {
+        type: moveType,
+        squareId: toId,
+        promoteTo: Strings.pieces.queen
+      }
+    });
   }
 });
 

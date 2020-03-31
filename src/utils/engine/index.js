@@ -1,7 +1,9 @@
+import Strings from 'constants/strings';
 import { getKeyWithBestScore } from 'utils/common';
 import { getCurrentPlayerColour } from 'utils/game';
 
 import performMovementFromCurrentToTarget from 'utils/squaresUpdate';
+import prepareSpecialMoveBoard from './prepareSpecialMoveBoard';
 import * as PossibleMoves from './possible-moves';
 import { rateBoard } from './evaluate-board';
 
@@ -14,11 +16,10 @@ function generatePossibilities(board) {
 
   const pieceMoves = pieceSquares.reduce((p, sq) => {
     const squareId = sq.id;
-    const { possibleMoves } = PossibleMoves.getPossibleMovesForPiece(
-      board,
-      squares,
-      squareId
-    );
+    const {
+      possibleMoves,
+      possibleSMoves
+    } = PossibleMoves.getPossibleMovesForPiece(board, squares, squareId);
 
     return [
       ...p,
@@ -31,8 +32,25 @@ function generatePossibilities(board) {
 
         return {
           currentColour,
+          type: 'STANDARD',
           squareId,
           targetId,
+          board: newBoard,
+          score: rateBoard(currentColour, newBoard)
+        };
+      }),
+      ...possibleSMoves.map((sMove) => {
+        const newBoard = prepareSpecialMoveBoard(board, squareId, sMove);
+        const type =
+          sMove.type === Strings.specialMoves.promotionSelection
+            ? Strings.specialMoves.promotion
+            : sMove.type;
+
+        return {
+          currentColour,
+          type,
+          squareId,
+          targetId: sMove.squareId,
           board: newBoard,
           score: rateBoard(currentColour, newBoard)
         };
@@ -96,7 +114,7 @@ function processPotentialFutures(board) {
 
   const moveResults = nextMoveOptions.reduce((results, option) => {
     const key = `${option.squareId}-${option.targetId}`;
-    return results.set(key, option.score);
+    return results.set(key, option);
   }, new Map([]));
 
   return moveResults;
@@ -113,12 +131,11 @@ function selectNextMove(board) {
     console.log('%c STALEMATE', 'color: orange; font-size: 16px;');
   }
 
-  const [squareId, targetId] = bestOutcome.split('-');
-
+  const option = outcomes.get(bestOutcome);
   const engineMoveChoice = {
-    moveType: 'standard',
-    fromId: Number(squareId),
-    toId: Number(targetId)
+    moveType: option.type,
+    fromId: option.squareId,
+    toId: option.targetId
   };
 
   console.groupCollapsed('%c engine done', 'color: forestgreen');
@@ -136,70 +153,7 @@ function selectNextMove(board) {
   );
 
   return engineMoveChoice;
-  /* TODO
-   *
-   * Account for special moves!
-   * Scoring for Check(mate) (?)
-   *
-   */
 }
-
-// function selectNextMove(board) {
-//   const { moves, squares } = board;
-//   const currentColour = getCurrentPlayerColour(moves);
-//   const pieceSquares = squares.filter(
-//     (x) => x.contains && x.contains.colour === currentColour
-//   );
-
-//   const pieceMoves = pieceSquares.reduce((p, sq) => {
-//     const squareId = sq.id;
-//     const {
-//       possibleMoves,
-//       possibleSMoves
-//     } = PossibleMoves.getPossibleMovesForPiece(board, squares, squareId);
-
-//     const moveResults = possibleMoves.reduce((results, targetId) => {
-//       const newMoveRating = rateBoard(
-//         currentColour,
-//         performMovementFromCurrentToTarget(board, squareId, targetId)
-//       );
-
-//       return results.set(targetId, newMoveRating);
-//     }, new Map([]));
-
-//     // TODO
-//     // reduce, check moves, map to correct movement function,
-//     // then mimic above to get ratings for the results.
-//     const specialMoveResults = possibleSMoves.map((targetId) => targetId);
-
-//     return [...p, { squareId, moveResults, specialMoveResults }];
-//   }, []);
-
-//   const bestPieceMove = pieceMoves.reduce(getMoveWithBestScore);
-//   const bestTargetId = getKeyForMaxValue(bestPieceMove.moveResults);
-//   const engineMoveChoice = {
-//     moveType: 'standard',
-//     fromId: bestPieceMove.squareId,
-//     toId: bestTargetId
-//   };
-
-//   console.groupCollapsed('%c engine in progress', 'color: magenta');
-//   console.log('input > ', board);
-//   console.log('current player > ', currentColour);
-//   console.log('pieces > ', pieceSquares);
-//   console.log('moves for pieces > ', pieceMoves);
-//   console.log('best >> ', bestPieceMove);
-//   console.log('output > ', engineMoveChoice);
-//   console.groupEnd();
-
-//   return engineMoveChoice;
-//   /* TODO
-//    *
-//    * Account for next player taking pieces!
-//    * Account for special moves!
-//    *
-//    */
-// }
 
 export default {
   selectNextMove

@@ -111,10 +111,10 @@ const getKeyWithScoreComparison = (compare) => (pairs) => {
 };
 
 export const getKeyWithLowestScore = getKeyWithScoreComparison(
-  (m, pk, ck) => m.get(pk) <= m.get(ck)
+  (m, pk, ck) => m.get(pk).score <= m.get(ck).score
 );
 export const getKeyWithBestScore = getKeyWithScoreComparison(
-  (m, pk, ck) => m.get(pk) >= m.get(ck)
+  (m, pk, ck) => m.get(pk).score >= m.get(ck).score
 );
 
 // export const getKeyForMaxValue = (pairs) =>
